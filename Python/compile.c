@@ -924,6 +924,14 @@ PyCompile_OpcodeStackEffect(int opcode, int oparg)
 
         case PRINT_EXPR:
             return -1;
+        case PRINT_ITEM:
+            return -1;
+        case PRINT_NEWLINE:
+            return 0;
+        case PRINT_ITEM_TO:
+            return -2;
+        case PRINT_NEWLINE_TO:
+            return -1;
         case LOAD_BUILD_CLASS:
             return 1;
         case INPLACE_LSHIFT:
