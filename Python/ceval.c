@@ -18,6 +18,7 @@
 #include "pydtrace.h"
 #include "setobject.h"
 #include "structmember.h"
+#include "../Include/Python.h"
 
 #include <ctype.h>
 
@@ -1865,6 +1866,87 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 goto error;
             Py_DECREF(res);
             DISPATCH();
+        }
+
+        TARGET(PRINT_ITEM_TO)
+        {
+            PyObject* pytwo_w = stream = POP();
+            int err = 0;
+            /* fall through to PRINT_ITEM */
+        }
+
+        TARGET(PRINT_ITEM)
+        {
+            PyObject* pytwo_v = POP();
+            if (stream == NULL || stream == Py_None) {
+                pytwo_w = _PySys_GetObjectId(&PyId_displayhook);
+                if (pytwo_w == NULL) {
+                    PyErr_SetString(PyExc_RuntimeError,
+                                    "lost sys.stdout");
+                    err = -1;
+                    goto error;
+                }
+            }
+            /* PyFile_SoftSpace() can exececute arbitrary code
+               if sys.stdout is an instance with a __getattr__.
+               If __getattr__ raises an exception, w will
+               be freed, so we need to prevent that temporarily. */
+            Py_XINCREF(pytwo_w);
+            if (pytwo_w != NULL && PyFile_SoftSpace(pytwo_w, 0))
+                err = PyFile_WriteString(" ", pytwo_w);
+            if (err == 0)
+                err = PyFile_WriteObject(pytwo_v, pytwo_w, Py_PRINT_RAW);
+            if (err == 0) {
+                /* XXX move into writeobject() ? */
+                if (PyUnicode_Check(pytwo_v)) {
+                Py_UNICODE *s = PyUnicode_AS_UNICODE(pytwo_v);
+                Py_ssize_t len = PyUnicode_GET_SIZE(pytwo_v);
+                if (len == 0 ||
+                    !Py_UNICODE_ISSPACE(s[len-1]) ||
+                    s[len-1] == ' ')
+                    PyFile_SoftSpace(pytwo_ww, 1);
+                }
+
+                else
+                    PyFile_SoftSpace(pytwo_w, 1);
+            }
+            Py_XDECREF(pytwo_w);
+            Py_DECREF(pytwo_v);
+            Py_XDECREF(stream);
+            stream = NULL;
+            if (err == 0) DISPATCH();
+            break;
+        }
+
+        TARGET(PRINT_NEWLINE_TO)
+        {
+            pytwo_w = stream = POP();
+            /* fall through to PRINT_NEWLINE */
+        }
+
+        TARGET(PRINT_NEWLINE)
+        {
+            if (stream == NULL || stream == Py_None) {
+                pytwo_w = _PySys_GetObjectId(&PyId_displayhook);
+                if (pytwo_w == NULL) {
+                    PyErr_SetString(PyExc_RuntimeError,
+                                    "lost sys.stdout");
+                    err = -1;
+                    goto error;
+                }
+            }
+            if (pytwo_w != NULL) {
+                /* w.write() may replace sys.stdout, so we
+                 * have to keep our reference to it */
+                Py_INCREF(pytwo_w);
+                err = PyFile_WriteString("\n", pytwo_w);
+                if (err == 0)
+                    PyFile_SoftSpace(pytwo_w, 0);
+                Py_DECREF(pytwo_w);
+            }
+            Py_XDECREF(stream);
+            stream = NULL;
+            break;
         }
 
 #ifdef CASE_TOO_BIG
