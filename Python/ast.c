@@ -3095,7 +3095,7 @@ ast_for_print_stmt(struct compiling *c, const node *n)
             asdl_seq_SET(seq, j, expression);
         }
     }
-    nl = (TYPE(CHILD(n, NCH(n) - 1)) == COMMA) ? false : true;
+    nl = (TYPE(CHILD(n, NCH(n) - 1)) == COMMA) ? 0 : 1;
     return Print(dest, seq, nl, LINENO(n), n->n_col_offset, c->c_arena);
 }
 
