@@ -29,6 +29,7 @@ module Python
           | Assign(expr* targets, expr value)
           | AugAssign(expr target, operator op, expr value)
           -- 'simple' indicates that we annotate simple name without parens
+          | Print(expr? dest, expr* values, int nl)
           | AnnAssign(expr target, expr annotation, expr? value, int simple)
 
           -- use 'orelse' because else is a keyword in target languages
