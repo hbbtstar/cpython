@@ -2123,6 +2123,43 @@ compiler_lambda(struct compiler *c, expr_ty e)
 }
 
 static int
+compiler_print(struct compiler *c, stmt_ty s)
+{
+    int i, n;
+    bool dest;
+
+    assert(s->kind == Print_kind);
+    n = asdl_seq_LEN(s->v.Print.values);
+    dest = false;
+    if (s->v.Print.dest) {
+        VISIT(c, expr, s->v.Print.dest);
+        dest = true;
+    }
+    for (i = 0; i < n; i++) {
+        expr_ty e = (expr_ty)asdl_seq_GET(s->v.Print.values, i);
+        if (dest) {
+            ADDOP(c, DUP_TOP);
+            VISIT(c, expr, e);
+            ADDOP(c, ROT_TWO);
+            ADDOP(c, PRINT_ITEM_TO);
+        }
+        else {
+            VISIT(c, expr, e);
+            ADDOP(c, PRINT_ITEM);
+        }
+    }
+    if (s->v.Print.nl) {
+        if (dest)
+        ADDOP(c, PRINT_NEWLINE_TO)
+        else
+        ADDOP(c, PRINT_NEWLINE)
+    }
+    else if (dest)
+    ADDOP(c, POP_TOP);
+    return 1;
+}
+
+static int
 compiler_if(struct compiler *c, stmt_ty s)
 {
     basicblock *end, *next;
