@@ -3073,7 +3073,7 @@ ast_for_print_stmt(struct compiling *c, const node *n)
      */
     expr_ty dest = NULL, expression;
     asdl_seq *seq = NULL;
-    bool nl;
+    int nl;
     int i, j, values_count, start = 1;
 
     REQ(n, print_stmt);
@@ -3085,7 +3085,7 @@ ast_for_print_stmt(struct compiling *c, const node *n)
     }
     values_count = (NCH(n) + 1 - start) / 2;
     if (values_count) {
-        seq = asdl_seq_new(values_count, c->c_arena);
+        seq = _Py_asdl_seq_new(values_count, c->c_arena);
         if (!seq)
             return NULL;
         for (i = start, j = 0; i < NCH(n); i += 2, ++j) {
