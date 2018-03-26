@@ -1880,6 +1880,7 @@ PyObject *stream = NULL;
 
         TARGET(PRINT_ITEM)
         {
+            _Py_IDENTIFIER(displayhook);
             pytwo_v = POP();
             if (stream == NULL || stream == Py_None) {
                 pytwo_w = _PySys_GetObjectId(&PyId_displayhook);
@@ -1929,6 +1930,7 @@ PyObject *stream = NULL;
 
         TARGET(PRINT_NEWLINE)
         {
+            _Py_IDENTIFIER(displayhook);
             if (stream == NULL || stream == Py_None) {
                 pytwo_w = _PySys_GetObjectId(&PyId_displayhook);
                 if (pytwo_w == NULL) {
