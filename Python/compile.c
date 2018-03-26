@@ -2126,14 +2126,14 @@ static int
 compiler_print(struct compiler *c, stmt_ty s)
 {
     int i, n;
-    bool dest;
+    int dest;
 
     assert(s->kind == Print_kind);
     n = asdl_seq_LEN(s->v.Print.values);
-    dest = false;
+    dest = 0;
     if (s->v.Print.dest) {
         VISIT(c, expr, s->v.Print.dest);
-        dest = true;
+        dest = 1;
     }
     for (i = 0; i < n; i++) {
         expr_ty e = (expr_ty)asdl_seq_GET(s->v.Print.values, i);
