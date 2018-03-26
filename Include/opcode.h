@@ -126,6 +126,10 @@ extern "C" {
 #define BUILD_CONST_KEY_MAP     156
 #define BUILD_STRING            157
 #define BUILD_TUPLE_UNPACK_WITH_CALL 158
+#define PRINT_ITEM	159
+#define PRINT_NEWLINE	160
+#define PRINT_ITEM_TO   161
+#define PRINT_NEWLINE_TO 162
 
 /* EXCEPT_HANDLER is a special, implicit block type which is created when
    entering an except handler. It is not an opcode but we define it here
