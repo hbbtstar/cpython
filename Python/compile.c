@@ -2886,6 +2886,8 @@ compiler_visit_stmt(struct compiler *c, stmt_ty s)
         break;
     case AugAssign_kind:
         return compiler_augassign(c, s);
+    case Print_kind:
+        return compiler_print(c, s);
     case AnnAssign_kind:
         return compiler_annassign(c, s);
     case For_kind:
