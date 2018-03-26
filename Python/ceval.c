@@ -889,6 +889,9 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
 #define FAST_DISPATCH() goto fast_next_opcode
 #endif
 
+PyObject *pytwo_w;
+PyObject *pytwo_v;
+PyObject *stream = NULL;
 
 /* Tuple access macros */
 
@@ -1870,14 +1873,14 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
 
         TARGET(PRINT_ITEM_TO)
         {
-            PyObject* pytwo_w = stream = POP();
+            pytwo_w = stream = POP();
             int err = 0;
             /* fall through to PRINT_ITEM */
         }
 
         TARGET(PRINT_ITEM)
         {
-            PyObject* pytwo_v = POP();
+            pytwo_v = POP();
             if (stream == NULL || stream == Py_None) {
                 pytwo_w = _PySys_GetObjectId(&PyId_displayhook);
                 if (pytwo_w == NULL) {
@@ -1892,7 +1895,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                If __getattr__ raises an exception, w will
                be freed, so we need to prevent that temporarily. */
             Py_XINCREF(pytwo_w);
-            if (pytwo_w != NULL && PyFile_SoftSpace(pytwo_w, 0))
+            if (pytwo_w != NULL)
                 err = PyFile_WriteString(" ", pytwo_w);
             if (err == 0)
                 err = PyFile_WriteObject(pytwo_v, pytwo_w, Py_PRINT_RAW);
