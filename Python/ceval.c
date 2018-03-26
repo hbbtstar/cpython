@@ -1896,20 +1896,20 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                 err = PyFile_WriteString(" ", pytwo_w);
             if (err == 0)
                 err = PyFile_WriteObject(pytwo_v, pytwo_w, Py_PRINT_RAW);
-            if (err == 0) {
-                /* XXX move into writeobject() ? */
-                if (PyUnicode_Check(pytwo_v)) {
-                Py_UNICODE *s = PyUnicode_AS_UNICODE(pytwo_v);
-                Py_ssize_t len = PyUnicode_GET_SIZE(pytwo_v);
-                if (len == 0 ||
-                    !Py_UNICODE_ISSPACE(s[len-1]) ||
-                    s[len-1] == ' ')
-                    PyFile_SoftSpace(pytwo_ww, 1);
-                }
-
-                else
-                    PyFile_SoftSpace(pytwo_w, 1);
-            }
+//            if (err == 0) {
+//                /* XXX move into writeobject() ? */
+//                if (PyUnicode_Check(pytwo_v)) {
+//                Py_UNICODE *s = PyUnicode_AS_UNICODE(pytwo_v);
+//                Py_ssize_t len = PyUnicode_GET_SIZE(pytwo_v);
+//                if (len == 0 ||
+//                    !Py_UNICODE_ISSPACE(s[len-1]) ||
+//                    s[len-1] == ' ')
+//                    PyFile_SoftSpace(pytwo_ww, 1);
+//                }
+//
+//                else
+//                    PyFile_SoftSpace(pytwo_w, 1);
+//            }
             Py_XDECREF(pytwo_w);
             Py_DECREF(pytwo_v);
             Py_XDECREF(stream);
@@ -1940,8 +1940,8 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
                  * have to keep our reference to it */
                 Py_INCREF(pytwo_w);
                 err = PyFile_WriteString("\n", pytwo_w);
-                if (err == 0)
-                    PyFile_SoftSpace(pytwo_w, 0);
+//                if (err == 0)
+//                    PyFile_SoftSpace(pytwo_w, 0);
                 Py_DECREF(pytwo_w);
             }
             Py_XDECREF(stream);
