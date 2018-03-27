@@ -54,8 +54,8 @@ class Monitor:
             filename = " " + self.filename
         else:
             filename = ''
-        print("Error at" + filename, "line", self.line_number, ":")
-        print("   ", ' '.join(str(x) for x in a))
+        print "Error at" + filename, "line", self.line_number, ":"
+        print "   ", ' '.join(str(x) for x in a)
         sys.exit(-1)
 
     def close(self):
@@ -169,7 +169,7 @@ class Monitor:
 
             self.stack.append(("if", condition))
             if self.verbose:
-                print(self.status())
+                print self.status()
             return
 
         previous_token, previous_condition = pop_stack()
@@ -179,13 +179,13 @@ class Monitor:
         elif token == 'endif':
             pass
         if self.verbose:
-            print(self.status())
+            print self.status()
 
 if __name__ == '__main__':
     for filename in sys.argv[1:]:
         with open(filename, "rt") as f:
             cpp = Monitor(filename, verbose=True)
-            print()
-            print(filename)
+            print
+            print filename
             for line_number, line in enumerate(f.read().split('\n'), 1):
                 cpp.writeline(line)

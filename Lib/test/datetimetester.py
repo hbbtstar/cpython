@@ -4750,13 +4750,13 @@ class ZoneInfo(tzinfo):
                 else:
                     zeros_count += 1
         trans_counts = (gap_count, fold_count, zeros_count)
-        print("Number of zones:       %5d" % count)
-        print("Number of transitions: %5d = %d (gaps) + %d (folds) + %d (zeros)" %
-              ((sum(trans_counts),) + trans_counts))
-        print("Min gap:         %16s at %s in %s" % (min_gap, min_gap_datetime, min_gap_zone))
-        print("Max gap:         %16s at %s in %s" % (max_gap, max_gap_datetime, max_gap_zone))
-        print("Min fold:        %16s at %s in %s" % (min_fold, min_fold_datetime, min_fold_zone))
-        print("Max fold:        %16s at %s in %s" % (max_fold, max_fold_datetime, max_fold_zone))
+        print "Number of zones:       %5d" % count
+        print "Number of transitions: %5d = %d (gaps) + %d (folds) + %d (zeros)" %
+              ((sum(trans_counts),) + trans_counts)
+        print "Min gap:         %16s at %s in %s" % (min_gap, min_gap_datetime, min_gap_zone)
+        print "Max gap:         %16s at %s in %s" % (max_gap, max_gap_datetime, max_gap_zone)
+        print "Min fold:        %16s at %s in %s" % (min_fold, min_fold_datetime, min_fold_zone)
+        print "Max fold:        %16s at %s in %s" % (max_fold, max_fold_datetime, max_fold_zone)
 
 
     def transitions(self):
@@ -4780,8 +4780,8 @@ class ZoneInfo(tzinfo):
                 if dt.year < start_year or same_abbr and prev_abbr != abbr:
                     continue
                 count += 1
-                print("%3d) %-30s %s %10s %5s -> %s" %
-                      (count, zonename, dt, shift, prev_abbr, abbr))
+                print "%3d) %-30s %s %10s %5s -> %s" %
+                      (count, zonename, dt, shift, prev_abbr, abbr)
 
     def folds(self):
         for t, shift in self.transitions():

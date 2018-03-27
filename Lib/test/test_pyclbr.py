@@ -23,13 +23,13 @@ class PyclbrTest(TestCase):
         ''' succeed iff {l1} - {ignore} == {l2} - {ignore} '''
         missing = (set(l1) ^ set(l2)) - set(ignore)
         if missing:
-            print("l1=%r\nl2=%r\nignore=%r" % (l1, l2, ignore), file=sys.stderr)
+            print >>sys.stderr, "l1=%r\nl2=%r\nignore=%r" % (l1, l2, ignore)
             self.fail("%r missing" % missing.pop())
 
     def assertHasattr(self, obj, attr, ignore):
         ''' succeed iff hasattr(obj,attr) or attr in ignore. '''
         if attr in ignore: return
-        if not hasattr(obj, attr): print("???", attr)
+        if not hasattr(obj, attr): print "???", attr
         self.assertTrue(hasattr(obj, attr),
                         'expected hasattr(%r, %r)' % (obj, attr))
 
@@ -38,7 +38,7 @@ class PyclbrTest(TestCase):
         ''' succeed iff key in obj or key in ignore. '''
         if key in ignore: return
         if key not in obj:
-            print("***",key, file=sys.stderr)
+            print >>sys.stderr, "***",key
         self.assertIn(key, obj)
 
     def assertEqualsOrIgnored(self, a, b, ignore):
@@ -99,7 +99,7 @@ class PyclbrTest(TestCase):
                 try:
                     self.assertListEq(real_bases, pyclbr_bases, ignore)
                 except:
-                    print("class=%s" % py_item, file=sys.stderr)
+                    print >>sys.stderr, "class=%s" % py_item
                     raise
 
                 actualMethods = []
@@ -121,7 +121,7 @@ class PyclbrTest(TestCase):
                                                ignore)
                     # can't check file or lineno
                 except:
-                    print("class=%s" % py_item, file=sys.stderr)
+                    print >>sys.stderr, "class=%s" % py_item
                     raise
 
         # Now check for missing stuff.

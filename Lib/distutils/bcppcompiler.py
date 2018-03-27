@@ -387,7 +387,7 @@ class BCPPCompiler(CCompiler) :
             try:
                 self.spawn(pp_args)
             except DistutilsExecError as msg:
-                print(msg)
+                print msg
                 raise CompileError(msg)
 
     # preprocess()

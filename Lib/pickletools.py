@@ -2182,19 +2182,19 @@ def assure_pickle_consistency(verbose=False):
     for name in pickle.__all__:
         if not re.match("[A-Z][A-Z0-9_]+$", name):
             if verbose:
-                print("skipping %r: it doesn't look like an opcode name" % name)
+                print "skipping %r: it doesn't look like an opcode name" % name
             continue
         picklecode = getattr(pickle, name)
         if not isinstance(picklecode, bytes) or len(picklecode) != 1:
             if verbose:
-                print(("skipping %r: value %r doesn't look like a pickle "
-                       "code" % (name, picklecode)))
+                print ("skipping %r: value %r doesn't look like a pickle "
+                       "code" % (name, picklecode))
             continue
         picklecode = picklecode.decode("latin-1")
         if picklecode in copy:
             if verbose:
-                print("checking name %r w/ code %r for consistency" % (
-                      name, picklecode))
+                print "checking name %r w/ code %r for consistency" % (
+                      name, picklecode)
             d = copy[picklecode]
             if d.name != name:
                 raise ValueError("for pickle code %r, pickle.py uses name %r "
@@ -2397,7 +2397,7 @@ def dis(pickle, out=None, memo=None, indentlevel=4, annotate=0):
     annocol = annotate  # column hint for annotations
     for opcode, arg, pos in genops(pickle):
         if pos is not None:
-            print("%5d:" % pos, end=' ', file=out)
+            print >>out, "%5d:" % pos,
 
         line = "%-4s %s%s" % (repr(opcode.code)[1:-1],
                               indentchunk * len(markstack),
@@ -2473,7 +2473,7 @@ def dis(pickle, out=None, memo=None, indentlevel=4, annotate=0):
             if annocol > 50:
                 annocol = annotate
             line += ' ' + opcode.doc.split('\n', 1)[0]
-        print(line, file=out)
+        print >>out, line
 
         if errormsg:
             # Note that we delayed complaining until the offending opcode
@@ -2492,7 +2492,7 @@ def dis(pickle, out=None, memo=None, indentlevel=4, annotate=0):
 
         stack.extend(after)
 
-    print("highest protocol among opcodes =", maxproto, file=out)
+    print >>out, "highest protocol among opcodes =", maxproto
     if stack:
         raise ValueError("stack not empty after STOP: %r" % stack)
 

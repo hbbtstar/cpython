@@ -28,12 +28,12 @@ def _walk_dir(dir, ddir=None, maxlevels=10, quiet=0):
     if quiet < 2 and isinstance(dir, os.PathLike):
         dir = os.fspath(dir)
     if not quiet:
-        print('Listing {!r}...'.format(dir))
+        print 'Listing {!r}...'.format(dir)
     try:
         names = os.listdir(dir)
     except OSError:
         if quiet < 2:
-            print("Can't list {!r}".format(dir))
+            print "Can't list {!r}".format(dir)
         names = []
     names.sort()
     for name in names:
@@ -143,7 +143,7 @@ def compile_file(fullname, ddir=None, force=False, rx=None, quiet=0,
                 except OSError:
                     pass
             if not quiet:
-                print('Compiling {!r}...'.format(fullname))
+                print 'Compiling {!r}...'.format(fullname)
             try:
                 ok = py_compile.compile(fullname, cfile, dfile, True,
                                         optimize=optimize)
@@ -152,23 +152,23 @@ def compile_file(fullname, ddir=None, force=False, rx=None, quiet=0,
                 if quiet >= 2:
                     return success
                 elif quiet:
-                    print('*** Error compiling {!r}...'.format(fullname))
+                    print '*** Error compiling {!r}...'.format(fullname)
                 else:
-                    print('*** ', end='')
+                    print '*** ',; sys.stdout.write('')
                 # escape non-printable characters in msg
                 msg = err.msg.encode(sys.stdout.encoding,
                                      errors='backslashreplace')
                 msg = msg.decode(sys.stdout.encoding)
-                print(msg)
+                print msg
             except (SyntaxError, UnicodeError, OSError) as e:
                 success = False
                 if quiet >= 2:
                     return success
                 elif quiet:
-                    print('*** Error compiling {!r}...'.format(fullname))
+                    print '*** Error compiling {!r}...'.format(fullname)
                 else:
-                    print('*** ', end='')
-                print(e.__class__.__name__ + ':', e)
+                    print '*** ',; sys.stdout.write('')
+                print e.__class__.__name__ + ':', e
             else:
                 if ok == 0:
                     success = False
@@ -191,7 +191,7 @@ def compile_path(skip_curdir=1, maxlevels=0, force=False, quiet=0,
     for dir in sys.path:
         if (not dir or dir == os.curdir) and skip_curdir:
             if quiet < 2:
-                print('Skipping current directory')
+                print 'Skipping current directory'
         else:
             success = success and compile_dir(dir, maxlevels, None,
                                               force, quiet=quiet,
@@ -260,7 +260,7 @@ def main():
                     compile_dests.append(line.strip())
         except OSError:
             if args.quiet < 2:
-                print("Error reading file list {}".format(args.flist))
+                print "Error reading file list {}".format(args.flist)
             return False
 
     if args.workers is not None:
@@ -285,7 +285,7 @@ def main():
                                 quiet=args.quiet)
     except KeyboardInterrupt:
         if args.quiet < 2:
-            print("\n[interrupted]")
+            print "\n[interrupted]"
         return False
     return True
 

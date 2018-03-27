@@ -687,8 +687,8 @@ class AbstractUnpickleTests(unittest.TestCase):
                 self.loads(data)
             except BaseException as exc:
                 if support.verbose > 1:
-                    print('%-32r - %s: %s' %
-                          (data, exc.__class__.__name__, exc))
+                    print '%-32r - %s: %s' %
+                          (data, exc.__class__.__name__, exc)
                 raise
 
     def test_load_from_data0(self):
@@ -2909,14 +2909,14 @@ if __name__ == "__main__":
     x = create_data()
     for i in range(pickle.HIGHEST_PROTOCOL+1):
         p = pickle.dumps(x, i)
-        print("DATA{0} = (".format(i))
+        print "DATA{0} = (".format(i)
         for j in range(0, len(p), 20):
             b = bytes(p[j:j+20])
-            print("    {0!r}".format(b))
-        print(")")
-        print()
-        print("# Disassembly of DATA{0}".format(i))
-        print("DATA{0}_DIS = \"\"\"\\".format(i))
+            print "    {0!r}".format(b)
+        print ")"
+        print
+        print "# Disassembly of DATA{0}".format(i)
+        print "DATA{0}_DIS = \"\"\"\\".format(i)
         dis(p)
-        print("\"\"\"")
-        print()
+        print "\"\"\""
+        print

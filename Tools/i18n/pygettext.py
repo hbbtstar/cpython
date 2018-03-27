@@ -197,9 +197,9 @@ msgstr ""
 
 
 def usage(code, msg=''):
-    print(__doc__ % globals(), file=sys.stderr)
+    print >>sys.stderr, __doc__ % globals()
     if msg:
-        print(msg, file=sys.stderr)
+        print >>sys.stderr, msg
     sys.exit(code)
 
 
@@ -391,13 +391,13 @@ class TokenEater:
         elif ttype not in [tokenize.COMMENT, token.INDENT, token.DEDENT,
                            token.NEWLINE, tokenize.NL]:
             # warn if we see anything else than STRING or whitespace
-            print(_(
+            print >>sys.stderr, _(
                 '*** %(file)s:%(lineno)s: Seen unexpected token "%(token)s"'
                 ) % {
                 'token': tstring,
                 'file': self.__curfile,
                 'lineno': self.__lineno
-                }, file=sys.stderr)
+                }
             self.__state = self.__waiting
 
     def __addentry(self, msg, lineno=None, isdocstring=0):
@@ -415,9 +415,9 @@ class TokenEater:
         options = self.__options
         timestamp = time.strftime('%Y-%m-%d %H:%M%z')
         encoding = fp.encoding if fp.encoding else 'UTF-8'
-        print(pot_header % {'time': timestamp, 'version': __version__,
+        print >>fp, pot_header % {'time': timestamp, 'version': __version__,
                             'charset': encoding,
-                            'encoding': '8bit'}, file=fp)
+                            'encoding': '8bit'}
         # Sort the entries.  First sort each particular entry's keys, then
         # sort all the entries by their first item.
         reverse = {}
@@ -443,8 +443,8 @@ class TokenEater:
                 elif options.locationstyle == options.SOLARIS:
                     for filename, lineno in v:
                         d = {'filename': filename, 'lineno': lineno}
-                        print(_(
-                            '# File: %(filename)s, line: %(lineno)d') % d, file=fp)
+                        print >>fp, _(
+                            '# File: %(filename)s, line: %(lineno)d') % d
                 elif options.locationstyle == options.GNU:
                     # fit as many locations on one line, as long as the
                     # resulting line length doesn't exceed 'options.width'
@@ -455,14 +455,14 @@ class TokenEater:
                         if len(locline) + len(s) <= options.width:
                             locline = locline + s
                         else:
-                            print(locline, file=fp)
+                            print >>fp, locline
                             locline = "#:" + s
                     if len(locline) > 2:
-                        print(locline, file=fp)
+                        print >>fp, locline
                 if isdocstring:
-                    print('#, docstring', file=fp)
-                print('msgid', normalize(k, encoding), file=fp)
-                print('msgstr ""\n', file=fp)
+                    print >>fp, '#, docstring'
+                print >>fp, 'msgid', normalize(k, encoding)
+                print >>fp, 'msgstr ""\n'
 
 
 
@@ -536,7 +536,7 @@ def main():
         elif opt in ('-v', '--verbose'):
             options.verbose = 1
         elif opt in ('-V', '--version'):
-            print(_('pygettext.py (xgettext for Python) %s') % __version__)
+            print _('pygettext.py (xgettext for Python) %s') % __version__
             sys.exit(0)
         elif opt in ('-w', '--width'):
             try:
@@ -569,8 +569,8 @@ def main():
             options.toexclude = fp.readlines()
             fp.close()
         except IOError:
-            print(_(
-                "Can't read --exclude-file: %s") % options.excludefilename, file=sys.stderr)
+            print >>sys.stderr, _(
+                "Can't read --exclude-file: %s") % options.excludefilename
             sys.exit(1)
     else:
         options.toexclude = []
@@ -589,12 +589,12 @@ def main():
     for filename in args:
         if filename == '-':
             if options.verbose:
-                print(_('Reading standard input'))
+                print _('Reading standard input')
             fp = sys.stdin.buffer
             closep = 0
         else:
             if options.verbose:
-                print(_('Working on %s') % filename)
+                print _('Working on %s') % filename
             fp = open(filename, 'rb')
             closep = 1
         try:
@@ -604,9 +604,8 @@ def main():
                 for _token in tokens:
                     eater(*_token)
             except tokenize.TokenError as e:
-                print('%s: %s, line %d, column %d' % (
-                    e.args[0], filename, e.args[1][0], e.args[1][1]),
-                    file=sys.stderr)
+                print >>sys.stderr, '%s: %s, line %d, column %d' % (
+                    e.args[0], filename, e.args[1][0], e.args[1][1])
         finally:
             if closep:
                 fp.close()

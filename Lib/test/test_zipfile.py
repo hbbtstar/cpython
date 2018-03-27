@@ -865,7 +865,7 @@ class PyZipFileTests(unittest.TestCase):
                 zipfp.writepy(packagedir, filterfunc=filter)
             reportStr = reportSIO.getvalue()
             if reportStr:
-                print(reportStr)
+                print reportStr
             self.assertTrue('SyntaxError' not in reportStr)
 
     def test_write_with_optimization(self):

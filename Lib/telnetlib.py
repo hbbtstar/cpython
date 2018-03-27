@@ -245,11 +245,11 @@ class Telnet:
 
         """
         if self.debuglevel > 0:
-            print('Telnet(%s,%s):' % (self.host, self.port), end=' ')
+            print 'Telnet(%s,%s):' % (self.host, self.port),
             if args:
-                print(msg % args)
+                print msg % args
             else:
-                print(msg)
+                print msg
 
     def set_debuglevel(self, debuglevel):
         """Set the debug level.
@@ -547,7 +547,7 @@ class Telnet:
                         try:
                             text = self.read_eager()
                         except EOFError:
-                            print('*** Connection closed by remote host ***')
+                            print '*** Connection closed by remote host ***'
                             return
                         if text:
                             sys.stdout.write(text.decode('ascii'))
@@ -574,7 +574,7 @@ class Telnet:
             try:
                 data = self.read_eager()
             except EOFError:
-                print('*** Connection closed by remote host ***')
+                print '*** Connection closed by remote host ***'
                 return
             if data:
                 sys.stdout.write(data.decode('ascii'))

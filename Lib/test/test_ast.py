@@ -1082,12 +1082,12 @@ def main():
     if sys.argv[1:] == ['-g']:
         for statements, kind in ((exec_tests, "exec"), (single_tests, "single"),
                                  (eval_tests, "eval")):
-            print(kind+"_results = [")
+            print kind+"_results = ["
             for statement in statements:
                 tree = ast.parse(statement, "?", kind)
-                print("%r," % (to_tuple(tree),))
-            print("]")
-        print("main()")
+                print "%r," % (to_tuple(tree),)
+            print "]"
+        print "main()"
         raise SystemExit
     unittest.main()
 

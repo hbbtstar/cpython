@@ -86,16 +86,16 @@ def parse_glibc_supported(filename):
 def pprint(data):
     items = sorted(data.items())
     for k, v in items:
-        print('    %-40s%a,' % ('%a:' % k, v))
+        print '    %-40s%a,' % ('%a:' % k, v)
 
 def print_differences(data, olddata):
     items = sorted(olddata.items())
     for k, v in items:
         if k not in data:
-            print('#    removed %a' % k)
+            print '#    removed %a' % k
         elif olddata[k] != data[k]:
-            print('#    updated %a -> %a to %a' % \
-                  (k, olddata[k], data[k]))
+            print '#    updated %a -> %a to %a' % \
+                  (k, olddata[k], data[k])
         # Additions are not mentioned
 
 def optimize(data):
@@ -118,8 +118,7 @@ def check(data):
     errors = 0
     for k, v in data.items():
         if locale.normalize(k) != v:
-            print('ERROR: %a -> %a != %a' % (k, locale.normalize(k), v),
-                  file=sys.stderr)
+            print >>sys.stderr, 'ERROR: %a -> %a != %a' % (k, locale.normalize(k), v)
             errors += 1
     return errors
 
@@ -144,7 +143,7 @@ if __name__ == '__main__':
         if len(data) == n:
             break
     print_differences(data, locale.locale_alias)
-    print()
-    print('locale_alias = {')
+    print
+    print 'locale_alias = {'
     pprint(data)
-    print('}')
+    print '}'

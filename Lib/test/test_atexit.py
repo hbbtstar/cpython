@@ -7,16 +7,16 @@ from test.support import script_helper
 
 ### helpers
 def h1():
-    print("h1")
+    print "h1"
 
 def h2():
-    print("h2")
+    print "h2"
 
 def h3():
-    print("h3")
+    print "h3"
 
 def h4(*args, **kwargs):
-    print("h4", args, kwargs)
+    print "h4", args, kwargs
 
 def raise1():
     raise TypeError

@@ -355,20 +355,20 @@ class Application:
             pass
 
         except KeyboardInterrupt:
-            print()
-            print('* User Break')
-            print()
+            print
+            print '* User Break'
+            print
             rc = 1
 
         except self.InternalError:
-            print()
-            print('* Internal Error (use --debug to display the traceback)')
+            print
+            print '* Internal Error (use --debug to display the traceback)'
             if self.debug:
-                print()
+                print
                 traceback.print_exc(20, sys.stdout)
             elif self.verbose:
-                print('  %s: %s' % sys.exc_info()[:2])
-            print()
+                print '  %s: %s' % sys.exc_info()[:2]
+            print
             rc = 1
 
         raise SystemExit(rc)
@@ -496,55 +496,55 @@ class Application:
 
         self.print_header()
         if self.synopsis:
-            print('Synopsis:')
+            print 'Synopsis:'
             # To remain backward compatible:
             try:
                 synopsis = self.synopsis % self.name
             except (NameError, KeyError, TypeError):
                 synopsis = self.synopsis % self.__dict__
-            print(' ' + synopsis)
-        print()
+            print ' ' + synopsis
+        print
         self.print_options()
         if self.version:
-            print('Version:')
-            print(' %s' % self.version)
-            print()
+            print 'Version:'
+            print ' %s' % self.version
+            print
         if self.about:
             about = self.about % self.__dict__
-            print(about.strip())
-            print()
+            print about.strip()
+            print
         if note:
-            print('-'*72)
-            print('Note:',note)
-            print()
+            print '-'*72
+            print 'Note:',note
+            print
 
     def notice(self,note):
 
-        print('-'*72)
-        print('Note:',note)
-        print('-'*72)
-        print()
+        print '-'*72
+        print 'Note:',note
+        print '-'*72
+        print
 
     def print_header(self):
 
-        print('-'*72)
-        print(self.header % self.__dict__)
-        print('-'*72)
-        print()
+        print '-'*72
+        print self.header % self.__dict__
+        print '-'*72
+        print
 
     def print_options(self):
 
         options = self.options
-        print('Options and default settings:')
+        print 'Options and default settings:'
         if not options:
-            print('  None')
+            print '  None'
             return
         int = [x for x in options if x.prefix == '--']
         short = [x for x in options if x.prefix == '-']
         items = short + int
         for o in options:
-            print(' ',o)
-        print()
+            print ' ',o
+        print
 
     #
     # Example handlers:
@@ -589,22 +589,22 @@ class Application:
 
         self.print_header()
         copyright = self.copyright % self.__dict__
-        print(copyright.strip())
-        print()
+        print copyright.strip()
+        print
         return 0
 
     def handle__examples(self,arg):
 
         self.print_header()
         if self.examples:
-            print('Examples:')
-            print()
+            print 'Examples:'
+            print
             examples = self.examples % self.__dict__
-            print(examples.strip())
-            print()
+            print examples.strip()
+            print
         else:
-            print('No examples available.')
-            print()
+            print 'No examples available.'
+            print
         return 0
 
     def main(self):
@@ -630,13 +630,13 @@ def _test():
         options = [Option('-v','verbose')]
 
         def handle_v(self,arg):
-            print('VERBOSE, Yeah !')
+            print 'VERBOSE, Yeah !'
 
     cmd = MyApplication()
     if not cmd.values['-h']:
         cmd.help()
-    print('files:',cmd.files)
-    print('Bye...')
+    print 'files:',cmd.files
+    print 'Bye...'
 
 if __name__ == '__main__':
     _test()

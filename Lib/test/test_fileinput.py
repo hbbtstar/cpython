@@ -106,7 +106,7 @@ class BufferSizesTests(unittest.TestCase):
 
         start = 1 + round*6
         if verbose:
-            print('%s. Simple iteration (bs=%s)' % (start+0, bs))
+            print '%s. Simple iteration (bs=%s)' % (start+0, bs)
         fi = FileInput(files=(t1, t2, t3, t4), bufsize=bs)
         lines = list(fi)
         fi.close()
@@ -117,7 +117,7 @@ class BufferSizesTests(unittest.TestCase):
         self.assertEqual(fi.filename(), t4)
 
         if verbose:
-            print('%s. Status variables (bs=%s)' % (start+1, bs))
+            print '%s. Status variables (bs=%s)' % (start+1, bs)
         fi = FileInput(files=(t1, t2, t3, t4), bufsize=bs)
         s = "x"
         while s and s != 'Line 6 of file 2\n':
@@ -129,14 +129,14 @@ class BufferSizesTests(unittest.TestCase):
         self.assertFalse(fi.isstdin())
 
         if verbose:
-            print('%s. Nextfile (bs=%s)' % (start+2, bs))
+            print '%s. Nextfile (bs=%s)' % (start+2, bs)
         fi.nextfile()
         self.assertEqual(fi.readline(), 'Line 1 of file 3\n')
         self.assertEqual(fi.lineno(), 22)
         fi.close()
 
         if verbose:
-            print('%s. Stdin (bs=%s)' % (start+3, bs))
+            print '%s. Stdin (bs=%s)' % (start+3, bs)
         fi = FileInput(files=(t1, t2, t3, t4, '-'), bufsize=bs)
         savestdin = sys.stdin
         try:
@@ -150,7 +150,7 @@ class BufferSizesTests(unittest.TestCase):
             sys.stdin = savestdin
 
         if verbose:
-            print('%s. Boundary conditions (bs=%s)' % (start+4, bs))
+            print '%s. Boundary conditions (bs=%s)' % (start+4, bs)
         fi = FileInput(files=(t1, t2, t3, t4), bufsize=bs)
         self.assertEqual(fi.lineno(), 0)
         self.assertEqual(fi.filename(), None)
@@ -159,13 +159,13 @@ class BufferSizesTests(unittest.TestCase):
         self.assertEqual(fi.filename(), None)
 
         if verbose:
-            print('%s. Inplace (bs=%s)' % (start+5, bs))
+            print '%s. Inplace (bs=%s)' % (start+5, bs)
         savestdout = sys.stdout
         try:
             fi = FileInput(files=(t1, t2, t3, t4), inplace=1, bufsize=bs)
             for line in fi:
                 line = line[:-1].upper()
-                print(line)
+                print line
             fi.close()
         finally:
             sys.stdout = savestdout

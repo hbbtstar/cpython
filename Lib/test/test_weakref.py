@@ -1827,7 +1827,7 @@ class FinalizeTestCase(unittest.TestCase):
             # Create an atexit finalizer from inside a finalizer called
             # at exit.  This should be the next to be run.
             g1 = weakref.finalize(cls, print, 'g1')
-            print('f3 error')
+            print 'f3 error'
             1/0
 
         # cls should stay alive till atexit callbacks run

@@ -180,7 +180,7 @@ def config_dict(filename):
         try:
             key, value = line.split("=")
         except ValueError:
-            print("Bad line in config-file %s:\n%s" % (filename,line))
+            print "Bad line in config-file %s:\n%s" % (filename,line)
             continue
         key = key.strip()
         value = value.strip()
@@ -230,7 +230,7 @@ def readconfig(cfgdict):
 try:
     readconfig(_CFG)
 except Exception:
-    print ("No configfile read, reason unknown")
+    print "No configfile read, reason unknown"
 
 
 class Vec2D(tuple):
@@ -3202,7 +3202,7 @@ class RawTurtle(TPen, TNavigator):
         cLI, cL, pl, items = coodata
         screen = self.screen
         if abs(self._position - new) > 0.5:
-            print ("undogoto: HALLO-DA-STIMMT-WAS-NICHT!")
+            print "undogoto: HALLO-DA-STIMMT-WAS-NICHT!"
         # restore former situation
         self.currentLineItem = cLI
         self.currentLine = cL
@@ -3254,7 +3254,7 @@ class RawTurtle(TPen, TNavigator):
         if filling:
             if self._fillpath == []:
                 self._fillpath = None
-                print("Unwahrscheinlich in _undogoto!")
+                print "Unwahrscheinlich in _undogoto!"
             elif self._fillpath is not None:
                 self._fillpath.pop()
         self._update() #count=True)
@@ -3866,7 +3866,7 @@ def read_docstrings(lang):
 #            eval(key).im_func.__doc__ = docsdict[key]
             eval(key).__doc__ = docsdict[key]
         except Exception:
-            print("Bad docstring-entry: %s" % key)
+            print "Bad docstring-entry: %s" % key
 
 _LANGUAGE = _CFG["language"]
 
@@ -3874,10 +3874,10 @@ try:
     if _LANGUAGE != "english":
         read_docstrings(_LANGUAGE)
 except ImportError:
-    print("Cannot find docsdict for", _LANGUAGE)
+    print "Cannot find docsdict for", _LANGUAGE
 except Exception:
-    print ("Unknown Error when trying to import %s-docstring-dictionary" %
-                                                                  _LANGUAGE)
+    print "Unknown Error when trying to import %s-docstring-dictionary" %
+                                                                  _LANGUAGE
 
 
 def getmethparlist(ob):
@@ -3960,7 +3960,7 @@ def _make_global_funcs(functions, cls, obj, init, docrevise):
         method = getattr(cls, methodname)
         pl1, pl2 = getmethparlist(method)
         if pl1 == "":
-            print(">>>>>>", pl1, pl2)
+            print ">>>>>>", pl1, pl2
             continue
         defstr = __func_body.format(obj=obj, init=init, name=methodname,
                                     paramslist=pl1, argslist=pl2)

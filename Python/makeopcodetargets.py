@@ -48,7 +48,7 @@ def main():
         target = "Python/opcode_targets.h"
     with open(target, "w") as f:
         write_contents(f)
-    print("Jump table written into %s" % target)
+    print "Jump table written into %s" % target
 
 
 if __name__ == "__main__":

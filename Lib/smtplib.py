@@ -294,9 +294,9 @@ class SMTP:
 
     def _print_debug(self, *args):
         if self.debuglevel > 1:
-            print(datetime.datetime.now().time(), *args, file=sys.stderr)
+            print >>sys.stderr, datetime.datetime.now().time(), *args
         else:
-            print(*args, file=sys.stderr)
+            print >>sys.stderr, *args
 
     def _get_socket(self, host, port, timeout):
         # This makes it simpler for SMTP_SSL to use the SMTP connect code
@@ -1101,14 +1101,14 @@ if __name__ == '__main__':
 
     fromaddr = prompt("From")
     toaddrs = prompt("To").split(',')
-    print("Enter message, end with ^D:")
+    print "Enter message, end with ^D:"
     msg = ''
     while 1:
         line = sys.stdin.readline()
         if not line:
             break
         msg = msg + line
-    print("Message length is %d" % len(msg))
+    print "Message length is %d" % len(msg)
 
     server = SMTP('localhost')
     server.set_debuglevel(1)

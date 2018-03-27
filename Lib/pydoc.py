@@ -1646,7 +1646,7 @@ def doc(thing, title='Python Library Documentation: %s', forceload=0,
         else:
             output.write(render_doc(thing, title, forceload, plaintext))
     except (ImportError, ErrorDuringImport) as value:
-        print(value)
+        print value
 
 def writedoc(thing, forceload=0):
     """Write HTML documentation to a file in the current directory."""
@@ -1655,9 +1655,9 @@ def writedoc(thing, forceload=0):
         page = html.page(describe(object), html.document(object, name))
         with open(name + '.html', 'w', encoding='utf-8') as file:
             file.write(page)
-        print('wrote', name + '.html')
+        print 'wrote', name + '.html'
     except (ImportError, ErrorDuringImport) as value:
-        print(value)
+        print value
 
 def writedocs(dir, pkgpath='', done=None):
     """Write out HTML documentation for all modules in a directory tree."""
@@ -2122,7 +2122,7 @@ def apropos(key):
     def callback(path, modname, desc):
         if modname[-9:] == '.__init__':
             modname = modname[:-9] + ' (package)'
-        print(modname, desc and '- ' + desc)
+        print modname, desc and '- ' + desc
     def onerror(modname):
         pass
     with warnings.catch_warnings():
@@ -2542,15 +2542,15 @@ def browse(port=0, *, open_browser=True):
     import webbrowser
     serverthread = _start_server(_url_handler, port)
     if serverthread.error:
-        print(serverthread.error)
+        print serverthread.error
         return
     if serverthread.serving:
         server_help_msg = 'Server commands: [b]rowser, [q]uit'
         if open_browser:
             webbrowser.open(serverthread.url)
         try:
-            print('Server ready at', serverthread.url)
-            print(server_help_msg)
+            print 'Server ready at', serverthread.url
+            print server_help_msg
             while serverthread.serving:
                 cmd = input('server> ')
                 cmd = cmd.lower()
@@ -2559,13 +2559,13 @@ def browse(port=0, *, open_browser=True):
                 elif cmd == 'b':
                     webbrowser.open(serverthread.url)
                 else:
-                    print(server_help_msg)
+                    print server_help_msg
         except (KeyboardInterrupt, EOFError):
-            print()
+            print
         finally:
             if serverthread.serving:
                 serverthread.stop()
-                print('Server stopped')
+                print 'Server stopped'
 
 
 # -------------------------------------------------- command-line interface
@@ -2614,7 +2614,7 @@ def cli():
         if not args: raise BadUsage
         for arg in args:
             if ispath(arg) and not os.path.exists(arg):
-                print('file %r does not exist' % arg)
+                print 'file %r does not exist' % arg
                 break
             try:
                 if ispath(arg) and os.path.isfile(arg):
@@ -2627,11 +2627,11 @@ def cli():
                 else:
                     help.help(arg)
             except ErrorDuringImport as value:
-                print(value)
+                print value
 
     except (getopt.error, BadUsage):
         cmd = os.path.splitext(os.path.basename(sys.argv[0]))[0]
-        print("""pydoc - the Python documentation tool
+        print """pydoc - the Python documentation tool
 
 {cmd} <name> ...
     Show text documentation on something.  <name> may be the name of a
@@ -2657,7 +2657,7 @@ def cli():
     Write out the HTML documentation for a module to a file in the current
     directory.  If <name> contains a '{sep}', it is treated as a filename; if
     it names a directory, documentation is written for all the contents.
-""".format(cmd=cmd, sep=os.sep))
+""".format(cmd=cmd, sep=os.sep)
 
 if __name__ == '__main__':
     cli()

@@ -50,12 +50,12 @@ def dis(x=None, *, file=None):
         items = sorted(x.__dict__.items())
         for name, x1 in items:
             if isinstance(x1, _have_code):
-                print("Disassembly of %s:" % name, file=file)
+                print >>file, "Disassembly of %s:" % name
                 try:
                     dis(x1, file=file)
                 except TypeError as msg:
-                    print("Sorry:", msg, file=file)
-                print(file=file)
+                    print >>file, "Sorry:", msg
+                print >>file
     elif hasattr(x, 'co_code'): # Code object
         disassemble(x, file=file)
     elif isinstance(x, (bytes, bytearray)): # Raw bytecode
@@ -161,7 +161,7 @@ def show_code(co, *, file=None):
 
     If *file* is not provided, the output is printed on stdout.
     """
-    print(code_info(co), file=file)
+    print >>file, code_info(co)
 
 _Instruction = collections.namedtuple("_Instruction",
      "opname opcode arg argval argrepr offset starts_line is_jump_target")
@@ -348,9 +348,9 @@ def _disassemble_bytes(code, lasti=-1, varnames=None, names=None,
                            instr.starts_line is not None and
                            instr.offset > 0)
         if new_source_line:
-            print(file=file)
+            print >>file
         is_current_instr = instr.offset == lasti
-        print(instr._disassemble(lineno_width, is_current_instr), file=file)
+        print >>file, instr._disassemble(lineno_width, is_current_instr)
 
 def _disassemble_str(source, *, file=None):
     """Compile the source string, then disassemble the code object."""

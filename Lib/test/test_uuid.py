@@ -469,7 +469,7 @@ eth0      Link encap:Ethernet  HWaddr 12:34:56:78:90:ab
             self.skipTest('requires ' + requires)
         hex = '%012x' % node
         if support.verbose >= 2:
-            print(hex, end=' ')
+            print hex,
         self.assertTrue(0 < node < (1 << 48),
                         "%s is not an RFC 4122 node ID" % hex)
 

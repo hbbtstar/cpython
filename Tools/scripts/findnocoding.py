@@ -28,8 +28,8 @@ except ImportError:
     pysource = pysource()
 
 
-    print("The pysource module is not available; "
-                         "no sophisticated Python source file search will be done.", file=sys.stderr)
+    print >>sys.stderr, "The pysource module is not available; "
+                         "no sophisticated Python source file search will be done."
 
 
 decl_re = re.compile(rb'^[ \t\f]*#.*?coding[:=][ \t]*([-\w.]+)')
@@ -82,8 +82,8 @@ if __name__ == '__main__':
     try:
         opts, args = getopt.getopt(sys.argv[1:], 'cd')
     except getopt.error as msg:
-        print(msg, file=sys.stderr)
-        print(usage, file=sys.stderr)
+        print >>sys.stderr, msg
+        print >>sys.stderr, usage
         sys.exit(1)
 
     is_python = pysource.looks_like_python
@@ -96,12 +96,12 @@ if __name__ == '__main__':
             debug = True
 
     if not args:
-        print(usage, file=sys.stderr)
+        print >>sys.stderr, usage
         sys.exit(1)
 
     for fullpath in pysource.walk_python_files(args, is_python):
         if debug:
-            print("Testing for coding: %s" % fullpath)
+            print "Testing for coding: %s" % fullpath
         result = needs_declaration(fullpath)
         if result:
-            print(fullpath)
+            print fullpath

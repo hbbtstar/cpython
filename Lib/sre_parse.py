@@ -13,6 +13,7 @@
 # XXX: show string offset and offending character for all errors
 
 from sre_constants import *
+import sys
 
 SPECIAL_CHARS = ".\\[{()*+?^$|"
 REPEAT_CHARS = "*+?{"
@@ -118,42 +119,42 @@ class SubPattern:
         nl = True
         seqtypes = (tuple, list)
         for op, av in self.data:
-            print(level*"  " + str(op), end='')
+            print level*"  " + str(op),; sys.stdout.write('')
             if op is IN:
                 # member sublanguage
-                print()
+                print
                 for op, a in av:
-                    print((level+1)*"  " + str(op), a)
+                    print (level+1)*"  " + str(op), a
             elif op is BRANCH:
-                print()
+                print
                 for i, a in enumerate(av[1]):
                     if i:
-                        print(level*"  " + "OR")
+                        print level*"  " + "OR"
                     a.dump(level+1)
             elif op is GROUPREF_EXISTS:
                 condgroup, item_yes, item_no = av
-                print('', condgroup)
+                print '', condgroup
                 item_yes.dump(level+1)
                 if item_no:
-                    print(level*"  " + "ELSE")
+                    print level*"  " + "ELSE"
                     item_no.dump(level+1)
             elif isinstance(av, seqtypes):
                 nl = False
                 for a in av:
                     if isinstance(a, SubPattern):
                         if not nl:
-                            print()
+                            print
                         a.dump(level+1)
                         nl = True
                     else:
                         if not nl:
-                            print(' ', end='')
-                        print(a, end='')
+                            print ' ',; sys.stdout.write('')
+                        print a,; sys.stdout.write('')
                         nl = False
                 if not nl:
-                    print()
+                    print
             else:
-                print('', av)
+                print '', av
     def __repr__(self):
         return repr(self.data)
     def __len__(self):

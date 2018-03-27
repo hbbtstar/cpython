@@ -16,7 +16,7 @@ def bin(s):
 class Test(unittest.TestCase):
     @unittest.skip('test disabled')
     def test_X(self):
-        print(sys.byteorder, file=sys.stderr)
+        print >>sys.stderr, sys.byteorder
         for i in range(32):
             bits = BITS()
             setattr(bits, "i%s" % i, 1)

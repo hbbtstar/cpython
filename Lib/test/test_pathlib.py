@@ -2062,7 +2062,7 @@ class PosixPathTest(_BasePathTest, unittest.TestCase):
     def _check_symlink_loop(self, *args, strict=True):
         path = self.cls(*args)
         with self.assertRaises(RuntimeError):
-            print(path.resolve(strict))
+            print path.resolve(strict)
 
     def test_open_mode(self):
         old_mask = os.umask(0)

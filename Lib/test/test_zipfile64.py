@@ -50,9 +50,9 @@ class TestsWithSourceFile(unittest.TestCase):
             # Print still working message since this test can be really slow
             if next_time <= time.time():
                 next_time = time.time() + _PRINT_WORKING_MSG_INTERVAL
-                print((
+                print >>sys.__stdout__, (
                    '  zipTest still writing %d of %d, be patient...' %
-                   (num, filecount)), file=sys.__stdout__)
+                   (num, filecount))
                 sys.__stdout__.flush()
         zipfp.close()
 
@@ -63,9 +63,9 @@ class TestsWithSourceFile(unittest.TestCase):
             # Print still working message since this test can be really slow
             if next_time <= time.time():
                 next_time = time.time() + _PRINT_WORKING_MSG_INTERVAL
-                print((
+                print >>sys.__stdout__, (
                    '  zipTest still reading %d of %d, be patient...' %
-                   (num, filecount)), file=sys.__stdout__)
+                   (num, filecount))
                 sys.__stdout__.flush()
         zipfp.close()
 

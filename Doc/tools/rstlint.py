@@ -139,7 +139,7 @@ Options:  -v       verbose (print all checked file names)
     try:
         gopts, args = getopt.getopt(argv[1:], 'vfs:i:')
     except getopt.GetoptError:
-        print(usage)
+        print usage
         return 2
 
     verbose = False
@@ -161,11 +161,11 @@ Options:  -v       verbose (print all checked file names)
     elif len(args) == 1:
         path = args[0]
     else:
-        print(usage)
+        print usage
         return 2
 
     if not exists(path):
-        print('Error: path %s does not exist' % path)
+        print 'Error: path %s does not exist' % path
         return 2
 
     count = defaultdict(int)
@@ -191,13 +191,13 @@ Options:  -v       verbose (print all checked file names)
                 continue
 
             if verbose:
-                print('Checking %s...' % fn)
+                print 'Checking %s...' % fn
 
             try:
                 with open(fn, 'r', encoding='utf-8') as f:
                     lines = list(f)
             except (IOError, OSError) as err:
-                print('%s: cannot open: %s' % (fn, err))
+                print '%s: cannot open: %s' % (fn, err)
                 count[4] += 1
                 continue
 
@@ -207,20 +207,20 @@ Options:  -v       verbose (print all checked file names)
                 csev = checker.severity
                 if csev >= severity:
                     for lno, msg in checker(fn, lines):
-                        print('[%d] %s:%d: %s' % (csev, fn, lno, msg))
+                        print '[%d] %s:%d: %s' % (csev, fn, lno, msg)
                         count[csev] += 1
     if verbose:
-        print()
+        print
     if not count:
         if severity > 1:
-            print('No problems with severity >= %d found.' % severity)
+            print 'No problems with severity >= %d found.' % severity
         else:
-            print('No problems found.')
+            print 'No problems found.'
     else:
         for severity in sorted(count):
             number = count[severity]
-            print('%d problem%s with severity %d found.' %
-                  (number, number > 1 and 's' or '', severity))
+            print '%d problem%s with severity %d found.' %
+                  (number, number > 1 and 's' or '', severity)
     return int(bool(count))
 
 

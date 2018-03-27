@@ -569,11 +569,11 @@ def main():
         opts, args = getopt.getopt(sys.argv[1:], 'deut')
     except getopt.error as msg:
         sys.stdout = sys.stderr
-        print(msg)
-        print("""usage: %s [-d|-e|-u|-t] [file|-]
+        print msg
+        print """usage: %s [-d|-e|-u|-t] [file|-]
         -d, -u: decode
         -e: encode (default)
-        -t: encode and decode string 'Aladdin:open sesame'"""%sys.argv[0])
+        -t: encode and decode string 'Aladdin:open sesame'"""%sys.argv[0]
         sys.exit(2)
     func = encode
     for o, a in opts:
@@ -590,11 +590,11 @@ def main():
 
 def test():
     s0 = b"Aladdin:open sesame"
-    print(repr(s0))
+    print repr(s0)
     s1 = encodebytes(s0)
-    print(repr(s1))
+    print repr(s1)
     s2 = decodebytes(s1)
-    print(repr(s2))
+    print repr(s2)
     assert s0 == s2
 
 

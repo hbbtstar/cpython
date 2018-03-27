@@ -51,7 +51,7 @@ def sleep_and_raise(t):
 
 def sleep_and_print(t, msg):
     time.sleep(t)
-    print(msg)
+    print msg
     sys.stdout.flush()
 
 
@@ -92,7 +92,7 @@ class ExecutorMixin:
 
         dt = time.time() - self.t1
         if test.support.verbose:
-            print("%.2fs" % dt, end=' ')
+            print "%.2fs" % dt,
         self.assertLess(dt, 60, "synchronization issue: test lasted too long")
 
         super().tearDown()

@@ -144,12 +144,12 @@ def test(l=200, n=4, fun=sun, startpos=(0,0), th=2):
     draw(l, n, th)
     tracer(1)
     c = clock()
-    print("Calculation:   %7.4f s" % (b - a))
-    print("Drawing:  %7.4f s" % (c - b))
-    print("Together: %7.4f s" % (c - a))
+    print "Calculation:   %7.4f s" % (b - a)
+    print "Drawing:  %7.4f s" % (c - b)
+    print "Together: %7.4f s" % (c - a)
     nk = len([x for x in tiledict if tiledict[x]])
     nd = len([x for x in tiledict if not tiledict[x]])
-    print("%d kites and %d darts = %d pieces." % (nk, nd, nk+nd))
+    print "%d kites and %d darts = %d pieces." % (nk, nd, nk+nd)
 
 def demo(fun=sun):
     start()

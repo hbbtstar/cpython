@@ -1277,8 +1277,8 @@ def main(srcfile, dump_module=False):
     auto_gen_msg = common_msg % argv0
     mod = asdl.parse(srcfile)
     if dump_module:
-        print('Parsed Module:')
-        print(mod)
+        print 'Parsed Module:'
+        print mod
     if not asdl.check(mod):
         sys.exit(1)
     if H_FILE:
@@ -1330,9 +1330,9 @@ if __name__ == "__main__":
         if o == '-d':
             dump_module = True
     if H_FILE and C_FILE:
-        print('Must specify exactly one output file')
+        print 'Must specify exactly one output file'
         sys.exit(1)
     elif len(args) != 1:
-        print('Must specify single input file')
+        print 'Must specify single input file'
         sys.exit(1)
     main(args[0], dump_module)

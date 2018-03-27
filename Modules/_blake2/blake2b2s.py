@@ -27,7 +27,7 @@ def find_public():
                     public_funcs.add(mo.group(1))
 
     for f in sorted(public_funcs):
-        print('#define {0:<18} PyBlake2_{0}'.format(f))
+        print '#define {0:<18} PyBlake2_{0}'.format(f)
 
     return public_funcs
 

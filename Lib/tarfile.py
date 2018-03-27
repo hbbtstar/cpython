@@ -269,7 +269,7 @@ def _safe_print(s):
     encoding = getattr(sys.stdout, 'encoding', None)
     if encoding is not None:
         s = s.encode(encoding, 'backslashreplace').decode(encoding)
-    print(s, end=' ')
+    print s,
 
 
 class TarError(Exception):
@@ -1896,7 +1896,7 @@ class TarFile(object):
                     _safe_print("-> " + tarinfo.linkname)
                 if tarinfo.islnk():
                     _safe_print("link to " + tarinfo.linkname)
-            print()
+            print
 
     def add(self, name, arcname=None, recursive=True, exclude=None, *, filter=None):
         """Add the file `name' to the archive. `name' may be any type of file
@@ -2421,7 +2421,7 @@ class TarFile(object):
         """Write debugging output to sys.stderr.
         """
         if level <= self.debug:
-            print(msg, file=sys.stderr)
+            print >>sys.stderr, msg
 
     def __enter__(self):
         self._check()
@@ -2479,9 +2479,9 @@ def main():
         if is_tarfile(src):
             with open(src, 'r') as tar:
                 tar.getmembers()
-                print(tar.getmembers(), file=sys.stderr)
+                print >>sys.stderr, tar.getmembers()
             if args.verbose:
-                print('{!r} is a tar archive.'.format(src))
+                print '{!r} is a tar archive.'.format(src)
         else:
             parser.exit(1, '{!r} is not a tar archive.\n'.format(src))
 
@@ -2511,7 +2511,7 @@ def main():
                 else:
                     msg = ('{!r} file is extracted '
                            'into {!r} directory.').format(src, curdir)
-                print(msg)
+                print msg
         else:
             parser.exit(1, '{!r} is not a tar archive.\n'.format(src))
 
@@ -2539,7 +2539,7 @@ def main():
                 tf.add(file_name)
 
         if args.verbose:
-            print('{!r} file created.'.format(tar_name))
+            print '{!r} file created.'.format(tar_name)
 
     else:
         parser.exit(1, parser.format_help())

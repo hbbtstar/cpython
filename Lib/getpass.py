@@ -122,7 +122,7 @@ def fallback_getpass(prompt='Password: ', stream=None):
                   stacklevel=2)
     if not stream:
         stream = sys.stderr
-    print("Warning: Password input may be echoed.", file=stream)
+    print >>stream, "Warning: Password input may be echoed."
     return _raw_input(prompt, stream)
 
 

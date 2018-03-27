@@ -35,11 +35,11 @@ def status(message, modal=False, info=None):
             sys.stdout.flush()
             result = fxn(*args, **kwargs)
             if not modal and not info:
-                print("done")
+                print "done"
             elif info:
-                print(info(result))
+                print info(result)
             else:
-                print("yes" if result else "NO")
+                print "yes" if result else "NO"
             return result
         return call_fxn
     return decorated_fxn
@@ -195,7 +195,7 @@ def normalize_docs_whitespace(file_paths):
                     f.writelines(new_lines)
                 fixed.append(path)
         except Exception as err:
-            print('Cannot fix %s: %s' % (path, err))
+            print 'Cannot fix %s: %s' % (path, err)
     return fixed
 
 
@@ -235,7 +235,7 @@ def regenerated_pyconfig_h_in(file_paths):
 
 def travis(pull_request):
     if pull_request == 'false':
-        print('Not a pull request; skipping')
+        print 'Not a pull request; skipping'
         return
     base_branch = get_base_branch()
     file_paths = changed_files(base_branch)
@@ -248,10 +248,10 @@ def travis(pull_request):
     fixed.extend(normalize_c_whitespace(c_files))
     fixed.extend(normalize_docs_whitespace(doc_files))
     if not fixed:
-        print('No whitespace issues found')
+        print 'No whitespace issues found'
     else:
-        print(f'Please fix the {len(fixed)} file(s) with whitespace issues')
-        print('(on UNIX you can run `make patchcheck` to make the fixes)')
+        print f'Please fix the {len(fixed)} file(s) with whitespace issues'
+        print '(on UNIX you can run `make patchcheck` to make the fixes)'
         sys.exit(1)
 
 def main():
@@ -282,8 +282,8 @@ def main():
     # Test suite run and passed.
     if python_files or c_files:
         end = " and check for refleaks?" if c_files else "?"
-        print()
-        print("Did you run the test suite" + end)
+        print
+        print "Did you run the test suite" + end
 
 
 if __name__ == '__main__':

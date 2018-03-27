@@ -573,8 +573,8 @@ def checkEnvironment():
         if frameworks['Tcl'] != frameworks['Tk']:
             fatal("The Tcl and Tk frameworks are not the same version.")
 
-        print(" -- Building with external Tcl/Tk %s frameworks"
-                    % frameworks['Tk'])
+        print " -- Building with external Tcl/Tk %s frameworks"
+                    % frameworks['Tk']
 
         # add files to check after build
         EXPECTED_SHARED_LIBS['_tkinter.so'] = [
@@ -584,8 +584,8 @@ def checkEnvironment():
                     % frameworks['Tk'],
                 ]
     else:
-        print(" -- Building private copy of Tcl/Tk")
-    print("")
+        print " -- Building private copy of Tcl/Tk"
+    print ""
 
     # Remove inherited environment variables which might influence build
     environ_var_prefixes = ['CPATH', 'C_INCLUDE_', 'DYLD_', 'LANG', 'LC_',
@@ -593,8 +593,8 @@ def checkEnvironment():
     for ev in list(os.environ):
         for prefix in environ_var_prefixes:
             if ev.startswith(prefix) :
-                print("INFO: deleting environment variable %s=%s" % (
-                                                    ev, os.environ[ev]))
+                print "INFO: deleting environment variable %s=%s" % (
+                                                    ev, os.environ[ev])
                 del os.environ[ev]
 
     base_path = '/bin:/sbin:/usr/bin:/usr/sbin'
@@ -606,7 +606,7 @@ def checkEnvironment():
     if os.path.isdir(OLD_DEVELOPER_TOOLS):
         base_path = base_path + ':' + OLD_DEVELOPER_TOOLS
     os.environ['PATH'] = base_path
-    print("Setting default PATH: %s"%(os.environ['PATH']))
+    print "Setting default PATH: %s"%(os.environ['PATH'])
     # Ensure we have access to sphinx-build.
     # You may have to create a link in /usr/bin for it.
     runCommand('sphinx-build --version')
@@ -628,17 +628,17 @@ def parseOptions(args=None):
                 [ 'build-dir=', 'third-party=', 'sdk-path=' , 'src-dir=',
                   'dep-target=', 'universal-archs=', 'help' ])
     except getopt.GetoptError:
-        print(sys.exc_info()[1])
+        print sys.exc_info()[1]
         sys.exit(1)
 
     if args:
-        print("Additional arguments")
+        print "Additional arguments"
         sys.exit(1)
 
     deptarget = None
     for k, v in options:
         if k in ('-h', '-?', '--help'):
-            print(USAGE)
+            print USAGE
             sys.exit(0)
 
         elif k in ('-d', '--build-dir'):
@@ -648,7 +648,7 @@ def parseOptions(args=None):
             DEPSRC=v
 
         elif k in ('--sdk-path',):
-            print(" WARNING: --sdk-path is no longer supported")
+            print " WARNING: --sdk-path is no longer supported"
 
         elif k in ('--src-dir',):
             SRCDIR=v
@@ -680,18 +680,18 @@ def parseOptions(args=None):
     FW_VERSION_PREFIX = FW_PREFIX[:] + ["Versions", getVersion()]
     FW_SSL_DIRECTORY = FW_VERSION_PREFIX[:] + ["etc", "openssl"]
 
-    print("-- Settings:")
-    print("   * Source directory:    %s" % SRCDIR)
-    print("   * Build directory:     %s" % WORKDIR)
-    print("   * Third-party source:  %s" % DEPSRC)
-    print("   * Deployment target:   %s" % DEPTARGET)
-    print("   * Universal archs:     %s" % str(ARCHLIST))
-    print("   * C compiler:          %s" % CC)
-    print("   * C++ compiler:        %s" % CXX)
-    print("")
-    print(" -- Building a Python %s framework at patch level %s"
-                % (getVersion(), getFullVersion()))
-    print("")
+    print "-- Settings:"
+    print "   * Source directory:    %s" % SRCDIR
+    print "   * Build directory:     %s" % WORKDIR
+    print "   * Third-party source:  %s" % DEPSRC
+    print "   * Deployment target:   %s" % DEPTARGET
+    print "   * Universal archs:     %s" % str(ARCHLIST)
+    print "   * C compiler:          %s" % CC
+    print "   * C++ compiler:        %s" % CXX
+    print ""
+    print " -- Building a Python %s framework at patch level %s"
+                % (getVersion(), getFullVersion())
+    print ""
 
 def extractArchive(builddir, archiveName):
     """
@@ -772,12 +772,12 @@ def verifyThirdPartyFile(url, checksum, fname):
     """
     name = os.path.basename(fname)
     if os.path.exists(fname):
-        print("Using local copy of %s"%(name,))
+        print "Using local copy of %s"%(name,)
     else:
-        print("Did not find local copy of %s"%(name,))
-        print("Downloading %s"%(name,))
+        print "Did not find local copy of %s"%(name,)
+        print "Downloading %s"%(name,)
         downloadURL(url, fname)
-        print("Archive for %s stored as %s"%(name, fname))
+        print "Archive for %s stored as %s"%(name, fname)
     if os.system(
             'MD5=$(openssl md5 %s) ; test "${MD5##*= }" = "%s"'
                 % (shellQuote(fname), checksum) ):
@@ -931,7 +931,7 @@ def buildRecipe(recipe, basedir, archList):
         os.mkdir(DEPSRC)
 
     verifyThirdPartyFile(url, recipe['checksum'], sourceArchive)
-    print("Extracting archive for %s"%(name,))
+    print "Extracting archive for %s"%(name,)
     buildDir=os.path.join(WORKDIR, '_bld')
     if not os.path.exists(buildDir):
         os.mkdir(buildDir)
@@ -1012,7 +1012,7 @@ def buildRecipe(recipe, basedir, archList):
         configure_args.insert(0, configure)
         configure_args = [ shellQuote(a) for a in configure_args ]
 
-        print("Running configure for %s"%(name,))
+        print "Running configure for %s"%(name,)
         runCommand(' '.join(configure_args) + ' 2>&1')
 
     if buildrecipe is not None:
@@ -1020,11 +1020,11 @@ def buildRecipe(recipe, basedir, archList):
         buildrecipe(basedir, archList)
 
     if install is not None:
-        print("Running install for %s"%(name,))
+        print "Running install for %s"%(name,)
         runCommand('{ ' + install + ' ;} 2>&1')
 
-    print("Done %s"%(name,))
-    print("")
+    print "Done %s"%(name,)
+    print ""
 
     os.chdir(curdir)
 
@@ -1032,9 +1032,9 @@ def buildLibraries():
     """
     Build our dependencies into $WORKDIR/libraries/usr/local
     """
-    print("")
-    print("Building required libraries")
-    print("")
+    print ""
+    print "Building required libraries"
+    print ""
     universal = os.path.join(WORKDIR, 'libraries')
     os.mkdir(universal)
     os.makedirs(os.path.join(universal, 'usr', 'local', 'lib'))
@@ -1048,7 +1048,7 @@ def buildLibraries():
 def buildPythonDocs():
     # This stores the documentation as Resources/English.lproj/Documentation
     # inside the framework. pydoc and IDLE will pick it up there.
-    print("Install python documentation")
+    print "Install python documentation"
     rootDir = os.path.join(WORKDIR, '_root')
     buildDir = os.path.join('../../Doc')
     docdir = os.path.join(rootDir, 'pydocs')
@@ -1065,7 +1065,7 @@ def buildPythonDocs():
 
 
 def buildPython():
-    print("Building a universal python for %s architectures" % UNIVERSALARCHS)
+    print "Building a universal python for %s architectures" % UNIVERSALARCHS
 
     buildDir = os.path.join(WORKDIR, '_bld', 'python')
     rootDir = os.path.join(WORKDIR, '_root')
@@ -1089,7 +1089,7 @@ def buildPython():
     # will find them during its extension import sanity checks.
     os.environ['DYLD_LIBRARY_PATH'] = os.path.join(WORKDIR,
                                         'libraries', 'usr', 'local', 'lib')
-    print("Running configure...")
+    print "Running configure..."
     runCommand("%s -C --enable-framework --enable-universalsdk=/ "
                "--with-universal-archs=%s "
                "%s "
@@ -1126,19 +1126,19 @@ def buildPython():
         make_cmd = "make " + make_extras
     else:
         make_cmd = "make"
-    print("Running " + make_cmd)
+    print "Running " + make_cmd
     runCommand(make_cmd)
 
-    print("Running make install")
+    print "Running make install"
     runCommand("make install DESTDIR=%s"%(
         shellQuote(rootDir)))
 
-    print("Running make frameworkinstallextras")
+    print "Running make frameworkinstallextras"
     runCommand("make frameworkinstallextras DESTDIR=%s"%(
         shellQuote(rootDir)))
 
     del os.environ['DYLD_LIBRARY_PATH']
-    print("Copying required shared libraries")
+    print "Copying required shared libraries"
     if os.path.exists(os.path.join(WORKDIR, 'libraries', 'Library')):
         build_lib_dir = os.path.join(
                 WORKDIR, 'libraries', 'Library', 'Frameworks',
@@ -1164,7 +1164,7 @@ def buildPython():
     sslDir = os.path.join(frmDirVersioned, 'etc', 'openssl')
     os.makedirs(sslDir)
 
-    print("Fix file modes")
+    print "Fix file modes"
     gid = grp.getgrnam('admin').gr_gid
 
     shared_lib_error = False
@@ -1189,8 +1189,8 @@ def buildPython():
                 data = captureCommand("otool -L %s" % shellQuote(p))
                 for sl in EXPECTED_SHARED_LIBS[fn]:
                     if ("\t%s " % sl) not in data:
-                        print("Expected shared lib %s was not linked with %s"
-                                % (sl, p))
+                        print "Expected shared lib %s was not linked with %s"
+                                % (sl, p)
                         shared_lib_error = True
 
     if shared_lib_error:
@@ -1341,7 +1341,7 @@ def packageFromRecipe(targetDir, recipe):
         readme = textwrap.dedent(recipe['readme'])
         isRequired = recipe.get('required', True)
 
-        print("- building package %s"%(pkgname,))
+        print "- building package %s"%(pkgname,)
 
         # Substitute some variables
         textvars = dict(

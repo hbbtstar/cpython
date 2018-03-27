@@ -3456,8 +3456,8 @@ order (MRO) for bases """
 
         capture = io.StringIO()
         # Calling str() or not exercises different internal paths.
-        print(o, file=capture)
-        print(str(o), file=capture)
+        print >>capture, o
+        print >>capture, str(o)
         self.assertEqual(capture.getvalue(), '41\n41\n')
         capture.close()
 
@@ -4251,7 +4251,7 @@ order (MRO) for bases """
                 raise RuntimeError("Premature access to sys.stdout.%s" % attr)
         sys.stdout = StdoutGuard()
         try:
-            print("Oops!")
+            print "Oops!"
         except RuntimeError:
             pass
         finally:

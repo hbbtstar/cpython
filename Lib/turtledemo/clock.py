@@ -128,5 +128,5 @@ def main():
 if __name__ == "__main__":
     mode("logo")
     msg = main()
-    print(msg)
+    print msg
     mainloop()

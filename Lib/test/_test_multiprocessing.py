@@ -3855,7 +3855,7 @@ class TestFlags(unittest.TestCase):
         r.close()
         w.close()
         flags = (tuple(sys.flags), grandchild_flags)
-        print(json.dumps(flags))
+        print json.dumps(flags)
 
     def test_flags(self):
         import json, subprocess
@@ -4148,8 +4148,8 @@ class TestStartMethod(unittest.TestCase):
         out = out.decode()
         err = err.decode()
         if out.rstrip() != 'ok' or err != '':
-            print(out)
-            print(err)
+            print out
+            print err
             self.fail("failed spawning forkserver or grandchild")
 
 
@@ -4282,14 +4282,12 @@ class BaseMixin(object):
 
         processes = set(multiprocessing.process._dangling) - set(cls.dangling[0])
         if processes:
-            print('Warning -- Dangling processes: %s' % processes,
-                  file=sys.stderr)
+            print >>sys.stderr, 'Warning -- Dangling processes: %s' % processes
         processes = None
 
         threads = set(threading._dangling) - set(cls.dangling[1])
         if threads:
-            print('Warning -- Dangling threads: %s' % threads,
-                  file=sys.stderr)
+            print >>sys.stderr, 'Warning -- Dangling threads: %s' % threads
         threads = None
 
 
@@ -4355,10 +4353,9 @@ class ManagerMixin(BaseMixin):
             t *= 2
             dt = time.monotonic() - start_time
             if dt >= 5.0:
-                print("Warning -- multiprocessing.Manager still has %s active "
+                print >>sys.stderr, "Warning -- multiprocessing.Manager still has %s active "
                       "children after %s seconds"
-                      % (multiprocessing.active_children(), dt),
-                      file=sys.stderr)
+                      % (multiprocessing.active_children(), dt)
                 break
 
         gc.collect()                       # do garbage collection
@@ -4366,9 +4363,9 @@ class ManagerMixin(BaseMixin):
             # This is not really an error since some tests do not
             # ensure that all processes which hold a reference to a
             # managed object have been joined.
-            print('Warning -- Shared objects which still exist at manager '
-                  'shutdown:')
-            print(cls.manager._debug_info())
+            print 'Warning -- Shared objects which still exist at manager '
+                  'shutdown:'
+            print cls.manager._debug_info()
         cls.manager.shutdown()
         cls.manager.join()
         cls.manager = None
@@ -4464,15 +4461,13 @@ def install_tests_in_module_dict(remote_globs, start_method):
         processes = set(multiprocessing.process._dangling) - set(dangling[0])
         if processes:
             need_sleep = True
-            print('Warning -- Dangling processes: %s' % processes,
-                  file=sys.stderr)
+            print >>sys.stderr, 'Warning -- Dangling processes: %s' % processes
         processes = None
 
         threads = set(threading._dangling) - set(dangling[1])
         if threads:
             need_sleep = True
-            print('Warning -- Dangling threads: %s' % threads,
-                  file=sys.stderr)
+            print >>sys.stderr, 'Warning -- Dangling threads: %s' % threads
         threads = None
 
         # Sleep 500 ms to give time to child processes to complete.

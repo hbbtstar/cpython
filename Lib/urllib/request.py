@@ -2315,7 +2315,7 @@ class FancyURLopener(URLopener):
                 (user, realm, host))
             return user, passwd
         except KeyboardInterrupt:
-            print()
+            print
             return None, None
 
 

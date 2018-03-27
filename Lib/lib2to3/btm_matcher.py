@@ -143,17 +143,17 @@ class BottomMatcher(object):
 
     def print_ac(self):
         "Prints a graphviz diagram of the BM automaton(for debugging)"
-        print("digraph g{")
+        print "digraph g{"
         def print_node(node):
             for subnode_key in node.transition_table.keys():
                 subnode = node.transition_table[subnode_key]
-                print("%d -> %d [label=%s] //%s" %
-                      (node.id, subnode.id, type_repr(subnode_key), str(subnode.fixers)))
+                print "%d -> %d [label=%s] //%s" %
+                      (node.id, subnode.id, type_repr(subnode_key), str(subnode.fixers))
                 if subnode_key == 1:
-                    print(subnode.content)
+                    print subnode.content
                 print_node(subnode)
         print_node(self.root)
-        print("}")
+        print "}"
 
 # taken from pytree.py for debugging; only used by print_ac
 _type_reprs = {}

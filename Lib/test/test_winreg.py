@@ -493,6 +493,6 @@ def test_main():
 
 if __name__ == "__main__":
     if not REMOTE_NAME:
-        print("Remote registry calls can be tested using",
-              "'test_winreg.py --remote \\\\machine_name'")
+        print "Remote registry calls can be tested using",
+              "'test_winreg.py --remote \\\\machine_name'"
     test_main()

@@ -24,7 +24,7 @@ def _ctrl_handler(sig):
     elif sig == signal.CTRL_BREAK_EVENT:
         pass
     else:
-        print("UNKNOWN EVENT")
+        print "UNKNOWN EVENT"
     return 0
 
 ctrl_handler = HandlerRoutine(_ctrl_handler)
@@ -37,7 +37,7 @@ SetConsoleCtrlHandler.restype = wintypes.BOOL
 if __name__ == "__main__":
     # Add our console control handling function with value 1
     if not SetConsoleCtrlHandler(ctrl_handler, 1):
-        print("Unable to add SetConsoleCtrlHandler")
+        print "Unable to add SetConsoleCtrlHandler"
         exit(-1)
 
     # Awake main process

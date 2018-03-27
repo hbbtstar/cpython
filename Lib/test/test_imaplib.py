@@ -105,7 +105,7 @@ class SimpleIMAPHandler(socketserver.StreamRequestHandler):
 
     def _send(self, message):
         if verbose:
-            print("SENT: %r" % message.strip())
+            print "SENT: %r" % message.strip()
         self.wfile.write(message)
 
     def _send_line(self, message):
@@ -139,7 +139,7 @@ class SimpleIMAPHandler(socketserver.StreamRequestHandler):
                     break
 
             if verbose:
-                print('GOT: %r' % line.strip())
+                print 'GOT: %r' % line.strip()
             if self.continuation:
                 try:
                     self.continuation.send(line)
@@ -526,15 +526,15 @@ class ThreadedNetworkedTests(unittest.TestCase):
                 raise
 
         if verbose:
-            print("creating server")
+            print "creating server"
         server = MyServer(addr, hdlr)
         self.assertEqual(server.server_address, server.socket.getsockname())
 
         if verbose:
-            print("server created")
-            print("ADDR =", addr)
-            print("CLASS =", self.server_class)
-            print("HDLR =", server.RequestHandlerClass)
+            print "server created"
+            print "ADDR =", addr
+            print "CLASS =", self.server_class
+            print "HDLR =", server.RequestHandlerClass
 
         t = threading.Thread(
             name='%s serving' % self.server_class,
@@ -546,17 +546,17 @@ class ThreadedNetworkedTests(unittest.TestCase):
         t.daemon = True  # In case this function raises.
         t.start()
         if verbose:
-            print("server running")
+            print "server running"
         return server, t
 
     def reap_server(self, server, thread):
         if verbose:
-            print("waiting for server")
+            print "waiting for server"
         server.shutdown()
         server.server_close()
         thread.join()
         if verbose:
-            print("done")
+            print "done"
 
     @contextmanager
     def reaped_server(self, hdlr):

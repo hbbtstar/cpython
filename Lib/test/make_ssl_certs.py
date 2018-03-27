@@ -88,7 +88,7 @@ req_template = """
 here = os.path.abspath(os.path.dirname(__file__))
 
 def make_cert_key(hostname, sign=False, extra_san=''):
-    print("creating cert for " + hostname)
+    print "creating cert for " + hostname
     tempnames = []
     for i in range(3):
         with tempfile.NamedTemporaryFile(delete=False) as f:
@@ -164,7 +164,7 @@ if __name__ == '__main__':
         f.write(cert)
     with open('ssl_key.pem', 'w') as f:
         f.write(key)
-    print("password protecting ssl_key.pem in ssl_key.passwd.pem")
+    print "password protecting ssl_key.pem in ssl_key.passwd.pem"
     check_call(['openssl','rsa','-in','ssl_key.pem','-out','ssl_key.passwd.pem','-des3','-passout','pass:somepass'])
     check_call(['openssl','rsa','-in','ssl_key.pem','-out','keycert.passwd.pem','-des3','-passout','pass:somepass'])
 
@@ -212,5 +212,5 @@ if __name__ == '__main__':
         f.write(cert)
 
     unmake_ca()
-    print("\n\nPlease change the values in test_ssl.py, test_parse_cert function related to notAfter,notBefore and serialNumber")
+    print "\n\nPlease change the values in test_ssl.py, test_parse_cert function related to notAfter,notBefore and serialNumber"
     check_call(['openssl','x509','-in','keycert.pem','-dates','-serial','-noout'])

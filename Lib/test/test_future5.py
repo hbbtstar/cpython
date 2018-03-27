@@ -13,7 +13,7 @@ class TestMultipleFeatures(unittest.TestCase):
 
     def test_print_function(self):
         with support.captured_output("stderr") as s:
-            print("foo", file=sys.stderr)
+            print >>sys.stderr, "foo"
         self.assertEqual(s.getvalue(), "foo\n")
 
 
