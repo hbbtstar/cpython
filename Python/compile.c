@@ -2141,21 +2141,21 @@ compiler_print(struct compiler *c, stmt_ty s)
             ADDOP(c, DUP_TOP);
             VISIT(c, expr, e);
             ADDOP(c, ROT_TWO);
-            ADDOP(c, PRINT_ITEM_TO);
+            ADDOP(c, PRINT_EXPR);
         }
         else {
             VISIT(c, expr, e);
-            ADDOP(c, PRINT_ITEM);
+            ADDOP(c, PRINT_EXPR);
         }
     }
-    if (s->v.Print.nl) {
-        if (dest)
-        ADDOP(c, PRINT_NEWLINE_TO)
-        else
-        ADDOP(c, PRINT_NEWLINE)
-    }
-    else if (dest)
-    ADDOP(c, POP_TOP);
+//    if (s->v.Print.nl) {
+//        if (dest)
+//        ADDOP(c, PRINT_EXPR)
+//        else
+//        ADDOP(c, PRINT_EXPR)
+//    }
+//    else if (dest)
+//    ADDOP(c, POP_TOP);
     return 1;
 }
 

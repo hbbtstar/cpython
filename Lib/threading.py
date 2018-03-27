@@ -922,8 +922,7 @@ class Thread:
                 # _sys) in case sys.stderr was redefined since the creation of
                 # self.
                 if _sys and _sys.stderr is not None:
-                    print >>_sys.stderr, "Exception in thread %s:\n%s" %
-                          (self.name, _format_exc())
+                    print >>_sys.stderr, "Exception in thread %s:\n%s" % (self.name, _format_exc())
                 elif self._stderr is not None:
                     # Do the best job possible w/o a huge amt. of code to
                     # approximate a traceback (code ideas from

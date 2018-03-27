@@ -1751,7 +1751,7 @@ builtin_pow_impl(PyObject *module, PyObject *x, PyObject *y, PyObject *z)
 
 /* AC: cannot convert yet, waiting for *args support */
 static PyObject *
-builtin_print(PyObject *self, PyObject *args, PyObject *kwds)
+builtin_threeprint(PyObject *self, PyObject *args, PyObject *kwds)
 {
     static char *kwlist[] = {"sep", "end", "file", "flush", 0};
     static PyObject *dummy_args;
@@ -2667,7 +2667,7 @@ static PyMethodDef builtin_methods[] = {
     BUILTIN_OCT_METHODDEF
     BUILTIN_ORD_METHODDEF
     BUILTIN_POW_METHODDEF
-    {"print",           (PyCFunction)builtin_print,      METH_VARARGS | METH_KEYWORDS, print_doc},
+    {"threeprint",           (PyCFunction)builtin_threeprint,      METH_VARARGS | METH_KEYWORDS, print_doc},
     BUILTIN_REPR_METHODDEF
     {"round",           (PyCFunction)builtin_round,      METH_VARARGS | METH_KEYWORDS, round_doc},
     BUILTIN_SETATTR_METHODDEF

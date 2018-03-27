@@ -311,13 +311,9 @@ class PyBuildExt(build_ext):
                                               longest, g)
 
         if missing:
-            print
             print "Python build finished successfully!"
-            print "The necessary bits to build these optional modules were not "
-                  "found:"
-            print_three_column(missing)
-            print "To find the necessary bits, look in setup.py in"
-                  " detect_modules() for the module's name."
+            print "The necessary bits to build these optional modules were not found:"
+            print "To find the necessary bits, look in setup.py in detect_modules() for the module's name."
             print
 
         if removed_modules:
@@ -337,8 +333,7 @@ class PyBuildExt(build_ext):
         if self.failed_on_import:
             failed = self.failed_on_import[:]
             print
-            print "Following modules built successfully"
-                  " but were removed because they could not be imported:"
+            print "Following modules built successfully but were removed because they could not be imported:"
             print_three_column(failed)
             print
 
@@ -906,8 +901,7 @@ class PyBuildExt(build_ext):
                                        library_dirs = ssl_libs,
                                        libraries = ['ssl', 'crypto']) )
             else:
-                print "warning: openssl 0x%08x is too old for _hashlib" %
-                      openssl_ver
+                print "warning: openssl 0x%08x is too old for _hashlib" % openssl_ver
                 missing.append('_hashlib')
 
         # We always compile these even when OpenSSL is available (issue #14693).
@@ -1071,8 +1065,7 @@ class PyBuildExt(build_ext):
                             m = re.search(br"#define\WDB_VERSION_PATCH\W(\d+)", f)
                             db_patch = int(m.group(1))
                             if db_patch < 21:
-                                print "db.h:", db_ver, "patch", db_patch,
-                                      "being ignored (4.6.x must be >= 4.6.21)"
+                                print "db.h:", db_ver, "patch", db_patch, "being ignored (4.6.x must be >= 4.6.21)"
                                 continue
 
                         if ( (db_ver not in db_ver_inc_map) and
@@ -1954,9 +1947,7 @@ class PyBuildExt(build_ext):
             if host_platform == 'darwin':
                 return self.configure_ctypes_darwin(ext)
 
-            print 'warning: building with the bundled copy of libffi is'
-                  ' deprecated on this platform.  It will not be'
-                  ' distributed with Python 3.7'
+            print 'warning: building with the bundled copy of libffi is deprecated on this platform.  It will not be distributed with Python 3.7'
             srcdir = sysconfig.get_config_var('srcdir')
             ffi_builddir = os.path.join(self.build_temp, 'libffi')
             ffi_srcdir = os.path.abspath(os.path.join(srcdir, 'Modules',
@@ -2075,8 +2066,7 @@ class PyBuildExt(build_ext):
                         break
                 else:
                     ffi_inc = None
-                    print 'Header file {} does not define LIBFFI_H or '
-                          'ffi_wrapper_h'.format(ffi_h)
+                    print 'Header file {} does not define LIBFFI_H or ffi_wrapper_h'.format(ffi_h)
         ffi_lib = None
         if ffi_inc is not None:
             for lib_name in ('ffi', 'ffi_pic'):
