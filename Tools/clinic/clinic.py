@@ -119,7 +119,7 @@ def warn_or_fail(fail=False, *args, filename=None, line_number=None):
         add(" on line " + str(line_number))
     add(':\n')
     add(joined)
-    print(output())
+    print output()
     if fail:
         sys.exit(-1)
 
@@ -3448,8 +3448,8 @@ class DSLParser:
                 else:
                     existing_function = None
                 if not existing_function:
-                    print("class", cls, "module", module, "existing", existing)
-                    print("cls. functions", cls.functions)
+                    print "class", cls, "module", module, "existing", existing
+                    print "cls. functions", cls.functions
                     fail("Couldn't find existing function " + repr(existing) + "!")
 
                 fields = [x.strip() for x in full_name.split('.')]
@@ -4286,8 +4286,8 @@ def main(argv):
 
     if ns.converters:
         if ns.filename:
-            print("Usage error: can't specify --converters and a filename at the same time.")
-            print()
+            print "Usage error: can't specify --converters and a filename at the same time."
+            print
             cmdline.print_usage()
             sys.exit(-1)
         converters = []
@@ -4309,19 +4309,19 @@ def main(argv):
                 if name.endswith(suffix):
                     ids.append((name, name[:-len(suffix)]))
                     break
-        print()
+        print
 
-        print("Legacy converters:")
+        print "Legacy converters:"
         legacy = sorted(legacy_converters)
-        print('    ' + ' '.join(c for c in legacy if c[0].isupper()))
-        print('    ' + ' '.join(c for c in legacy if c[0].islower()))
-        print()
+        print '    ' + ' '.join(c for c in legacy if c[0].isupper())
+        print '    ' + ' '.join(c for c in legacy if c[0].islower())
+        print
 
         for title, attribute, ids in (
             ("Converters", 'converter_init', converters),
             ("Return converters", 'return_converter_init', return_converters),
         ):
-            print(title + ":")
+            print title + ":"
             longest = -1
             for name, short_name in ids:
                 longest = max(longest, len(short_name))
@@ -4339,16 +4339,16 @@ def main(argv):
                         else:
                             s = parameter_name
                         parameters.append(s)
-                print('    {}({})'.format(short_name, ', '.join(parameters)))
-            print()
-        print("All converters also accept (c_default=None, py_default=None, annotation=None).")
-        print("All return converters also accept (py_default=None).")
+                print '    {}({})'.format(short_name, ', '.join(parameters))
+            print
+        print "All converters also accept (c_default=None, py_default=None, annotation=None)."
+        print "All return converters also accept (py_default=None)."
         sys.exit(0)
 
     if ns.make:
         if ns.output or ns.filename:
-            print("Usage error: can't use -o or filenames with --make.")
-            print()
+            print "Usage error: can't use -o or filenames with --make."
+            print
             cmdline.print_usage()
             sys.exit(-1)
         for root, dirs, files in os.walk('.'):
@@ -4360,7 +4360,7 @@ def main(argv):
                     continue
                 path = os.path.join(root, filename)
                 if ns.verbose:
-                    print(path)
+                    print path
                 parse_file(path, force=ns.force, verify=not ns.force)
         return
 
@@ -4369,14 +4369,14 @@ def main(argv):
         sys.exit(-1)
 
     if ns.output and len(ns.filename) > 1:
-        print("Usage error: can't use -o with multiple filenames.")
-        print()
+        print "Usage error: can't use -o with multiple filenames."
+        print
         cmdline.print_usage()
         sys.exit(-1)
 
     for filename in ns.filename:
         if ns.verbose:
-            print(filename)
+            print filename
         parse_file(filename, output=ns.output, force=ns.force, verify=not ns.force)
 
 

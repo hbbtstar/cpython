@@ -409,11 +409,11 @@ if __name__ == '__main__':
                          default=0,
                          cancel=2,
                          title="Test Dialog")
-            print(d.go())
-            print(askinteger("Spam", "Egg count", initialvalue=12*12))
-            print(askfloat("Spam", "Egg weight\n(in tons)", minvalue=1,
-                           maxvalue=100))
-            print(askstring("Spam", "Egg label"))
+            print d.go()
+            print askinteger("Spam", "Egg count", initialvalue=12*12)
+            print askfloat("Spam", "Egg weight\n(in tons)", minvalue=1,
+                           maxvalue=100)
+            print askstring("Spam", "Egg label")
         t = Button(root, text='Test', command=doit)
         t.pack()
         q = Button(root, text='Quit', command=t.quit)

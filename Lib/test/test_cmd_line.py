@@ -440,8 +440,8 @@ class CmdLineTest(unittest.TestCase):
         filename = test.support.TESTFN
         self.addCleanup(test.support.unlink, filename)
         with open(filename, "w") as script:
-            print("import sys", file=script)
-            print("del sys.modules['__main__']", file=script)
+            print >>script, "import sys"
+            print >>script, "del sys.modules['__main__']"
         assert_python_ok(filename)
 
     def test_unknown_options(self):

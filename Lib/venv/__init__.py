@@ -421,5 +421,5 @@ if __name__ == '__main__':
         main()
         rc = 0
     except Exception as e:
-        print('Error: %s' % e, file=sys.stderr)
+        print >>sys.stderr, 'Error: %s' % e
     sys.exit(rc)

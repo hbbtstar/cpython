@@ -23,6 +23,6 @@ def main(old_path, new_path):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print("Usage: %s <path to be updated> <path with new contents>" % (sys.argv[0],))
+        print "Usage: %s <path to be updated> <path with new contents>" % (sys.argv[0],)
         sys.exit(1)
     main(sys.argv[1], sys.argv[2])

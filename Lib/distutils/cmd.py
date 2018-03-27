@@ -187,7 +187,7 @@ class Command:
         """
         from distutils.debug import DEBUG
         if DEBUG:
-            print(msg)
+            print msg
             sys.stdout.flush()
 
 

@@ -294,14 +294,14 @@ class DirectoryTestCase(ASTTestCase):
 
         for filename in names:
             if test.support.verbose:
-                print('Testing %s' % filename)
+                print 'Testing %s' % filename
 
             # Some f-strings are not correctly round-tripped by
             #  Tools/parser/unparse.py.  See issue 28002 for details.
             #  We need to skip files that contain such f-strings.
             if os.path.basename(filename) in ('test_fstring.py', ):
                 if test.support.verbose:
-                    print(f'Skipping {filename}: see issue 28002')
+                    print f'Skipping {filename}: see issue 28002'
                 continue
 
             with self.subTest(filename=filename):

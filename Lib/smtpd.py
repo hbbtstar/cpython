@@ -110,9 +110,9 @@ DATA_SIZE_DEFAULT = 33554432
 
 
 def usage(code, msg=''):
-    print(__doc__ % globals(), file=sys.stderr)
+    print >>sys.stderr, __doc__ % globals()
     if msg:
-        print(msg, file=sys.stderr)
+        print >>sys.stderr, msg
     sys.exit(code)
 
 
@@ -166,7 +166,7 @@ class SMTPChannel(asynchat.async_chat):
             if err.args[0] != errno.ENOTCONN:
                 raise
             return
-        print('Peer:', repr(self.peer), file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, 'Peer:', repr(self.peer)
         self.push('220 %s %s' % (self.fqdn, __version__))
 
     def _set_post_data_state(self):
@@ -331,7 +331,7 @@ class SMTPChannel(asynchat.async_chat):
     # Implementation of base class abstract method
     def found_terminator(self):
         line = self._emptystring.join(self.received_lines)
-        print('Data:', repr(line), file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, 'Data:', repr(line)
         self.received_lines = []
         if self.smtp_state == self.COMMAND:
             sz, self.num_bytes = self.num_bytes, 0
@@ -514,7 +514,7 @@ class SMTPChannel(asynchat.async_chat):
         if not self.seen_greeting:
             self.push('503 Error: send HELO first')
             return
-        print('===> MAIL', arg, file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, '===> MAIL', arg
         syntaxerr = '501 Syntax: MAIL FROM: <address>'
         if self.extended_smtp:
             syntaxerr += ' [SP <mail-parameters>]'
@@ -561,14 +561,14 @@ class SMTPChannel(asynchat.async_chat):
             self.push('555 MAIL FROM parameters not recognized or not implemented')
             return
         self.mailfrom = address
-        print('sender:', self.mailfrom, file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, 'sender:', self.mailfrom
         self.push('250 OK')
 
     def smtp_RCPT(self, arg):
         if not self.seen_greeting:
             self.push('503 Error: send HELO first');
             return
-        print('===> RCPT', arg, file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, '===> RCPT', arg
         if not self.mailfrom:
             self.push('503 Error: need MAIL command')
             return
@@ -596,7 +596,7 @@ class SMTPChannel(asynchat.async_chat):
             self.push('555 RCPT TO parameters not recognized or not implemented')
             return
         self.rcpttos.append(address)
-        print('recips:', self.rcpttos, file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, 'recips:', self.rcpttos
         self.push('250 OK')
 
     def smtp_RSET(self, arg):
@@ -653,12 +653,12 @@ class SMTPServer(asyncore.dispatcher):
             self.close()
             raise
         else:
-            print('%s started at %s\n\tLocal addr: %s\n\tRemote addr:%s' % (
+            print >>DEBUGSTREAM, '%s started at %s\n\tLocal addr: %s\n\tRemote addr:%s' % (
                 self.__class__.__name__, time.ctime(time.time()),
-                localaddr, remoteaddr), file=DEBUGSTREAM)
+                localaddr, remoteaddr)
 
     def handle_accepted(self, conn, addr):
-        print('Incoming connection from %s' % repr(addr), file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, 'Incoming connection from %s' % repr(addr)
         channel = self.channel_class(self,
                                      conn,
                                      addr,
@@ -714,22 +714,22 @@ class DebuggingServer(SMTPServer):
                 if not isinstance(data, str):
                     # decoded_data=false; make header match other binary output
                     peerheader = repr(peerheader.encode('utf-8'))
-                print(peerheader)
+                print peerheader
                 inheaders = 0
             if not isinstance(data, str):
                 # Avoid spurious 'str on bytes instance' warning.
                 line = repr(line)
-            print(line)
+            print line
 
     def process_message(self, peer, mailfrom, rcpttos, data, **kwargs):
-        print('---------- MESSAGE FOLLOWS ----------')
+        print '---------- MESSAGE FOLLOWS ----------'
         if kwargs:
             if kwargs.get('mail_options'):
-                print('mail options: %s' % kwargs['mail_options'])
+                print 'mail options: %s' % kwargs['mail_options']
             if kwargs.get('rcpt_options'):
-                print('rcpt options: %s\n' % kwargs['rcpt_options'])
+                print 'rcpt options: %s\n' % kwargs['rcpt_options']
         self._print_message_content(peer, data)
-        print('------------ END MESSAGE ------------')
+        print '------------ END MESSAGE ------------'
 
 
 class PureProxy(SMTPServer):
@@ -750,7 +750,7 @@ class PureProxy(SMTPServer):
         data = NEWLINE.join(lines)
         refused = self._deliver(mailfrom, rcpttos, data)
         # TBD: what to do with refused addresses?
-        print('we got some refusals:', refused, file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, 'we got some refusals:', refused
 
     def _deliver(self, mailfrom, rcpttos, data):
         import smtplib
@@ -763,10 +763,10 @@ class PureProxy(SMTPServer):
             finally:
                 s.quit()
         except smtplib.SMTPRecipientsRefused as e:
-            print('got SMTPRecipientsRefused', file=DEBUGSTREAM)
+            print >>DEBUGSTREAM, 'got SMTPRecipientsRefused'
             refused = e.recipients
         except (OSError, smtplib.SMTPException) as e:
-            print('got', e.__class__, file=DEBUGSTREAM)
+            print >>DEBUGSTREAM, 'got', e.__class__
             # All recipients were refused.  If the exception had an associated
             # error code, use it.  Otherwise,fake it with a non-triggering
             # exception code.
@@ -819,11 +819,11 @@ class MailmanProxy(PureProxy):
         for rcpt, listname, command in listnames:
             rcpttos.remove(rcpt)
         # If there's any non-list destined recipients left,
-        print('forwarding recips:', ' '.join(rcpttos), file=DEBUGSTREAM)
+        print >>DEBUGSTREAM, 'forwarding recips:', ' '.join(rcpttos)
         if rcpttos:
             refused = self._deliver(mailfrom, rcpttos, data)
             # TBD: what to do with refused addresses?
-            print('we got refusals:', refused, file=DEBUGSTREAM)
+            print >>DEBUGSTREAM, 'we got refusals:', refused
         # Now deliver directly to the list commands
         mlists = {}
         s = StringIO(data)
@@ -836,7 +836,7 @@ class MailmanProxy(PureProxy):
         if not msg.get('date'):
             msg['Date'] = time.ctime(time.time())
         for rcpt, listname, command in listnames:
-            print('sending message to', rcpt, file=DEBUGSTREAM)
+            print >>DEBUGSTREAM, 'sending message to', rcpt
             mlist = mlists.get(listname)
             if not mlist:
                 mlist = MailList.MailList(listname, lock=0)
@@ -882,7 +882,7 @@ def parseargs():
         if opt in ('-h', '--help'):
             usage(0)
         elif opt in ('-V', '--version'):
-            print(__version__)
+            print __version__
             sys.exit(0)
         elif opt in ('-n', '--nosetuid'):
             options.setuid = False
@@ -897,7 +897,7 @@ def parseargs():
                 int_size = int(arg)
                 options.size_limit = int_size
             except:
-                print('Invalid size: ' + arg, file=sys.stderr)
+                print >>sys.stderr, 'Invalid size: ' + arg
                 sys.exit(1)
 
     # parse the rest of the arguments
@@ -951,13 +951,13 @@ if __name__ == '__main__':
         try:
             import pwd
         except ImportError:
-            print('Cannot import module "pwd"; try running with -n option.', file=sys.stderr)
+            print >>sys.stderr, 'Cannot import module "pwd"; try running with -n option.'
             sys.exit(1)
         nobody = pwd.getpwnam('nobody')[2]
         try:
             os.setuid(nobody)
         except PermissionError:
-            print('Cannot setuid "nobody"; try running with -n option.', file=sys.stderr)
+            print >>sys.stderr, 'Cannot setuid "nobody"; try running with -n option.'
             sys.exit(1)
     try:
         asyncore.loop()

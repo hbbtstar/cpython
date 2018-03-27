@@ -259,7 +259,7 @@ class HTTPResponse(io.BufferedIOBase):
         if len(line) > _MAXLINE:
             raise LineTooLong("status line")
         if self.debuglevel > 0:
-            print("reply:", repr(line))
+            print "reply:", repr(line)
         if not line:
             # Presumably, the server closed the connection before
             # sending a valid response.
@@ -306,7 +306,7 @@ class HTTPResponse(io.BufferedIOBase):
                 if not skip:
                     break
                 if self.debuglevel > 0:
-                    print("header:", skip)
+                    print "header:", skip
 
         self.code = self.status = status
         self.reason = reason.strip()
@@ -322,7 +322,7 @@ class HTTPResponse(io.BufferedIOBase):
 
         if self.debuglevel > 0:
             for hdr in self.headers:
-                print("header:", hdr, end=" ")
+                print "header:", hdr,
 
         # are we using the chunked-style of transfer encoding?
         tr_enc = self.headers.get("transfer-encoding")
@@ -928,7 +928,7 @@ class HTTPConnection:
                 break
 
             if self.debuglevel > 0:
-                print('header:', line.decode())
+                print 'header:', line.decode()
 
     def connect(self):
         """Connect to the host and port specified in __init__."""
@@ -966,14 +966,14 @@ class HTTPConnection:
                 raise NotConnected()
 
         if self.debuglevel > 0:
-            print("send:", repr(data))
+            print "send:", repr(data)
         blocksize = 8192
         if hasattr(data, "read") :
             if self.debuglevel > 0:
-                print("sendIng a read()able")
+                print "sendIng a read()able"
             encode = self._is_textIO(data)
             if encode and self.debuglevel > 0:
-                print("encoding file using iso-8859-1")
+                print "encoding file using iso-8859-1"
             while 1:
                 datablock = data.read(blocksize)
                 if not datablock:
@@ -1002,10 +1002,10 @@ class HTTPConnection:
     def _read_readable(self, readable):
         blocksize = 8192
         if self.debuglevel > 0:
-            print("sendIng a read()able")
+            print "sendIng a read()able"
         encode = self._is_textIO(readable)
         if encode and self.debuglevel > 0:
-            print("encoding file using iso-8859-1")
+            print "encoding file using iso-8859-1"
         while True:
             datablock = readable.read(blocksize)
             if not datablock:
@@ -1055,7 +1055,7 @@ class HTTPConnection:
             for chunk in chunks:
                 if not chunk:
                     if self.debuglevel > 0:
-                        print('Zero length chunk ignored')
+                        print 'Zero length chunk ignored'
                     continue
 
                 if encode_chunked and self._http_vsn == 11:
@@ -1268,7 +1268,7 @@ class HTTPConnection:
                 if content_length is None:
                     if body is not None:
                         if self.debuglevel > 0:
-                            print('Unable to determine size of %r' % body)
+                            print 'Unable to determine size of %r' % body
                         encode_chunked = True
                         self.putheader('Transfer-Encoding', 'chunked')
                 else:

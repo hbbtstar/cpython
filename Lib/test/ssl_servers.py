@@ -205,5 +205,5 @@ if __name__ == "__main__":
 
     server = HTTPSServer(("", args.port), handler_class, context)
     if args.verbose:
-        print("Listening on https://localhost:{0.port}".format(args))
+        print "Listening on https://localhost:{0.port}".format(args)
     server.serve_forever(0.1)

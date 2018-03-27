@@ -32,9 +32,9 @@ def main(args):
         matches = [(y,x) for (x,y) in unicode_names
                    if pat.search(y) is not None]
         if matches:
-            print("***", arg, "matches", "***")
+            print "***", arg, "matches", "***"
             for match in matches:
-                print("%s (%d)" % match)
+                print "%s (%d)" % match
 
 if __name__ == "__main__":
     main(sys.argv[1:])

@@ -49,17 +49,17 @@ class SelectTestCase(unittest.TestCase):
         p = os.popen(cmd, 'r')
         for tout in (0, 1, 2, 4, 8, 16) + (None,)*10:
             if support.verbose:
-                print('timeout =', tout)
+                print 'timeout =', tout
             rfd, wfd, xfd = select.select([p], [], [], tout)
             if (rfd, wfd, xfd) == ([], [], []):
                 continue
             if (rfd, wfd, xfd) == ([p], [], []):
                 line = p.readline()
                 if support.verbose:
-                    print(repr(line))
+                    print repr(line)
                 if not line:
                     if support.verbose:
-                        print('EOF')
+                        print 'EOF'
                     break
                 continue
             self.fail('Unexpected return values from select():', rfd, wfd, xfd)

@@ -51,26 +51,26 @@ class TestThread(threading.Thread):
     def run(self):
         delay = random.random() / 10000.0
         if verbose:
-            print('task %s will run for %.1f usec' %
-                  (self.name, delay * 1e6))
+            print 'task %s will run for %.1f usec' %
+                  (self.name, delay * 1e6)
 
         with self.sema:
             with self.mutex:
                 self.nrunning.inc()
                 if verbose:
-                    print(self.nrunning.get(), 'tasks are running')
+                    print self.nrunning.get(), 'tasks are running'
                 self.testcase.assertLessEqual(self.nrunning.get(), 3)
 
             time.sleep(delay)
             if verbose:
-                print('task', self.name, 'done')
+                print 'task', self.name, 'done'
 
             with self.mutex:
                 self.nrunning.dec()
                 self.testcase.assertGreaterEqual(self.nrunning.get(), 0)
                 if verbose:
-                    print('%s is finished. %d tasks are running' %
-                          (self.name, self.nrunning.get()))
+                    print '%s is finished. %d tasks are running' %
+                          (self.name, self.nrunning.get())
 
 
 class BaseTestCase(unittest.TestCase):
@@ -106,7 +106,7 @@ class ThreadTests(BaseTestCase):
             t.start()
 
         if verbose:
-            print('waiting for all tasks to complete')
+            print 'waiting for all tasks to complete'
         for t in threads:
             t.join()
             self.assertFalse(t.is_alive())
@@ -114,7 +114,7 @@ class ThreadTests(BaseTestCase):
             self.assertIsNotNone(t.ident)
             self.assertRegex(repr(t), r'^<TestThread\(.*, stopped -?\d+\)>$')
         if verbose:
-            print('all tasks done')
+            print 'all tasks done'
         self.assertEqual(numrunning.get(), 0)
 
     def test_ident_of_no_threading_threads(self):
@@ -134,7 +134,7 @@ class ThreadTests(BaseTestCase):
     # run with a small(ish) thread stack size (256kB)
     def test_various_ops_small_stack(self):
         if verbose:
-            print('with 256kB thread stack size...')
+            print 'with 256kB thread stack size...'
         try:
             threading.stack_size(262144)
         except _thread.error:
@@ -146,7 +146,7 @@ class ThreadTests(BaseTestCase):
     # run with a large thread stack size (1MB)
     def test_various_ops_large_stack(self):
         if verbose:
-            print('with 1MB thread stack size...')
+            print 'with 1MB thread stack size...'
         try:
             threading.stack_size(0x100000)
         except _thread.error:
@@ -232,32 +232,32 @@ class ThreadTests(BaseTestCase):
         t.daemon = True # so if this fails, we don't hang Python at shutdown
         t.start()
         if verbose:
-            print("    started worker thread")
+            print "    started worker thread"
 
         # Try a thread id that doesn't make sense.
         if verbose:
-            print("    trying nonsensical thread id")
+            print "    trying nonsensical thread id"
         result = set_async_exc(ctypes.c_long(-1), exception)
         self.assertEqual(result, 0)  # no thread states modified
 
         # Now raise an exception in the worker thread.
         if verbose:
-            print("    waiting for worker thread to get started")
+            print "    waiting for worker thread to get started"
         ret = worker_started.wait()
         self.assertTrue(ret)
         if verbose:
-            print("    verifying worker hasn't exited")
+            print "    verifying worker hasn't exited"
         self.assertFalse(t.finished)
         if verbose:
-            print("    attempting to raise asynch exception in worker")
+            print "    attempting to raise asynch exception in worker"
         result = set_async_exc(ctypes.c_long(t.id), exception)
         self.assertEqual(result, 1) # one thread state modified
         if verbose:
-            print("    waiting for worker to say it caught the exception")
+            print "    waiting for worker to say it caught the exception"
         worker_saw_exception.wait(timeout=10)
         self.assertTrue(t.finished)
         if verbose:
-            print("    all OK -- joining worker")
+            print "    all OK -- joining worker"
         if t.finished:
             t.join()
         # else the thread is still running, and we have no way to kill it

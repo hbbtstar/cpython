@@ -144,7 +144,7 @@ class TokenList(list):
         return _refold_parse_tree(self, policy=policy)
 
     def pprint(self, indent=''):
-        print(self.ppstr(indent=indent))
+        print self.ppstr(indent=indent)
 
     def ppstr(self, indent=''):
         return '\n'.join(self._pp(indent=indent))
@@ -861,7 +861,7 @@ class Terminal(str):
         return "{}({})".format(self.__class__.__name__, super().__repr__())
 
     def pprint(self):
-        print(self.__class__.__name__ + '/' + self.token_type)
+        print self.__class__.__name__ + '/' + self.token_type
 
     @property
     def all_defects(self):

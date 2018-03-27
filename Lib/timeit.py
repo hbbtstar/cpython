@@ -263,8 +263,8 @@ def main(args=None, *, _wrap_timer=None):
                                     "time", "clock", "process",
                                     "verbose", "unit=", "help"])
     except getopt.error as err:
-        print(err)
-        print("use -h/--help for command line help")
+        print err
+        print "use -h/--help for command line help"
         return 2
     timer = default_timer
     stmt = "\n".join(args) or "pass"
@@ -284,8 +284,7 @@ def main(args=None, *, _wrap_timer=None):
             if a in units:
                 time_unit = a
             else:
-                print("Unrecognized unit. Please select usec, msec, or sec.",
-                    file=sys.stderr)
+                print >>sys.stderr, "Unrecognized unit. Please select usec, msec, or sec."
                 return 2
         if o in ("-r", "--repeat"):
             repeat = int(a)
@@ -302,7 +301,7 @@ def main(args=None, *, _wrap_timer=None):
                 precision += 1
             verbose += 1
         if o in ("-h", "--help"):
-            print(__doc__, end=' ')
+            print __doc__,
             return 0
     setup = "\n".join(setup) or "pass"
     # Include the current directory, so that local imports work (sys.path
@@ -319,7 +318,7 @@ def main(args=None, *, _wrap_timer=None):
         if verbose:
             def callback(number, time_taken):
                 msg = "{num} loops -> {secs:.{prec}g} secs"
-                print(msg.format(num=number, secs=time_taken, prec=precision))
+                print msg.format(num=number, secs=time_taken, prec=precision)
         try:
             number, _ = t.autorange(callback)
         except:
@@ -332,8 +331,8 @@ def main(args=None, *, _wrap_timer=None):
         return 1
     best = min(r)
     if verbose:
-        print("raw times:", " ".join(["%.*g" % (precision, x) for x in r]))
-    print("%d loops," % number, end=' ')
+        print "raw times:", " ".join(["%.*g" % (precision, x) for x in r])
+    print "%d loops," % number,
     usec = best * 1e6 / number
     if time_unit is not None:
         scale = units[time_unit]
@@ -343,8 +342,8 @@ def main(args=None, *, _wrap_timer=None):
         for scale, time_unit in scales:
             if usec >= scale:
                 break
-    print("best of %d: %.*g %s per loop" % (repeat, precision,
-                                            usec/scale, time_unit))
+    print "best of %d: %.*g %s per loop" % (repeat, precision,
+                                            usec/scale, time_unit)
     best = min(r)
     usec = best * 1e6 / number
     worst = max(r)

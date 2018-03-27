@@ -486,7 +486,7 @@ class ComplexTest(unittest.TestCase):
         fo = None
         try:
             fo = open(support.TESTFN, "w")
-            print(a, b, file=fo)
+            print >>fo, a, b
             fo.close()
             fo = open(support.TESTFN, "r")
             self.assertEqual(fo.read(), ("%s %s\n" % (a, b)))

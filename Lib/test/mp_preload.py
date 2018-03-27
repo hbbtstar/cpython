@@ -4,7 +4,7 @@ multiprocessing.Lock()
 
 
 def f():
-    print("ok")
+    print "ok"
 
 
 if __name__ == "__main__":

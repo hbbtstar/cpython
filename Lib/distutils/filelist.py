@@ -44,7 +44,7 @@ class FileList:
         """
         from distutils.debug import DEBUG
         if DEBUG:
-            print(msg)
+            print msg
 
     # -- List-like methods ---------------------------------------------
 

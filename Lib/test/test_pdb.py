@@ -284,7 +284,7 @@ def do_nothing():
     pass
 
 def do_something():
-    print(42)
+    print 42
 
 def test_list_commands():
     """Test the list and source commands of pdb.

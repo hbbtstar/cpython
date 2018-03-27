@@ -135,16 +135,16 @@ class samplecmdclass(cmd.Cmd):
     """
 
     def preloop(self):
-        print("Hello from preloop")
+        print "Hello from preloop"
 
     def postloop(self):
-        print("Hello from postloop")
+        print "Hello from postloop"
 
     def completedefault(self, *ignored):
-        print("This is the completedefault method")
+        print "This is the completedefault method"
 
     def complete_command(self):
-        print("complete command")
+        print "complete command"
 
     def do_shell(self, s):
         pass
@@ -152,17 +152,17 @@ class samplecmdclass(cmd.Cmd):
     def do_add(self, s):
         l = s.split()
         if len(l) != 2:
-            print("*** invalid number of arguments")
+            print "*** invalid number of arguments"
             return
         try:
             l = [int(i) for i in l]
         except ValueError:
-            print("*** arguments should be numbers")
+            print "*** arguments should be numbers"
             return
-        print(l[0]+l[1])
+        print l[0]+l[1]
 
     def help_add(self):
-        print("help text for add")
+        print "help text for add"
         return
 
     def do_exit(self, arg):
@@ -174,7 +174,7 @@ class TestAlternateInput(unittest.TestCase):
     class simplecmd(cmd.Cmd):
 
         def do_print(self, args):
-            print(args, file=self.stdout)
+            print >>self.stdout, args
 
         def do_EOF(self, args):
             return True
@@ -183,7 +183,7 @@ class TestAlternateInput(unittest.TestCase):
     class simplecmd2(simplecmd):
 
         def do_EOF(self, args):
-            print('*** Unknown syntax: EOF', file=self.stdout)
+            print >>self.stdout, '*** Unknown syntax: EOF'
             return True
 
 
@@ -231,7 +231,7 @@ def test_coverage(coverdir):
                         trace=0, count=1)
     tracer.run('import importlib; importlib.reload(cmd); test_main()')
     r=tracer.results()
-    print("Writing coverage results...")
+    print "Writing coverage results..."
     r.write_results(show_missing=True, summary=True, coverdir=coverdir)
 
 if __name__ == "__main__":

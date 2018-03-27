@@ -230,19 +230,19 @@ def main():
                     Path('distutils') / 'command' / 'bdist_wininst.py'
                 ))
             copied = copy_to_layout(temp / t.rstrip('/'), chain(files, extra_files))
-            print('Copied {} files'.format(copied))
+            print 'Copied {} files'.format(copied)
 
         if ns.embed:
             with open(str(temp / (BASE_NAME + '._pth')), 'w') as f:
-                print(BASE_NAME + '.zip', file=f)
-                print('.', file=f)
-                print('', file=f)
-                print('# Uncomment to run site.main() automatically', file=f)
-                print('#import site', file=f)
+                print >>f, BASE_NAME + '.zip'
+                print >>f, '.'
+                print >>f, ''
+                print >>f, '# Uncomment to run site.main() automatically'
+                print >>f, '#import site'
 
         if out:
             total = copy_to_layout(out, rglob(temp, '**/*', None))
-            print('Wrote {} files to {}'.format(total, out))
+            print 'Wrote {} files to {}'.format(total, out)
     finally:
         if delete_temp:
             shutil.rmtree(temp, True)

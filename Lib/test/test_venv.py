@@ -104,8 +104,8 @@ class BasicTest(BaseTest):
         fn = self.get_env_file(self.bindir, self.exe)
         if not os.path.exists(fn):  # diagnostics for Windows buildbot failures
             bd = self.get_env_file(self.bindir)
-            print('Contents of %r:' % bd)
-            print('    %r' % os.listdir(bd))
+            print 'Contents of %r:' % bd
+            print '    %r' % os.listdir(bd)
         self.assertTrue(os.path.exists(fn), 'File %r should exist.' % fn)
 
     def test_prompt(self):
@@ -224,8 +224,8 @@ class BasicTest(BaseTest):
             if not os.path.exists(fn):
                 # diagnostics for Windows buildbot failures
                 bd = self.get_env_file(self.bindir)
-                print('Contents of %r:' % bd)
-                print('    %r' % os.listdir(bd))
+                print 'Contents of %r:' % bd
+                print '    %r' % os.listdir(bd)
             self.assertTrue(os.path.exists(fn), 'File %r should exist.' % fn)
 
     def test_isolation(self):
@@ -302,7 +302,7 @@ class BasicTest(BaseTest):
                              stderr=subprocess.PIPE, encoding='oem',
                              shell=True)
         out, err = p.communicate()
-        print(err)
+        print err
         self.assertEqual(out.strip(), '0')
 
 @skipInVenv

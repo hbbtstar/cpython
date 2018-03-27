@@ -482,12 +482,12 @@ class DecodedGenerator(Generator):
         for part in msg.walk():
             maintype = part.get_content_maintype()
             if maintype == 'text':
-                print(part.get_payload(decode=False), file=self)
+                print >>self, part.get_payload(decode=False)
             elif maintype == 'multipart':
                 # Just skip this
                 pass
             else:
-                print(self._fmt % {
+                print >>self, self._fmt % {
                     'type'       : part.get_content_type(),
                     'maintype'   : part.get_content_maintype(),
                     'subtype'    : part.get_content_subtype(),
@@ -496,7 +496,7 @@ class DecodedGenerator(Generator):
                                             '[no description]'),
                     'encoding'   : part.get('Content-Transfer-Encoding',
                                             '[no encoding]'),
-                    }, file=self)
+                    }
 
 
 

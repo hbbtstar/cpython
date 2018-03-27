@@ -337,8 +337,8 @@ def _parse_args(args, **kwargs):
         parser.error("--pgo/-v don't go together!")
 
     if ns.nowindows:
-        print("Warning: the --nowindows (-n) option is deprecated. "
-              "Use -vv to display assertions in stderr.", file=sys.stderr)
+        print >>sys.stderr, "Warning: the --nowindows (-n) option is deprecated. "
+              "Use -vv to display assertions in stderr."
 
     if ns.quiet:
         ns.verbose = 0
@@ -373,9 +373,8 @@ def _parse_args(args, **kwargs):
         ns.header = True
     if ns.huntrleaks and ns.verbose3:
         ns.verbose3 = False
-        print("WARNING: Disable --verbose3 because it's incompatible with "
-              "--huntrleaks: see http://bugs.python.org/issue27103",
-              file=sys.stderr)
+        print >>sys.stderr, "WARNING: Disable --verbose3 because it's incompatible with "
+              "--huntrleaks: see http://bugs.python.org/issue27103"
     if ns.match_filename:
         if ns.match_tests is None:
             ns.match_tests = []

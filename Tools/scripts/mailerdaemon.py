@@ -180,11 +180,11 @@ def parsedir(dir, modify):
         fp = open(fn)
         m = email.message_from_file(fp, _class=ErrorMessage)
         sender = m.getaddr('From')
-        print('%s\t%-40s\t'%(fn, sender[1]), end=' ')
+        print '%s\t%-40s\t'%(fn, sender[1]),
 
         if m.is_warning():
             fp.close()
-            print('warning only')
+            print 'warning only'
             nwarn = nwarn + 1
             if modify:
                 os.rename(fn, ','+fn)
@@ -194,11 +194,11 @@ def parsedir(dir, modify):
         try:
             errors = m.get_errors()
         except Unparseable:
-            print('** Not parseable')
+            print '** Not parseable'
             nbad = nbad + 1
             fp.close()
             continue
-        print(len(errors), 'errors')
+        print len(errors), 'errors'
 
         # Remember them
         for e in errors:
@@ -220,16 +220,16 @@ def parsedir(dir, modify):
             os.rename(fn, ','+fn)
 ##          os.unlink(fn)
 
-    print('--------------')
-    print(nok, 'files parsed,',nwarn,'files warning-only,', end=' ')
-    print(nbad,'files unparseable')
-    print('--------------')
+    print '--------------'
+    print nok, 'files parsed,',nwarn,'files warning-only,',
+    print nbad,'files unparseable'
+    print '--------------'
     list = []
     for e in errordict.keys():
         list.append((errordict[e], errorfirst[e], errorlast[e], e))
     list.sort()
     for num, first, last, e in list:
-        print('%d %s - %s\t%s' % (num, first, last, e))
+        print '%d %s - %s\t%s' % (num, first, last, e)
 
 def main():
     modify = 0

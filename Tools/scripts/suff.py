@@ -14,7 +14,7 @@ def main():
         suff = getsuffix(filename)
         suffixes.setdefault(suff, []).append(filename)
     for suff, filenames in sorted(suffixes.items()):
-        print(repr(suff), len(filenames))
+        print repr(suff), len(filenames)
 
 
 def getsuffix(filename):

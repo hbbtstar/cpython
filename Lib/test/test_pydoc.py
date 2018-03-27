@@ -573,9 +573,9 @@ class PydocDocTest(unittest.TestCase):
         for encoding in ('ISO-8859-1', 'UTF-8'):
             with open(TESTFN, 'w', encoding=encoding) as script:
                 if encoding != 'UTF-8':
-                    print('#coding: {}'.format(encoding), file=script)
-                print('"""line 1: h\xe9', file=script)
-                print('line 2: hi"""', file=script)
+                    print >>script, '#coding: {}'.format(encoding)
+                print >>script, '"""line 1: h\xe9'
+                print >>script, 'line 2: hi"""'
             synopsis = pydoc.synopsis(TESTFN, {})
             self.assertEqual(synopsis, 'line 1: h\xe9')
 

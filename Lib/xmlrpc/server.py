@@ -653,9 +653,9 @@ class CGIXMLRPCRequestHandler(SimpleXMLRPCDispatcher):
 
         response = self._marshaled_dispatch(request_text)
 
-        print('Content-Type: text/xml')
-        print('Content-Length: %d' % len(response))
-        print()
+        print 'Content-Type: text/xml'
+        print 'Content-Length: %d' % len(response)
+        print
         sys.stdout.flush()
         sys.stdout.buffer.write(response)
         sys.stdout.buffer.flush()
@@ -677,10 +677,10 @@ class CGIXMLRPCRequestHandler(SimpleXMLRPCDispatcher):
              'explain' : explain
             }
         response = response.encode('utf-8')
-        print('Status: %d %s' % (code, message))
-        print('Content-Type: %s' % http.server.DEFAULT_ERROR_CONTENT_TYPE)
-        print('Content-Length: %d' % len(response))
-        print()
+        print 'Status: %d %s' % (code, message)
+        print 'Content-Type: %s' % http.server.DEFAULT_ERROR_CONTENT_TYPE
+        print 'Content-Length: %d' % len(response)
+        print
         sys.stdout.flush()
         sys.stdout.buffer.write(response)
         sys.stdout.buffer.flush()
@@ -964,9 +964,9 @@ class DocCGIXMLRPCRequestHandler(   CGIXMLRPCRequestHandler,
 
         response = self.generate_html_documentation().encode('utf-8')
 
-        print('Content-Type: text/html')
-        print('Content-Length: %d' % len(response))
-        print()
+        print 'Content-Type: text/html'
+        print 'Content-Length: %d' % len(response)
+        print
         sys.stdout.flush()
         sys.stdout.buffer.write(response)
         sys.stdout.buffer.flush()
@@ -993,10 +993,10 @@ if __name__ == '__main__':
         server.register_function(lambda x,y: x+y, 'add')
         server.register_instance(ExampleService(), allow_dotted_names=True)
         server.register_multicall_functions()
-        print('Serving XML-RPC on localhost port 8000')
-        print('It is advisable to run this example server within a secure, closed network.')
+        print 'Serving XML-RPC on localhost port 8000'
+        print 'It is advisable to run this example server within a secure, closed network.'
         try:
             server.serve_forever()
         except KeyboardInterrupt:
-            print("\nKeyboard interrupt received, exiting.")
+            print "\nKeyboard interrupt received, exiting."
             sys.exit(0)

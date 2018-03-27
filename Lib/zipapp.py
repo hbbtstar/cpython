@@ -183,7 +183,7 @@ def main(args=None):
         if not os.path.isfile(args.source):
             raise SystemExit("Can only get info for an archive file")
         interpreter = get_interpreter(args.source)
-        print("Interpreter: {}".format(interpreter or "<none>"))
+        print "Interpreter: {}".format(interpreter or "<none>")
         sys.exit(0)
 
     if os.path.isfile(args.source):

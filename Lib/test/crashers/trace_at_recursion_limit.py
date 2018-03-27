@@ -19,7 +19,7 @@ def g(*args):
     return g
 
 def f():
-    print(sys.getrecursionlimit())
+    print sys.getrecursionlimit()
     f()
 
 sys.settrace(g)

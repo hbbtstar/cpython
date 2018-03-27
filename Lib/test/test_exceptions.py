@@ -392,7 +392,7 @@ class ExceptionTests(unittest.TestCase):
             try:
                 e = exc(*args)
             except:
-                print("\nexc=%r, args=%r" % (exc, args), file=sys.stderr)
+                print >>sys.stderr, "\nexc=%r, args=%r" % (exc, args)
                 raise
             else:
                 # Verify module name

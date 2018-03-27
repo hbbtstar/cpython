@@ -134,8 +134,8 @@ def _scrolled_list(parent):  # htest #
     top.geometry("+%d+%d" % (x+200, y + 175))
     class MyScrolledList(ScrolledList):
         def fill_menu(self): self.menu.add_command(label="right click")
-        def on_select(self, index): print("select", self.get(index))
-        def on_double(self, index): print("double", self.get(index))
+        def on_select(self, index): print "select", self.get(index)
+        def on_double(self, index): print "double", self.get(index)
 
     scrolled_list = MyScrolledList(top)
     for i in range(30):

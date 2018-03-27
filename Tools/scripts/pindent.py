@@ -377,13 +377,13 @@ def make_backup(filename):
         try:
             os.remove(backup)
         except OSError:
-            print("Can't remove backup %r" % (backup,), file=sys.stderr)
+            print >>sys.stderr, "Can't remove backup %r" % (backup,)
         # end try
     # end if
     try:
         os.rename(filename, backup)
     except OSError:
-        print("Can't rename %r to %r" % (filename, backup), file=sys.stderr)
+        print >>sys.stderr, "Can't rename %r to %r" % (filename, backup)
     # end try
 # end def make_backup
 

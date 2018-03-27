@@ -430,7 +430,7 @@ def namedtuple(typename, field_names, *, verbose=False, rename=False, module=Non
     result = namespace[typename]
     result._source = class_definition
     if verbose:
-        print(result._source)
+        print result._source
 
     # For pickling to work, the __module__ variable needs to be set to the frame
     # where the named tuple is created.  Bypass this step in environments where

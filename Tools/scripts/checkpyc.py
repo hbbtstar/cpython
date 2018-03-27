@@ -20,43 +20,43 @@ def main():
         verbose = silent = False
     MAGIC = importlib.util.MAGIC_NUMBER
     if not silent:
-        print('Using MAGIC word', repr(MAGIC))
+        print 'Using MAGIC word', repr(MAGIC)
     for dirname in sys.path:
         try:
             names = os.listdir(dirname)
         except OSError:
-            print('Cannot list directory', repr(dirname))
+            print 'Cannot list directory', repr(dirname)
             continue
         if not silent:
-            print('Checking ', repr(dirname), '...')
+            print 'Checking ', repr(dirname), '...'
         for name in sorted(names):
             if name.endswith('.py'):
                 name = os.path.join(dirname, name)
                 try:
                     st = os.stat(name)
                 except OSError:
-                    print('Cannot stat', repr(name))
+                    print 'Cannot stat', repr(name)
                     continue
                 if verbose:
-                    print('Check', repr(name), '...')
+                    print 'Check', repr(name), '...'
                 name_c = cache_from_source(name)
                 try:
                     with open(name_c, 'rb') as f:
                         magic_str = f.read(4)
                         mtime_str = f.read(4)
                 except IOError:
-                    print('Cannot open', repr(name_c))
+                    print 'Cannot open', repr(name_c)
                     continue
                 if magic_str != MAGIC:
-                    print('Bad MAGIC word in ".pyc" file', end=' ')
-                    print(repr(name_c))
+                    print 'Bad MAGIC word in ".pyc" file',
+                    print repr(name_c)
                     continue
                 mtime = get_long(mtime_str)
                 if mtime in {0, -1}:
-                    print('Bad ".pyc" file', repr(name_c))
+                    print 'Bad ".pyc" file', repr(name_c)
                 elif mtime != st[ST_MTIME]:
-                    print('Out-of-date ".pyc" file', end=' ')
-                    print(repr(name_c))
+                    print 'Out-of-date ".pyc" file',
+                    print repr(name_c)
 
 
 def get_long(s):

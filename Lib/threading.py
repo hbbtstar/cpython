@@ -922,27 +922,27 @@ class Thread:
                 # _sys) in case sys.stderr was redefined since the creation of
                 # self.
                 if _sys and _sys.stderr is not None:
-                    print("Exception in thread %s:\n%s" %
-                          (self.name, _format_exc()), file=_sys.stderr)
+                    print >>_sys.stderr, "Exception in thread %s:\n%s" %
+                          (self.name, _format_exc())
                 elif self._stderr is not None:
                     # Do the best job possible w/o a huge amt. of code to
                     # approximate a traceback (code ideas from
                     # Lib/traceback.py)
                     exc_type, exc_value, exc_tb = self._exc_info()
                     try:
-                        print((
+                        print >>self._stderr, (
                             "Exception in thread " + self.name +
-                            " (most likely raised during interpreter shutdown):"), file=self._stderr)
-                        print((
-                            "Traceback (most recent call last):"), file=self._stderr)
+                            " (most likely raised during interpreter shutdown):")
+                        print >>self._stderr, (
+                            "Traceback (most recent call last):")
                         while exc_tb:
-                            print((
+                            print >>self._stderr, (
                                 '  File "%s", line %s, in %s' %
                                 (exc_tb.tb_frame.f_code.co_filename,
                                     exc_tb.tb_lineno,
-                                    exc_tb.tb_frame.f_code.co_name)), file=self._stderr)
+                                    exc_tb.tb_frame.f_code.co_name))
                             exc_tb = exc_tb.tb_next
-                        print(("%s: %s" % (exc_type, exc_value)), file=self._stderr)
+                        print >>self._stderr, ("%s: %s" % (exc_type, exc_value))
                     # Make sure that exc_tb gets deleted since it is a memory
                     # hog; deleting everything else is just for thoroughness
                     finally:

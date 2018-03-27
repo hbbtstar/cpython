@@ -45,8 +45,8 @@ def setUpModule():
                 try:
                     localeconv()
                 except Exception as err:
-                    print("WARNING: Skip locale %s (encoding %s): [%s] %s"
-                        % (loc, encoding, type(err), err))
+                    print "WARNING: Skip locale %s (encoding %s): [%s] %s"
+                        % (loc, encoding, type(err), err)
                 else:
                     locales.append(loc)
             candidate_locales = locales

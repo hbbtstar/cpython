@@ -300,7 +300,7 @@ class TestPendingCalls(unittest.TestCase):
             #run our callbacks.  Note that callbacks are only run on the
             #main thread
             if False and support.verbose:
-                print("(%i)"%(len(l),),)
+                print "(%i)"%(len(l),)
             for i in range(1000):
                 a = i*i
             if context and not context.event.is_set():
@@ -309,7 +309,7 @@ class TestPendingCalls(unittest.TestCase):
             self.assertTrue(count < 10000,
                 "timeout waiting for %i callbacks, got %i"%(n, len(l)))
         if False and support.verbose:
-            print("(%i)"%(len(l),))
+            print "(%i)"%(len(l),)
 
     def test_pendingcalls_threaded(self):
 
@@ -339,7 +339,7 @@ class TestPendingCalls(unittest.TestCase):
                 context.nFinished += 1
                 nFinished = context.nFinished
                 if False and support.verbose:
-                    print("finished threads: ", nFinished)
+                    print "finished threads: ", nFinished
             if nFinished == context.nThreads:
                 context.event.set()
 
@@ -426,9 +426,9 @@ class EmbeddingTests(unittest.TestCase):
         # This is just a "don't crash" test
         out, err = self.run_embedded_interpreter('repeated_init_and_subinterpreters')
         if support.verbose:
-            print()
-            print(out)
-            print(err)
+            print
+            print out
+            print err
 
     @staticmethod
     def _get_default_pipe_encoding():
@@ -445,9 +445,9 @@ class EmbeddingTests(unittest.TestCase):
         env = dict(os.environ, PYTHONIOENCODING="utf-8:surrogateescape")
         out, err = self.run_embedded_interpreter("forced_io_encoding", env=env)
         if support.verbose:
-            print()
-            print(out)
-            print(err)
+            print
+            print out
+            print err
         expected_stream_encoding = "utf-8"
         expected_errors = "surrogateescape"
         expected_pipe_encoding = self._get_default_pipe_encoding()

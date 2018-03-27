@@ -705,7 +705,7 @@ class BigmemTclTest(unittest.TestCase):
 def setUpModule():
     if support.verbose:
         tcl = Tcl()
-        print('patchlevel =', tcl.call('info', 'patchlevel'))
+        print 'patchlevel =', tcl.call('info', 'patchlevel')
 
 
 def test_main():

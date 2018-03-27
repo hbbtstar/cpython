@@ -6,16 +6,16 @@ import sys, os
 def main():
     for filename in sys.argv[1:]:
         if os.path.isdir(filename):
-            print(filename, "Directory!")
+            print filename, "Directory!"
             continue
         with open(filename, "rb") as f:
             data = f.read()
         if b'\0' in data:
-            print(filename, "Binary!")
+            print filename, "Binary!"
             continue
         newdata = data.replace(b"\r\n", b"\n")
         if newdata != data:
-            print(filename)
+            print filename
             with open(filename, "wb") as f:
                 f.write(newdata)
 

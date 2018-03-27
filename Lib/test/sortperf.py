@@ -38,7 +38,7 @@ def randfloats(n):
                     except OSError:
                         pass
         except OSError as msg:
-            print("can't write", fn, ":", msg)
+            print "can't write", fn, ":", msg
     else:
         result = marshal.load(fp)
         fp.close()
@@ -60,7 +60,7 @@ def doit(L):
     t0 = time.perf_counter()
     L.sort()
     t1 = time.perf_counter()
-    print("%6.2f" % (t1-t0), end=' ')
+    print "%6.2f" % (t1-t0),
     flush()
 
 def tabulate(r):
@@ -84,11 +84,11 @@ def tabulate(r):
     """
     cases = tuple([ch + "sort" for ch in r"*\/3+%~=!"])
     fmt = ("%2s %7s" + " %6s"*len(cases))
-    print(fmt % (("i", "2**i") + cases))
+    print fmt % (("i", "2**i") + cases)
     for i in r:
         n = 1 << i
         L = randfloats(n)
-        print("%2d %7d" % (i, n), end=' ')
+        print "%2d %7d" % (i, n),
         flush()
         doit(L) # *sort
         L.reverse()
@@ -137,7 +137,7 @@ def tabulate(r):
         # significantly faster if we leave tham as ints.
         L = list(map(float, L))
         doit(L) # !sort
-        print()
+        print
 
 def main():
     """Main program when invoked as a script.

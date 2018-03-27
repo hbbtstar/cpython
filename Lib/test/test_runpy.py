@@ -226,22 +226,22 @@ class RunModuleTestCase(unittest.TestCase, CodeExecutionMixin):
         pkg_name = "__runpy_pkg__"
         test_fname = mod_base+os.extsep+"py"
         pkg_dir = sub_dir = os.path.realpath(tempfile.mkdtemp())
-        if verbose > 1: print("  Package tree in:", sub_dir)
+        if verbose > 1: print "  Package tree in:", sub_dir
         sys.path.insert(0, pkg_dir)
-        if verbose > 1: print("  Updated sys.path:", sys.path[0])
+        if verbose > 1: print "  Updated sys.path:", sys.path[0]
         if depth:
             namespace_flags = [parent_namespaces] * depth
             namespace_flags[-1] = namespace
             for namespace_flag in namespace_flags:
                 sub_dir = os.path.join(sub_dir, pkg_name)
                 pkg_fname = self._add_pkg_dir(sub_dir, namespace_flag)
-                if verbose > 1: print("  Next level in:", sub_dir)
-                if verbose > 1: print("  Created:", pkg_fname)
+                if verbose > 1: print "  Next level in:", sub_dir
+                if verbose > 1: print "  Created:", pkg_fname
         mod_fname = os.path.join(sub_dir, test_fname)
         mod_file = open(mod_fname, "w")
         mod_file.write(source)
         mod_file.close()
-        if verbose > 1: print("  Created:", mod_fname)
+        if verbose > 1: print "  Created:", mod_fname
         mod_name = (pkg_name+".")*depth + mod_base
         mod_spec = importlib.util.spec_from_file_location(mod_name,
                                                           mod_fname)
@@ -251,26 +251,26 @@ class RunModuleTestCase(unittest.TestCase, CodeExecutionMixin):
         for entry in list(sys.modules):
             if entry.startswith("__runpy_pkg__"):
                 del sys.modules[entry]
-        if verbose > 1: print("  Removed sys.modules entries")
+        if verbose > 1: print "  Removed sys.modules entries"
         del sys.path[0]
-        if verbose > 1: print("  Removed sys.path entry")
+        if verbose > 1: print "  Removed sys.path entry"
         for root, dirs, files in os.walk(top, topdown=False):
             for name in files:
                 try:
                     os.remove(os.path.join(root, name))
                 except OSError as ex:
-                    if verbose > 1: print(ex) # Persist with cleaning up
+                    if verbose > 1: print ex # Persist with cleaning up
             for name in dirs:
                 fullname = os.path.join(root, name)
                 try:
                     os.rmdir(fullname)
                 except OSError as ex:
-                    if verbose > 1: print(ex) # Persist with cleaning up
+                    if verbose > 1: print ex # Persist with cleaning up
         try:
             os.rmdir(top)
-            if verbose > 1: print("  Removed package tree")
+            if verbose > 1: print "  Removed package tree"
         except OSError as ex:
-            if verbose > 1: print(ex) # Persist with cleaning up
+            if verbose > 1: print ex # Persist with cleaning up
 
     def _fix_ns_for_legacy_pyc(self, ns, alter_sys):
         char_to_add = "c"
@@ -308,7 +308,7 @@ class RunModuleTestCase(unittest.TestCase, CodeExecutionMixin):
         def create_ns(init_globals):
             return run_module(mod_name, init_globals, alter_sys=alter_sys)
         try:
-            if verbose > 1: print("Running from source:", mod_name)
+            if verbose > 1: print "Running from source:", mod_name
             self.check_code_execution(create_ns, expected_ns)
             importlib.invalidate_caches()
             __import__(mod_name)
@@ -317,12 +317,12 @@ class RunModuleTestCase(unittest.TestCase, CodeExecutionMixin):
                 make_legacy_pyc(mod_fname)
                 unload(mod_name)  # In case loader caches paths
                 importlib.invalidate_caches()
-                if verbose > 1: print("Running from compiled:", mod_name)
+                if verbose > 1: print "Running from compiled:", mod_name
                 self._fix_ns_for_legacy_pyc(expected_ns, alter_sys)
                 self.check_code_execution(create_ns, expected_ns)
         finally:
             self._del_pkg(pkg_dir)
-        if verbose > 1: print("Module executed successfully")
+        if verbose > 1: print "Module executed successfully"
 
     def _check_package(self, depth, alter_sys=False,
                           *, namespace=False, parent_namespaces=False):
@@ -349,7 +349,7 @@ class RunModuleTestCase(unittest.TestCase, CodeExecutionMixin):
         def create_ns(init_globals):
             return run_module(pkg_name, init_globals, alter_sys=alter_sys)
         try:
-            if verbose > 1: print("Running from source:", pkg_name)
+            if verbose > 1: print "Running from source:", pkg_name
             self.check_code_execution(create_ns, expected_ns)
             importlib.invalidate_caches()
             __import__(mod_name)
@@ -357,13 +357,13 @@ class RunModuleTestCase(unittest.TestCase, CodeExecutionMixin):
             if not sys.dont_write_bytecode:
                 make_legacy_pyc(mod_fname)
                 unload(mod_name)  # In case loader caches paths
-                if verbose > 1: print("Running from compiled:", pkg_name)
+                if verbose > 1: print "Running from compiled:", pkg_name
                 importlib.invalidate_caches()
                 self._fix_ns_for_legacy_pyc(expected_ns, alter_sys)
                 self.check_code_execution(create_ns, expected_ns)
         finally:
             self._del_pkg(pkg_dir)
-        if verbose > 1: print("Package executed successfully")
+        if verbose > 1: print "Package executed successfully"
 
     def _add_relative_modules(self, base_dir, source, depth):
         if depth <= 1:
@@ -376,17 +376,17 @@ class RunModuleTestCase(unittest.TestCase, CodeExecutionMixin):
         # Add sibling module
         sibling_fname = os.path.join(module_dir, "sibling.py")
         create_empty_file(sibling_fname)
-        if verbose > 1: print("  Added sibling module:", sibling_fname)
+        if verbose > 1: print "  Added sibling module:", sibling_fname
         # Add nephew module
         uncle_dir = os.path.join(parent_dir, "uncle")
         self._add_pkg_dir(uncle_dir)
-        if verbose > 1: print("  Added uncle package:", uncle_dir)
+        if verbose > 1: print "  Added uncle package:", uncle_dir
         cousin_dir = os.path.join(uncle_dir, "cousin")
         self._add_pkg_dir(cousin_dir)
-        if verbose > 1: print("  Added cousin package:", cousin_dir)
+        if verbose > 1: print "  Added cousin package:", cousin_dir
         nephew_fname = os.path.join(cousin_dir, "nephew.py")
         create_empty_file(nephew_fname)
-        if verbose > 1: print("  Added nephew module:", nephew_fname)
+        if verbose > 1: print "  Added nephew module:", nephew_fname
 
     def _check_relative_imports(self, depth, run_name=None):
         contents = r"""\
@@ -403,7 +403,7 @@ from ..uncle.cousin import nephew
         try:
             self._add_relative_modules(pkg_dir, contents, depth)
             pkg_name = mod_name.rpartition('.')[0]
-            if verbose > 1: print("Running from source:", mod_name)
+            if verbose > 1: print "Running from source:", mod_name
             d1 = run_module(mod_name, run_name=run_name) # Read from source
             self.assertEqual(d1["__name__"], expected_name)
             self.assertEqual(d1["__package__"], pkg_name)
@@ -416,7 +416,7 @@ from ..uncle.cousin import nephew
             if not sys.dont_write_bytecode:
                 make_legacy_pyc(mod_fname)
                 unload(mod_name)  # In case the loader caches paths
-                if verbose > 1: print("Running from compiled:", mod_name)
+                if verbose > 1: print "Running from compiled:", mod_name
                 importlib.invalidate_caches()
                 d2 = run_module(mod_name, run_name=run_name) # Read from bytecode
                 self.assertEqual(d2["__name__"], expected_name)
@@ -426,21 +426,21 @@ from ..uncle.cousin import nephew
                 del d2 # Ensure __loader__ entry doesn't keep file open
         finally:
             self._del_pkg(pkg_dir)
-        if verbose > 1: print("Module executed successfully")
+        if verbose > 1: print "Module executed successfully"
 
     def test_run_module(self):
         for depth in range(4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_module(depth)
 
     def test_run_module_in_namespace_package(self):
         for depth in range(1, 4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_module(depth, namespace=True, parent_namespaces=True)
 
     def test_run_package(self):
         for depth in range(1, 4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_package(depth)
 
     def test_run_package_init_exceptions(self):
@@ -498,37 +498,37 @@ from ..uncle.cousin import nephew
 
     def test_run_package_in_namespace_package(self):
         for depth in range(1, 4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_package(depth, parent_namespaces=True)
 
     def test_run_namespace_package(self):
         for depth in range(1, 4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_package(depth, namespace=True)
 
     def test_run_namespace_package_in_namespace_package(self):
         for depth in range(1, 4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_package(depth, namespace=True, parent_namespaces=True)
 
     def test_run_module_alter_sys(self):
         for depth in range(4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_module(depth, alter_sys=True)
 
     def test_run_package_alter_sys(self):
         for depth in range(1, 4):
-            if verbose > 1: print("Testing package depth:", depth)
+            if verbose > 1: print "Testing package depth:", depth
             self._check_package(depth, alter_sys=True)
 
     def test_explicit_relative_import(self):
         for depth in range(2, 5):
-            if verbose > 1: print("Testing relative imports at depth:", depth)
+            if verbose > 1: print "Testing relative imports at depth:", depth
             self._check_relative_imports(depth)
 
     def test_main_relative_import(self):
         for depth in range(2, 5):
-            if verbose > 1: print("Testing main relative imports at depth:", depth)
+            if verbose > 1: print "Testing main relative imports at depth:", depth
             self._check_relative_imports(depth, "__main__")
 
     def test_run_name(self):

@@ -70,4 +70,4 @@ if __name__ == '__main__':
 
     # print all the warning messages collected
     for w in ws:
-        print(w.message)
+        print w.message

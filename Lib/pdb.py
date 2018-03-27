@@ -450,10 +450,10 @@ class Pdb(bdb.Bdb, cmd.Cmd):
     # interface abstraction functions
 
     def message(self, msg):
-        print(msg, file=self.stdout)
+        print >>self.stdout, msg
 
     def error(self, msg):
-        print('***', msg, file=self.stdout)
+        print >>self.stdout, '***', msg
 
     # Generic completion functions.  Individual complete_foo methods can be
     # assigned below to one of these functions.
@@ -1635,20 +1635,20 @@ def main():
     opts, args = getopt.getopt(sys.argv[1:], 'hc:', ['--help', '--command='])
 
     if not args:
-        print(_usage)
+        print _usage
         sys.exit(2)
 
     commands = []
     for opt, optarg in opts:
         if opt in ['-h', '--help']:
-            print(_usage)
+            print _usage
             sys.exit()
         elif opt in ['-c', '--command']:
             commands.append(optarg)
 
     mainpyfile = args[0]     # Get script filename
     if not os.path.exists(mainpyfile):
-        print('Error:', mainpyfile, 'does not exist')
+        print 'Error:', mainpyfile, 'does not exist'
         sys.exit(1)
 
     sys.argv[:] = args      # Hide "pdb.py" and pdb options from argument list
@@ -1667,25 +1667,25 @@ def main():
             pdb._runscript(mainpyfile)
             if pdb._user_requested_quit:
                 break
-            print("The program finished and will be restarted")
+            print "The program finished and will be restarted"
         except Restart:
-            print("Restarting", mainpyfile, "with arguments:")
-            print("\t" + " ".join(args))
+            print "Restarting", mainpyfile, "with arguments:"
+            print "\t" + " ".join(args)
         except SystemExit:
             # In most cases SystemExit does not warrant a post-mortem session.
-            print("The program exited via sys.exit(). Exit status:", end=' ')
-            print(sys.exc_info()[1])
+            print "The program exited via sys.exit(). Exit status:",
+            print sys.exc_info()[1]
         except SyntaxError:
             traceback.print_exc()
             sys.exit(1)
         except:
             traceback.print_exc()
-            print("Uncaught exception. Entering post mortem debugging")
-            print("Running 'cont' or 'step' will restart the program")
+            print "Uncaught exception. Entering post mortem debugging"
+            print "Running 'cont' or 'step' will restart the program"
             t = sys.exc_info()[2]
             pdb.interaction(None, t)
-            print("Post mortem debugger finished. The " + mainpyfile +
-                  " will be restarted")
+            print "Post mortem debugger finished. The " + mainpyfile +
+                  " will be restarted"
 
 
 # When invoked as main program, invoke the debugger on a script

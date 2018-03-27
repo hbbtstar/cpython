@@ -524,10 +524,9 @@ def collect_info(info):
             collect_func(info_add)
         except Exception as exc:
             error = True
-            print("ERROR: %s() failed" % (collect_func.__name__),
-                  file=sys.stderr)
+            print >>sys.stderr, "ERROR: %s() failed" % (collect_func.__name__)
             traceback.print_exc(file=sys.stderr)
-            print(file=sys.stderr)
+            print >>sys.stderr
             sys.stderr.flush()
 
     return error
@@ -535,16 +534,16 @@ def collect_info(info):
 
 def dump_info(info, file=None):
     title = "Python debug information"
-    print(title)
-    print("=" * len(title))
-    print()
+    print title
+    print "=" * len(title)
+    print
 
     infos = info.get_infos()
     infos = sorted(infos.items())
     for key, value in infos:
         value = value.replace("\n", " ")
-        print("%s: %s" % (key, value))
-    print()
+        print "%s: %s" % (key, value)
+    print
 
 
 def main():
@@ -553,7 +552,7 @@ def main():
     dump_info(info)
 
     if error:
-        print("Collection failed: exit with error", file=sys.stderr)
+        print >>sys.stderr, "Collection failed: exit with error"
         sys.exit(1)
 
 

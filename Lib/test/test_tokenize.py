@@ -1222,15 +1222,15 @@ class TestDetectEncoding(TestCase):
         # test coding cookie
         for encoding in ('iso-8859-15', 'utf-8'):
             with open(filename, 'w', encoding=encoding) as fp:
-                print("# coding: %s" % encoding, file=fp)
-                print("print('euro:\u20ac')", file=fp)
+                print >>fp, "# coding: %s" % encoding
+                print >>fp, "print('euro:\u20ac')"
             with tokenize_open(filename) as fp:
                 self.assertEqual(fp.encoding, encoding)
                 self.assertEqual(fp.mode, 'r')
 
         # test BOM (no coding cookie)
         with open(filename, 'w', encoding='utf-8-sig') as fp:
-            print("print('euro:\u20ac')", file=fp)
+            print >>fp, "print('euro:\u20ac')"
         with tokenize_open(filename) as fp:
             self.assertEqual(fp.encoding, 'utf-8-sig')
             self.assertEqual(fp.mode, 'r')

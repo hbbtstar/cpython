@@ -420,13 +420,13 @@ class MakefileTests(unittest.TestCase):
     def test_parse_makefile(self):
         self.addCleanup(unlink, TESTFN)
         with open(TESTFN, "w") as makefile:
-            print("var1=a$(VAR2)", file=makefile)
-            print("VAR2=b$(var3)", file=makefile)
-            print("var3=42", file=makefile)
-            print("var4=$/invalid", file=makefile)
-            print("var5=dollar$$5", file=makefile)
-            print("var6=${var3}/lib/python3.5/config-$(VAR2)$(var5)"
-                  "-x86_64-linux-gnu", file=makefile)
+            print >>makefile, "var1=a$(VAR2)"
+            print >>makefile, "VAR2=b$(var3)"
+            print >>makefile, "var3=42"
+            print >>makefile, "var4=$/invalid"
+            print >>makefile, "var5=dollar$$5"
+            print >>makefile, "var6=${var3}/lib/python3.5/config-$(VAR2)$(var5)"
+                  "-x86_64-linux-gnu"
         vars = sysconfig._parse_makefile(TESTFN)
         self.assertEqual(vars, {
             'var1': 'ab42',
