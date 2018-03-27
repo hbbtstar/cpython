@@ -355,11 +355,11 @@ def getmodule(module):
             __import__(module)
         except AttributeError as exc:
             if support.verbose:
-                print "Can't import module %r: %s" % (module, exc)
+                print("Can't import module %r: %s" % (module, exc))
             raise ImportError
         except ImportError as exc:
             if support.verbose:
-                print exc
+                print(exc)
             raise
         return sys.modules[module]
 
@@ -425,7 +425,7 @@ class CompatPickleTests(unittest.TestCase):
                     getmodule(module3)
                 except ImportError as exc:
                     if support.verbose:
-                        print exc
+                        print(exc)
                 if ((module2, module3) not in ALT_IMPORT_MAPPING and
                     REVERSE_IMPORT_MAPPING.get(module3, None) != module2):
                     for (m3, n3), (m2, n2) in REVERSE_NAME_MAPPING.items():

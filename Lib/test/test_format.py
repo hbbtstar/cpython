@@ -14,20 +14,21 @@ maxsize = support.MAX_Py_ssize_t
 def testformat(formatstr, args, output=None, limit=None, overflowok=False):
     if verbose:
         if output:
-            print "{!a} % {!a} =? {!a} ...".format(formatstr, args, output),
+            print("{!a} % {!a} =? {!a} ...".format(formatstr, args, output),
+                  end=' ')
         else:
-            print "{!a} % {!a} works? ...".format(formatstr, args),
+            print("{!a} % {!a} works? ...".format(formatstr, args), end=' ')
     try:
         result = formatstr % args
     except OverflowError:
         if not overflowok:
             raise
         if verbose:
-            print 'overflow (this is fine)'
+            print('overflow (this is fine)')
     else:
         if output and limit is None and result != output:
             if verbose:
-                print 'no'
+                print('no')
             raise AssertionError("%r %% %r == %r != %r" %
                                 (formatstr, args, result, output))
         # when 'limit' is specified, it determines how many characters
@@ -38,12 +39,12 @@ def testformat(formatstr, args, output=None, limit=None, overflowok=False):
         elif output and limit is not None and (
                 len(result)!=len(output) or result[:limit]!=output[:limit]):
             if verbose:
-                print 'no'
-            print "%s %% %s == %s != %s" % \
-                  (repr(formatstr), repr(args), repr(result), repr(output))
+                print('no')
+            print("%s %% %s == %s != %s" % \
+                  (repr(formatstr), repr(args), repr(result), repr(output)))
         else:
             if verbose:
-                print 'yes'
+                print('yes')
 
 def testcommon(formatstr, args, output=None, limit=None, overflowok=False):
     # if formatstr is a str, test str, bytes, and bytearray;
@@ -253,20 +254,20 @@ class FormatTest(unittest.TestCase):
 
         # Test exception for unknown format characters, etc.
         if verbose:
-            print 'Testing exceptions'
+            print('Testing exceptions')
         def test_exc(formatstr, args, exception, excmsg):
             try:
                 testformat(formatstr, args)
             except exception as exc:
                 if str(exc) == excmsg:
                     if verbose:
-                        print "yes"
+                        print("yes")
                 else:
-                    if verbose: print 'no'
-                    print 'Unexpected ', exception, ':', repr(str(exc))
+                    if verbose: print('no')
+                    print('Unexpected ', exception, ':', repr(str(exc)))
             except:
-                if verbose: print 'no'
-                print 'Unexpected exception'
+                if verbose: print('no')
+                print('Unexpected exception')
                 raise
             else:
                 raise TestFailed('did not get expected exception: %s' % excmsg)
@@ -334,20 +335,20 @@ class FormatTest(unittest.TestCase):
 
         # Test exception for unknown format characters, etc.
         if verbose:
-            print 'Testing exceptions'
+            print('Testing exceptions')
         def test_exc(formatstr, args, exception, excmsg):
             try:
                 testformat(formatstr, args)
             except exception as exc:
                 if str(exc) == excmsg:
                     if verbose:
-                        print "yes"
+                        print("yes")
                 else:
-                    if verbose: print 'no'
-                    print 'Unexpected ', exception, ':', repr(str(exc))
+                    if verbose: print('no')
+                    print('Unexpected ', exception, ':', repr(str(exc)))
             except:
-                if verbose: print 'no'
-                print 'Unexpected exception'
+                if verbose: print('no')
+                print('Unexpected exception')
                 raise
             else:
                 raise TestFailed('did not get expected exception: %s' % excmsg)

@@ -3061,7 +3061,7 @@ def _main():
         msg = "Failed to import {} ({}: {})".format(mod_name,
                                                     type(exc).__name__,
                                                     exc)
-        print >>sys.stderr, msg
+        print(msg, file=sys.stderr)
         exit(2)
 
     if has_attrs:
@@ -3071,28 +3071,28 @@ def _main():
             obj = getattr(obj, part)
 
     if module.__name__ in sys.builtin_module_names:
-        print >>sys.stderr, "Can't get info for builtin modules."
+        print("Can't get info for builtin modules.", file=sys.stderr)
         exit(1)
 
     if args.details:
-        print 'Target: {}'.format(target)
-        print 'Origin: {}'.format(getsourcefile(module))
-        print 'Cached: {}'.format(module.__cached__)
+        print('Target: {}'.format(target))
+        print('Origin: {}'.format(getsourcefile(module)))
+        print('Cached: {}'.format(module.__cached__))
         if obj is module:
-            print 'Loader: {}'.format(repr(module.__loader__))
+            print('Loader: {}'.format(repr(module.__loader__)))
             if hasattr(module, '__path__'):
-                print 'Submodule search path: {}'.format(module.__path__)
+                print('Submodule search path: {}'.format(module.__path__))
         else:
             try:
                 __, lineno = findsource(obj)
             except Exception:
                 pass
             else:
-                print 'Line: {}'.format(lineno)
+                print('Line: {}'.format(lineno))
 
-        print '\n'
+        print('\n')
     else:
-        print getsource(obj)
+        print(getsource(obj))
 
 
 if __name__ == "__main__":

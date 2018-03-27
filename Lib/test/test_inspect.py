@@ -1088,7 +1088,7 @@ class TestGetClosureVars(unittest.TestCase):
         # Basic test of the 4 different resolution mechanisms
         def f(nonlocal_ref):
             def g(local_ref):
-                print local_ref, nonlocal_ref, _global_ref, unbound_ref
+                print(local_ref, nonlocal_ref, _global_ref, unbound_ref)
             return g
         _arg = object()
         nonlocal_vars = {"nonlocal_ref": _arg}
@@ -1102,7 +1102,7 @@ class TestGetClosureVars(unittest.TestCase):
     def test_generator_closure(self):
         def f(nonlocal_ref):
             def g(local_ref):
-                print local_ref, nonlocal_ref, _global_ref, unbound_ref
+                print(local_ref, nonlocal_ref, _global_ref, unbound_ref)
                 yield
             return g
         _arg = object()
@@ -1118,7 +1118,7 @@ class TestGetClosureVars(unittest.TestCase):
         class C:
             def f(self, nonlocal_ref):
                 def g(local_ref):
-                    print local_ref, nonlocal_ref, _global_ref, unbound_ref
+                    print(local_ref, nonlocal_ref, _global_ref, unbound_ref)
                 return g
         _arg = object()
         nonlocal_vars = {"nonlocal_ref": _arg}

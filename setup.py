@@ -307,40 +307,40 @@ class PyBuildExt(build_ext):
             while len(lst) % 3:
                 lst.append("")
             for e, f, g in zip(lst[::3], lst[1::3], lst[2::3]):
-                print "%-*s   %-*s   %-*s" % (longest, e, longest, f,
-                                              longest, g)
+                print("%-*s   %-*s   %-*s" % (longest, e, longest, f,
+                                              longest, g))
 
         if missing:
-            print
-            print "Python build finished successfully!"
-            print "The necessary bits to build these optional modules were not "
-                  "found:"
+            print()
+            print("Python build finished successfully!")
+            print("The necessary bits to build these optional modules were not "
+                  "found:")
             print_three_column(missing)
-            print "To find the necessary bits, look in setup.py in"
-                  " detect_modules() for the module's name."
-            print
+            print("To find the necessary bits, look in setup.py in"
+                  " detect_modules() for the module's name.")
+            print()
 
         if removed_modules:
-            print "The following modules found by detect_modules() in"
-            " setup.py, have been"
-            print "built by the Makefile instead, as configured by the"
-            " Setup files:"
+            print("The following modules found by detect_modules() in"
+            " setup.py, have been")
+            print("built by the Makefile instead, as configured by the"
+            " Setup files:")
             print_three_column([ext.name for ext in removed_modules])
 
         if self.failed:
             failed = self.failed[:]
-            print
-            print "Failed to build these modules:"
+            print()
+            print("Failed to build these modules:")
             print_three_column(failed)
-            print
+            print()
 
         if self.failed_on_import:
             failed = self.failed_on_import[:]
-            print
-            print "Following modules built successfully"
-                  " but were removed because they could not be imported:"
+            print()
+            print("Following modules built successfully"
+                  " but were removed because they could not be imported:")
             print_three_column(failed)
-            print
+            print()
 
     def build_extension(self, ext):
 
@@ -888,7 +888,7 @@ class PyBuildExt(build_ext):
                             openssl_ver = int(m.group(1), 16)
                             break
             except IOError as msg:
-                print "IOError while reading opensshv.h:", msg
+                print("IOError while reading opensshv.h:", msg)
 
         #print('openssl_ver = 0x%08x' % openssl_ver)
         min_openssl_ver = 0x00907000
@@ -906,8 +906,8 @@ class PyBuildExt(build_ext):
                                        library_dirs = ssl_libs,
                                        libraries = ['ssl', 'crypto']) )
             else:
-                print "warning: openssl 0x%08x is too old for _hashlib" %
-                      openssl_ver
+                print("warning: openssl 0x%08x is too old for _hashlib" %
+                      openssl_ver)
                 missing.append('_hashlib')
 
         # We always compile these even when OpenSSL is available (issue #14693).
@@ -1055,7 +1055,7 @@ class PyBuildExt(build_ext):
                 if host_platform == 'darwin' and is_macosx_sdk_path(d):
                     f = os.path.join(sysroot, d[1:], "db.h")
 
-                if db_setup_debug: print "db: looking for db.h in", f
+                if db_setup_debug: print("db: looking for db.h in", f)
                 if os.path.exists(f):
                     with open(f, 'rb') as file:
                         f = file.read()
@@ -1071,8 +1071,8 @@ class PyBuildExt(build_ext):
                             m = re.search(br"#define\WDB_VERSION_PATCH\W(\d+)", f)
                             db_patch = int(m.group(1))
                             if db_patch < 21:
-                                print "db.h:", db_ver, "patch", db_patch,
-                                      "being ignored (4.6.x must be >= 4.6.21)"
+                                print("db.h:", db_ver, "patch", db_patch,
+                                      "being ignored (4.6.x must be >= 4.6.21)")
                                 continue
 
                         if ( (db_ver not in db_ver_inc_map) and
@@ -1081,14 +1081,14 @@ class PyBuildExt(build_ext):
                             # (first occurrence only)
                             db_ver_inc_map[db_ver] = d
                             if db_setup_debug:
-                                print "db.h: found", db_ver, "in", d
+                                print("db.h: found", db_ver, "in", d)
                         else:
                             # we already found a header for this library version
-                            if db_setup_debug: print "db.h: ignoring", d
+                            if db_setup_debug: print("db.h: ignoring", d)
                     else:
                         # ignore this header, it didn't contain a version number
                         if db_setup_debug:
-                            print "db.h: no version number version in", d
+                            print("db.h: no version number version in", d)
 
             db_found_vers = list(db_ver_inc_map.keys())
             db_found_vers.sort()
@@ -1133,12 +1133,12 @@ class PyBuildExt(build_ext):
                         dblib_dir = [ os.path.abspath(os.path.dirname(dblib_file)) ]
                         raise db_found
                     else:
-                        if db_setup_debug: print "db lib: ", dblib, "not found"
+                        if db_setup_debug: print("db lib: ", dblib, "not found")
 
         except db_found:
             if db_setup_debug:
-                print "bsddb using BerkeleyDB lib:", db_ver, dblib
-                print "bsddb lib dir:", dblib_dir, " inc dir:", db_incdir
+                print("bsddb using BerkeleyDB lib:", db_ver, dblib)
+                print("bsddb lib dir:", dblib_dir, " inc dir:", db_incdir)
             dblibs = [dblib]
             # Only add the found library and include directories if they aren't
             # already being searched. This avoids an explicit runtime library
@@ -1150,7 +1150,7 @@ class PyBuildExt(build_ext):
             if dblib_dir[0] in lib_dirs:
                 dblib_dir = None
         else:
-            if db_setup_debug: print "db: no appropriate library found"
+            if db_setup_debug: print("db: no appropriate library found")
             db_incs = None
             dblibs = []
             dblib_dir = None
@@ -1187,7 +1187,7 @@ class PyBuildExt(build_ext):
 
             f = os.path.join(d, "sqlite3.h")
             if os.path.exists(f):
-                if sqlite_setup_debug: print "sqlite: found %s"%f
+                if sqlite_setup_debug: print("sqlite: found %s"%f)
                 with open(f) as file:
                     incf = file.read()
                 m = re.search(
@@ -1199,15 +1199,15 @@ class PyBuildExt(build_ext):
                     if sqlite_version_tuple >= MIN_SQLITE_VERSION_NUMBER:
                         # we win!
                         if sqlite_setup_debug:
-                            print "%s/sqlite3.h: version %s"%(d, sqlite_version)
+                            print("%s/sqlite3.h: version %s"%(d, sqlite_version))
                         sqlite_incdir = d
                         break
                     else:
                         if sqlite_setup_debug:
-                            print "%s: version %d is too old, need >= %s"%(d,
-                                        sqlite_version, MIN_SQLITE_VERSION)
+                            print("%s: version %d is too old, need >= %s"%(d,
+                                        sqlite_version, MIN_SQLITE_VERSION))
                 elif sqlite_setup_debug:
-                    print "sqlite: %s had no SQLITE_VERSION"%(f,)
+                    print("sqlite: %s had no SQLITE_VERSION"%(f,))
 
         if sqlite_incdir:
             sqlite_dirs_to_check = [
@@ -1297,7 +1297,7 @@ class PyBuildExt(build_ext):
                             ndbm_libs = ['gdbm_compat']
                         else:
                             ndbm_libs = []
-                        if dbm_setup_debug: print "building dbm using ndbm"
+                        if dbm_setup_debug: print("building dbm using ndbm")
                         dbmext = Extension('_dbm', ['_dbmmodule.c'],
                                            define_macros=[
                                                ('HAVE_NDBM_H',None),
@@ -1312,7 +1312,7 @@ class PyBuildExt(build_ext):
                                                                'gdbm_compat'):
                             gdbm_libs.append('gdbm_compat')
                         if find_file("gdbm/ndbm.h", inc_dirs, []) is not None:
-                            if dbm_setup_debug: print "building dbm using gdbm"
+                            if dbm_setup_debug: print("building dbm using gdbm")
                             dbmext = Extension(
                                 '_dbm', ['_dbmmodule.c'],
                                 define_macros=[
@@ -1321,7 +1321,7 @@ class PyBuildExt(build_ext):
                                 libraries = gdbm_libs)
                             break
                         if find_file("gdbm-ndbm.h", inc_dirs, []) is not None:
-                            if dbm_setup_debug: print "building dbm using gdbm"
+                            if dbm_setup_debug: print("building dbm using gdbm")
                             dbmext = Extension(
                                 '_dbm', ['_dbmmodule.c'],
                                 define_macros=[
@@ -1331,7 +1331,7 @@ class PyBuildExt(build_ext):
                             break
                 elif cand == "bdb":
                     if dblibs:
-                        if dbm_setup_debug: print "building dbm using bdb"
+                        if dbm_setup_debug: print("building dbm using bdb")
                         dbmext = Extension('_dbm', ['_dbmmodule.c'],
                                            library_dirs=dblib_dir,
                                            runtime_library_dirs=dblib_dir,
@@ -1954,9 +1954,9 @@ class PyBuildExt(build_ext):
             if host_platform == 'darwin':
                 return self.configure_ctypes_darwin(ext)
 
-            print 'warning: building with the bundled copy of libffi is'
+            print('warning: building with the bundled copy of libffi is'
                   ' deprecated on this platform.  It will not be'
-                  ' distributed with Python 3.7'
+                  ' distributed with Python 3.7')
             srcdir = sysconfig.get_config_var('srcdir')
             ffi_builddir = os.path.join(self.build_temp, 'libffi')
             ffi_srcdir = os.path.abspath(os.path.join(srcdir, 'Modules',
@@ -1984,7 +1984,7 @@ class PyBuildExt(build_ext):
 
                 res = os.system(cmd)
                 if res or not os.path.exists(ffi_configfile):
-                    print "Failed to configure _ctypes module"
+                    print("Failed to configure _ctypes module")
                     return False
 
             fficonfig = {}
@@ -2075,8 +2075,8 @@ class PyBuildExt(build_ext):
                         break
                 else:
                     ffi_inc = None
-                    print 'Header file {} does not define LIBFFI_H or '
-                          'ffi_wrapper_h'.format(ffi_h)
+                    print('Header file {} does not define LIBFFI_H or '
+                          'ffi_wrapper_h'.format(ffi_h))
         ffi_lib = None
         if ffi_inc is not None:
             for lib_name in ('ffi', 'ffi_pic'):

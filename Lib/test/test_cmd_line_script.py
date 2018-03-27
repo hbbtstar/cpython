@@ -113,8 +113,8 @@ class CmdLineTest(unittest.TestCase):
                              expected_path0, expected_package,
                              expected_loader):
         if verbose > 1:
-            print "Output from test script %r:" % script_name
-            print repr(data)
+            print("Output from test script %r:" % script_name)
+            print(repr(data))
         self.assertEqual(exit_code, 0)
         printed_loader = '__loader__==%a' % expected_loader
         printed_file = '__file__==%a' % expected_file
@@ -123,11 +123,11 @@ class CmdLineTest(unittest.TestCase):
         printed_path0 = 'sys.path[0]==%a' % expected_path0
         printed_cwd = 'cwd==%a' % os.getcwd()
         if verbose > 1:
-            print 'Expected output:'
-            print printed_file
-            print printed_package
-            print printed_argv0
-            print printed_cwd
+            print('Expected output:')
+            print(printed_file)
+            print(printed_package)
+            print(printed_argv0)
+            print(printed_cwd)
         self.assertIn(printed_loader.encode('utf-8'), data)
         self.assertIn(printed_file.encode('utf-8'), data)
         self.assertIn(printed_package.encode('utf-8'), data)
@@ -151,9 +151,9 @@ class CmdLineTest(unittest.TestCase):
         run_args = cmd_line_switches + (script_name,)
         rc, out, err = assert_python_failure(*run_args)
         if verbose > 1:
-            print 'Output from test script %r:' % script_name
-            print repr(err)
-            print 'Expected output: %r' % expected_msg
+            print('Output from test script %r:' % script_name)
+            print(repr(err))
+            print('Expected output: %r' % expected_msg)
         self.assertIn(expected_msg.encode('utf-8'), err)
 
     def test_dash_c_loader(self):
@@ -361,7 +361,7 @@ class CmdLineTest(unittest.TestCase):
                 script_name = _make_test_script(pkg_dir, 'script')
                 rc, out, err = assert_python_ok('-m', 'test_pkg.script', *example_args, __isolated=False)
                 if verbose > 1:
-                    print repr(out)
+                    print(repr(out))
                 expected = "init_argv0==%r" % '-m'
                 self.assertIn(expected.encode('utf-8'), out)
                 self._check_output(script_name, rc, out,
@@ -379,7 +379,7 @@ class CmdLineTest(unittest.TestCase):
                         'import sys; print("sys.path[0]==%r" % sys.path[0])',
                         __isolated=False)
                     if verbose > 1:
-                        print repr(out)
+                        print(repr(out))
                     expected = "sys.path[0]==%r" % ''
                     self.assertIn(expected.encode('utf-8'), out)
 
@@ -408,7 +408,7 @@ class CmdLineTest(unittest.TestCase):
     def check_dash_m_failure(self, *args):
         rc, out, err = assert_python_failure('-m', *args, __isolated=False)
         if verbose > 1:
-            print repr(out)
+            print(repr(out))
         self.assertEqual(rc, 1)
         return err
 

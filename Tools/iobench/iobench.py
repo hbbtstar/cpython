@@ -308,7 +308,7 @@ def run_all_tests(options):
         "large": 2,
     }
 
-    print "Python %s" % sys.version
+    print("Python %s" % sys.version)
     if sys.version_info < (3, 3):
         if sys.maxunicode > 0xffff:
             text = "UCS-4 (wide build)"
@@ -316,28 +316,28 @@ def run_all_tests(options):
             text = "UTF-16 (narrow build)"
     else:
         text = "PEP 393"
-    print "Unicode: %s" % text
-    print platform.platform()
+    print("Unicode: %s" % text)
+    print(platform.platform())
     binary_files = list(get_binary_files())
     text_files = list(get_text_files())
     if "b" in options:
-        print "Binary unit = one byte"
+        print("Binary unit = one byte")
     if "t" in options:
-        print "Text unit = one character (%s-decoded)" % TEXT_ENCODING
+        print("Text unit = one character (%s-decoded)" % TEXT_ENCODING)
 
     # Binary reads
     if "b" in options and "r" in options:
-        print "\n** Binary input **\n"
+        print("\n** Binary input **\n")
         run_test_family(read_tests, "t", binary_files, lambda fn: open(fn, "rb"))
 
     # Text reads
     if "t" in options and "r" in options:
-        print "\n** Text input **\n"
+        print("\n** Text input **\n")
         run_test_family(read_tests, "b", text_files, lambda fn: text_open(fn, "r"))
 
     # Binary writes
     if "b" in options and "w" in options:
-        print "\n** Binary append **\n"
+        print("\n** Binary append **\n")
         def make_test_source(name, size):
             with open(name, "rb") as f:
                 return f.read()
@@ -346,7 +346,7 @@ def run_all_tests(options):
 
     # Text writes
     if "t" in options and "w" in options:
-        print "\n** Text append **\n"
+        print("\n** Text append **\n")
         def make_test_source(name, size):
             with text_open(name, "r") as f:
                 return f.read()
@@ -355,7 +355,7 @@ def run_all_tests(options):
 
     # Binary overwrites
     if "b" in options and "w" in options:
-        print "\n** Binary overwrite **\n"
+        print("\n** Binary overwrite **\n")
         def make_test_source(name, size):
             with open(name, "rb") as f:
                 return f.read()
@@ -364,7 +364,7 @@ def run_all_tests(options):
 
     # Text overwrites
     if "t" in options and "w" in options:
-        print "\n** Text overwrite **\n"
+        print("\n** Text overwrite **\n")
         def make_test_source(name, size):
             with text_open(name, "r") as f:
                 return f.read()
@@ -373,7 +373,7 @@ def run_all_tests(options):
 
 
 def prepare_files():
-    print "Preparing files..."
+    print("Preparing files...")
     # Binary files
     for name, size in get_binary_files():
         if os.path.isfile(name) and os.path.getsize(name) == size:

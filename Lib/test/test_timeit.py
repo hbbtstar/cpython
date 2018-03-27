@@ -366,7 +366,7 @@ class TestTimeit(unittest.TestCase):
 
     def test_autorange_with_callback(self):
         def callback(a, b):
-            print "{} {:.3f}".format(a, b)
+            print("{} {:.3f}".format(a, b))
         with captured_stdout() as s:
             num_loops, time_taken = self.autorange(callback)
         self.assertEqual(num_loops, 1000)

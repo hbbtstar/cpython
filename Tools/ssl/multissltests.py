@@ -405,24 +405,24 @@ def main():
                 )
         except Exception as e:
             log.exception("%s failed", build)
-            print >>sys.stderr, "{} failed: {}".format(build, e)
+            print("{} failed: {}".format(build, e), file=sys.stderr)
             sys.exit(2)
 
-    print "\n{} finished in {}".format(
+    print("\n{} finished in {}".format(
         "Tests" if not args.compile_only else "Builds",
         datetime.now() - start
-    )
-    print 'Python: ', sys.version
+    ))
+    print('Python: ', sys.version)
     if args.compile_only:
-        print 'Build only'
+        print('Build only')
     elif args.tests:
-        print 'Executed Tests:', ' '.join(args.tests)
+        print('Executed Tests:', ' '.join(args.tests))
     else:
-        print 'Executed all SSL tests.'
+        print('Executed all SSL tests.')
 
-    print 'OpenSSL / LibreSSL versions:'
+    print('OpenSSL / LibreSSL versions:')
     for build in builds:
-        print "    * {0.library} {0.version}".format(build)
+        print("    * {0.library} {0.version}".format(build))
 
 
 if __name__ == "__main__":

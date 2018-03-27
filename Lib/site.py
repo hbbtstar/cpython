@@ -173,12 +173,13 @@ def addpackage(sitedir, name, known_paths):
                     sys.path.append(dir)
                     known_paths.add(dircase)
             except Exception:
-                print >>sys.stderr, "Error processing line {:d} of {}:\n".format(n+1, fullname)
+                print("Error processing line {:d} of {}:\n".format(n+1, fullname),
+                      file=sys.stderr)
                 import traceback
                 for record in traceback.format_exception(*sys.exc_info()):
                     for line in record.splitlines():
-                        print >>sys.stderr, '  '+line
-                print >>sys.stderr, "\nRemainder of file ignored"
+                        print('  '+line, file=sys.stderr)
+                print("\nRemainder of file ignored", file=sys.stderr)
                 break
     if reset:
         known_paths = None
@@ -561,15 +562,15 @@ def _script():
     if not args:
         user_base = getuserbase()
         user_site = getusersitepackages()
-        print "sys.path = ["
+        print("sys.path = [")
         for dir in sys.path:
-            print "    %r," % (dir,)
-        print "]"
-        print "USER_BASE: %r (%s)" % (user_base,
-            "exists" if os.path.isdir(user_base) else "doesn't exist")
-        print "USER_SITE: %r (%s)" % (user_site,
-            "exists" if os.path.isdir(user_site) else "doesn't exist")
-        print "ENABLE_USER_SITE: %r" %  ENABLE_USER_SITE
+            print("    %r," % (dir,))
+        print("]")
+        print("USER_BASE: %r (%s)" % (user_base,
+            "exists" if os.path.isdir(user_base) else "doesn't exist"))
+        print("USER_SITE: %r (%s)" % (user_site,
+            "exists" if os.path.isdir(user_site) else "doesn't exist"))
+        print("ENABLE_USER_SITE: %r" %  ENABLE_USER_SITE)
         sys.exit(0)
 
     buffer = []
@@ -579,7 +580,7 @@ def _script():
         buffer.append(USER_SITE)
 
     if buffer:
-        print os.pathsep.join(buffer)
+        print(os.pathsep.join(buffer))
         if ENABLE_USER_SITE:
             sys.exit(0)
         elif ENABLE_USER_SITE is False:
@@ -590,7 +591,7 @@ def _script():
             sys.exit(3)
     else:
         import textwrap
-        print textwrap.dedent(help % (sys.argv[0], os.pathsep))
+        print(textwrap.dedent(help % (sys.argv[0], os.pathsep)))
         sys.exit(10)
 
 if __name__ == '__main__':

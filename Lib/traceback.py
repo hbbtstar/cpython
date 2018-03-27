@@ -22,7 +22,7 @@ def print_list(extracted_list, file=None):
     if file is None:
         file = sys.stderr
     for item in StackSummary.from_list(extracted_list).format():
-        print >>file, item,; file.write("")
+        print(item, file=file, end="")
 
 def format_list(extracted_list):
     """Format a list of traceback entry tuples for printing.
@@ -98,7 +98,7 @@ def print_exception(etype, value, tb, limit=None, file=None, chain=True):
         file = sys.stderr
     for line in TracebackException(
             type(value), value, tb, limit=limit).format(chain=chain):
-        print >>file, line,; file.write("")
+        print(line, file=file, end="")
 
 
 def format_exception(etype, value, tb, limit=None, chain=True):

@@ -5,8 +5,8 @@ import sys
 try:
     from tkinter import *
 except ImportError:
-    print >>sys.__stderr__, "** IDLE can't import Tkinter.\n"
-          "Your Python may not be configured for Tk. **"
+    print("** IDLE can't import Tkinter.\n"
+          "Your Python may not be configured for Tk. **", file=sys.__stderr__)
     raise SystemExit(1)
 import tkinter.messagebox as tkMessageBox
 if TkVersion < 8.5:
@@ -567,14 +567,14 @@ class ModifiedInterpreter(InteractiveInterpreter):
             console = self.tkconsole.console
             if how == "OK":
                 if what is not None:
-                    print >>console, repr(what)
+                    print(repr(what), file=console)
             elif how == "EXCEPTION":
                 if self.tkconsole.getvar("<<toggle-jit-stack-viewer>>"):
                     self.remote_stack_viewer()
             elif how == "ERROR":
                 errmsg = "pyshell.ModifiedInterpreter: Subprocess ERROR:\n"
-                print >>sys.__stderr__, errmsg, what
-                print >>console, errmsg, what
+                print(errmsg, what, file=sys.__stderr__)
+                print(errmsg, what, file=console)
             # we received a response to the currently active seq number:
             try:
                 self.tkconsole.endexecuting()
@@ -642,8 +642,9 @@ class ModifiedInterpreter(InteractiveInterpreter):
             code = compile(source, filename, "exec")
         except (OverflowError, SyntaxError):
             self.tkconsole.resetoutput()
-            print >>self.tkconsole.stderr, '*** Error in script or command!\n'
-                 'Traceback (most recent call last):'
+            print('*** Error in script or command!\n'
+                 'Traceback (most recent call last):',
+                  file=self.tkconsole.stderr)
             InteractiveInterpreter.showsyntaxerror(self, filename)
             self.tkconsole.showprompt()
         else:
@@ -778,13 +779,14 @@ class ModifiedInterpreter(InteractiveInterpreter):
                 raise
         except:
             if use_subprocess:
-                print >>self.tkconsole.stderr, "IDLE internal error in runcode()"
+                print("IDLE internal error in runcode()",
+                      file=self.tkconsole.stderr)
                 self.showtraceback()
                 self.tkconsole.endexecuting()
             else:
                 if self.tkconsole.canceled:
                     self.tkconsole.canceled = False
-                    print >>self.tkconsole.stderr, "KeyboardInterrupt"
+                    print("KeyboardInterrupt", file=self.tkconsole.stderr)
                 else:
                     self.showtraceback()
         finally:
@@ -1387,7 +1389,7 @@ def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "c:deihnr:st:")
     except getopt.error as msg:
-        print >>sys.stderr, "Error: %s\n%s" % (msg, usage_msg)
+        print("Error: %s\n%s" % (msg, usage_msg), file=sys.stderr)
         sys.exit(2)
     for o, a in opts:
         if o == '-c':
@@ -1404,14 +1406,15 @@ def main():
         if o == '-i':
             enable_shell = True
         if o == '-n':
-            print >>sys.stderr, " Warning: running IDLE without a subprocess is deprecated."
+            print(" Warning: running IDLE without a subprocess is deprecated.",
+                  file=sys.stderr)
             use_subprocess = False
         if o == '-r':
             script = a
             if os.path.isfile(script):
                 pass
             else:
-                print "No script file: ", script
+                print("No script file: ", script)
                 sys.exit()
             enable_shell = True
         if o == '-s':

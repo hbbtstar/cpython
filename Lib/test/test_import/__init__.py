@@ -105,12 +105,12 @@ class ImportTests(unittest.TestCase):
                 pyc = TESTFN + ".pyc"
 
             with open(source, "w") as f:
-                print >>f, "# This tests Python's ability to import a",
-                      ext, "file."
+                print("# This tests Python's ability to import a",
+                      ext, "file.", file=f)
                 a = random.randrange(1000)
                 b = random.randrange(1000)
-                print >>f, "a =", a
-                print >>f, "b =", b
+                print("a =", a, file=f)
+                print("b =", b, file=f)
 
             if TESTFN in sys.modules:
                 del sys.modules[TESTFN]
@@ -182,7 +182,7 @@ class ImportTests(unittest.TestCase):
     def test_failing_import_sticks(self):
         source = TESTFN + ".py"
         with open(source, "w") as f:
-            print >>f, "a = 1/0"
+            print("a = 1/0", file=f)
 
         # New in 2.4, we shouldn't be able to import that no matter how often
         # we try.
@@ -719,7 +719,7 @@ class PycacheTests(unittest.TestCase):
         self.source = TESTFN + '.py'
         self._clean()
         with open(self.source, 'w') as fp:
-            print >>fp, '# This is a test file written by test_import.py'
+            print('# This is a test file written by test_import.py', file=fp)
         sys.path.insert(0, os.curdir)
         importlib.invalidate_caches()
 
@@ -860,7 +860,7 @@ class PycacheTests(unittest.TestCase):
         __import__(TESTFN)
         unload(TESTFN)
         with open(self.source, 'a') as fp:
-            print >>fp, "x = 5"
+            print("x = 5", file=fp)
         m = __import__(TESTFN)
         self.assertEqual(m.x, 5)
 

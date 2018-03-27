@@ -52,13 +52,13 @@ def main():
             leftover = None
         for line in reversed(lines):
             if prog.search(line):
-                print line
+                print(line)
 
 
 def usage(msg, code=2):
     sys.stdout = sys.stderr
-    print msg
-    print __doc__
+    print(msg)
+    print(__doc__)
     sys.exit(code)
 
 

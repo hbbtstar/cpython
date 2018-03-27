@@ -16,20 +16,20 @@ class DummyThreadingTestCase(unittest.TestCase):
             #delay = random.random() * 2
             delay = 0
             if support.verbose:
-                print 'task', self.name, 'will run for', delay, 'sec'
+                print('task', self.name, 'will run for', delay, 'sec')
             sema.acquire()
             mutex.acquire()
             running += 1
             if support.verbose:
-                print running, 'tasks are running'
+                print(running, 'tasks are running')
             mutex.release()
             time.sleep(delay)
             if support.verbose:
-                print 'task', self.name, 'done'
+                print('task', self.name, 'done')
             mutex.acquire()
             running -= 1
             if support.verbose:
-                print self.name, 'is finished.', running, 'tasks are running'
+                print(self.name, 'is finished.', running, 'tasks are running')
             mutex.release()
             sema.release()
 
@@ -50,11 +50,11 @@ class DummyThreadingTestCase(unittest.TestCase):
             t.start()
 
         if support.verbose:
-            print 'waiting for all tasks to complete'
+            print('waiting for all tasks to complete')
         for t in self.threads:
             t.join()
         if support.verbose:
-            print 'all tasks done'
+            print('all tasks done')
 
 if __name__ == '__main__':
     unittest.main()

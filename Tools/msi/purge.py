@@ -17,11 +17,11 @@ VERSION_RE = re.compile(r'(\d+\.\d+\.\d+)(\w+\d+)?$')
 try:
     m = VERSION_RE.match(sys.argv[1])
     if not m:
-        print 'Invalid version:', sys.argv[1]
-        print 'Expected something like "3.5.1rc1"'
+        print('Invalid version:', sys.argv[1])
+        print('Expected something like "3.5.1rc1"')
         sys.exit(1)
 except LookupError:
-    print 'Missing version argument. Expected something like "3.5.1rc1"'
+    print('Missing version argument. Expected something like "3.5.1rc1"')
     sys.exit(1)
 
 URL = "https://www.python.org/ftp/python/{}/".format(m.group(1))
@@ -66,9 +66,9 @@ PATHS = [
     "python-{}-amd64-webinstall.exe".format(m.group(0)),
 ] + ["win32{}/{}".format(REL, f) for f in FILES] + ["amd64{}/{}".format(REL, f) for f in FILES]
 
-print 'Purged:'
+print('Purged:')
 for n in PATHS:
     u = URL + n
     with urlopen(Request(u, method='PURGE', headers={'Fastly-Soft-Purge': 1})) as r:
         r.read()
-    print '  ', u
+    print('  ', u)

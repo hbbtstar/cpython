@@ -253,7 +253,7 @@ class ScopeTests(unittest.TestCase):
     def testUnboundLocal(self):
 
         def errorInOuter():
-            print y
+            print(y)
             def inner():
                 return y
             y = 1
@@ -274,7 +274,7 @@ class ScopeTests(unittest.TestCase):
         def errorInOuter():
             y = 1
             del y
-            print y
+            print(y)
             def inner():
                 return y
 
@@ -570,18 +570,18 @@ class ScopeTests(unittest.TestCase):
     def testListCompLocalVars(self):
 
         try:
-            print bad
+            print(bad)
         except NameError:
             pass
         else:
-            print "bad should not be defined"
+            print("bad should not be defined")
 
         def x():
             [bad for s in 'a b' for bad in s.split()]
 
         x()
         try:
-            print bad
+            print(bad)
         except NameError:
             pass
 

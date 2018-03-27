@@ -54,7 +54,7 @@ def genwincodec(codepage):
 ''' % (encodingname, ' '.join(platform.win32_ver()), codepage
       ) + code.split('"""#"', 1)[1]
 
-    print code
+    print(code)
 
 if __name__ == '__main__':
     import sys

@@ -113,7 +113,7 @@ w = [7, 10, 19]
 # The primitive roots are correct:
 for i in range(3):
     if not is_primitive_root(w[i], P[i], F[i], E[i]):
-        print "FAIL"
+        print("FAIL")
 
 
 # =================================================================
@@ -153,7 +153,7 @@ w = [5, 31, 13]
 # The primitive roots are correct:
 for i in range(3):
     if not is_primitive_root(w[i], P[i], F[i], E[i]):
-        print "FAIL"
+        print("FAIL")
 
 
 # ======================================================================

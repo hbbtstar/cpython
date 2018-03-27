@@ -1482,7 +1482,7 @@ class TestEnum(unittest.TestCase):
     def test_extending2(self):
         class Shade(Enum):
             def shade(self):
-                print self.name
+                print(self.name)
         class Color(Shade):
             red = 1
             green = 2
@@ -2529,9 +2529,9 @@ class TestStdLib(unittest.TestCase):
         failed = False
         for k in values.keys():
             if result[k] != values[k]:
-                print
-                print ''.join([unicode('\n%s\n     key: %s\n  result: %s\nexpected: %s\n%s\n' %
-                        ('=' * 75, k, result[k], values[k], '=' * 75))])
+                print()
+                print('\n%s\n     key: %s\n  result: %s\nexpected: %s\n%s\n' %
+                        ('=' * 75, k, result[k], values[k], '=' * 75), sep='')
                 failed = True
         if failed:
             self.fail("result does not equal expected, see print above")
@@ -2565,7 +2565,7 @@ class TestStdLib(unittest.TestCase):
         failed = False
         for v, r in zip(values, result):
             if r != v:
-                print ''.join([unicode('\n%s\n%s\n%s\n%s\n' % ('=' * 75, r, v, '=' * 75))])
+                print('\n%s\n%s\n%s\n%s\n' % ('=' * 75, r, v, '=' * 75), sep='')
                 failed = True
         if failed:
             self.fail("result does not equal expected, see print above")

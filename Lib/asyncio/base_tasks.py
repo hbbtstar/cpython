@@ -63,12 +63,14 @@ def _task_print_stack(task, limit, file):
         extracted_list.append((filename, lineno, name, line))
     exc = task._exception
     if not extracted_list:
-        print >>file, 'No stack for %r' % task
+        print('No stack for %r' % task, file=file)
     elif exc is not None:
-        print >>file, 'Traceback for %r (most recent call last):' % task
+        print('Traceback for %r (most recent call last):' % task,
+              file=file)
     else:
-        print >>file, 'Stack for %r (most recent call last):' % task
+        print('Stack for %r (most recent call last):' % task,
+              file=file)
     traceback.print_list(extracted_list, file=file)
     if exc is not None:
         for line in traceback.format_exception_only(exc.__class__, exc):
-            print >>file, line,; file.write('')
+            print(line, file=file, end='')

@@ -46,7 +46,7 @@ class Test(unittest.TestCase):
                     self.assertEqual(n * v.itemsize, len(v.tobytes()))
             except:
                 # so that we can see the failing type
-                print tp
+                print(tp)
                 raise
 
     def test_endian_types(self):
@@ -74,7 +74,7 @@ class Test(unittest.TestCase):
                     self.assertEqual(n, len(v))
             except:
                 # so that we can see the failing type
-                print tp
+                print(tp)
                 raise
 
 # define some structure classes

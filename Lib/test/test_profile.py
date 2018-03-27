@@ -53,11 +53,11 @@ class ProfileTest(unittest.TestCase):
         self.assertEqual(results[0], 1000)
         for i, method in enumerate(self.methodnames):
             if results[i+1] != expected[method]:
-                print "Stats.%s output for %s doesn't fit expectation!" %
-                      (method, self.profilerclass.__name__)
-                print '\n'.join(unified_diff(
+                print("Stats.%s output for %s doesn't fit expectation!" %
+                      (method, self.profilerclass.__name__))
+                print('\n'.join(unified_diff(
                                   results[i+1].split('\n'),
-                                  expected[method].split('\n')))
+                                  expected[method].split('\n'))))
 
     def test_calling_conventions(self):
         # Issue #5330: profile and cProfile wouldn't report C functions called
@@ -96,7 +96,7 @@ class ProfileTest(unittest.TestCase):
 
 def regenerate_expected_output(filename, cls):
     filename = filename.rstrip('co')
-    print 'Regenerating %s...' % filename
+    print('Regenerating %s...' % filename)
     results = cls.do_profiling()
 
     newfile = []

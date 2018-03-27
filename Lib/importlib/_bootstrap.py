@@ -224,7 +224,7 @@ def _verbose_message(message, *args, verbosity=1):
     if sys.flags.verbose >= verbosity:
         if not message.startswith(('#', 'import ')):
             message = '# ' + message
-        print >>sys.stderr, message.format(*args)
+        print(message.format(*args), file=sys.stderr)
 
 
 def _requires_builtin(fxn):

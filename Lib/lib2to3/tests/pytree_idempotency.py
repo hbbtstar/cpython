@@ -30,7 +30,7 @@ def main():
     fn = "example.py"
     tree = dr.parse_file(fn, debug=True)
     if not diff(fn, tree):
-        print "No diffs."
+        print("No diffs.")
     if not sys.argv[1:]:
         return # Pass a dummy argument to run the complete test suite below
 
@@ -46,7 +46,7 @@ def main():
             fn = fn[:-1]
         if not fn.endswith(".py"):
             continue
-        print >>sys.stderr, "Parsing", fn
+        print("Parsing", fn, file=sys.stderr)
         tree = dr.parse_file(fn, debug=True)
         if diff(fn, tree):
             problems.append(fn)
@@ -57,27 +57,27 @@ def main():
             names = os.listdir(dir)
         except OSError:
             continue
-        print >>sys.stderr, "Scanning", dir, "..."
+        print("Scanning", dir, "...", file=sys.stderr)
         for name in names:
             if not name.endswith(".py"):
                 continue
-            print >>sys.stderr, "Parsing", name
+            print("Parsing", name, file=sys.stderr)
             fn = os.path.join(dir, name)
             try:
                 tree = dr.parse_file(fn, debug=True)
             except pgen2.parse.ParseError as err:
-                print "ParseError:", err
+                print("ParseError:", err)
             else:
                 if diff(fn, tree):
                     problems.append(fn)
 
     # Show summary of problem files
     if not problems:
-        print "No problems.  Congratulations!"
+        print("No problems.  Congratulations!")
     else:
-        print "Problems in following files:"
+        print("Problems in following files:")
         for fn in problems:
-            print "***", fn
+            print("***", fn)
 
 def diff(fn, tree):
     f = open("@", "w")

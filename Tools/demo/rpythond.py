@@ -26,7 +26,7 @@ def main():
     s.listen(1)
     while True:
         conn, (remotehost, remoteport) = s.accept()
-        print 'connection from', remotehost, remoteport
+        print('connection from', remotehost, remoteport)
         request = b''
         while 1:
             data = conn.recv(BUFSIZE)
@@ -45,7 +45,7 @@ def execute(request):
         try:
             exec(request, {}, {})
         except:
-            print
+            print()
             traceback.print_exc(100)
     finally:
         sys.stderr = stderr

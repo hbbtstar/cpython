@@ -70,8 +70,8 @@ class StrftimeTest(unittest.TestCase):
         self.strftest2(now)
 
         if support.verbose:
-            print "Strftime test, platform: %s, Python version: %s" % \
-                  (sys.platform, sys.version.split()[0])
+            print("Strftime test, platform: %s, Python version: %s" % \
+                  (sys.platform, sys.version.split()[0]))
 
         for j in range(-5, 5):
             for i in range(25):
@@ -82,7 +82,7 @@ class StrftimeTest(unittest.TestCase):
 
     def strftest1(self, now):
         if support.verbose:
-            print "strftime test for", time.ctime(now)
+            print("strftime test for", time.ctime(now))
         now = self.now
         # Make sure any characters that could be taken as regex syntax is
         # escaped in escapestr()
@@ -163,20 +163,20 @@ class StrftimeTest(unittest.TestCase):
                 msg = "Error for nonstandard '%s' format (%s): %s" % \
                       (e[0], e[2], str(result))
                 if support.verbose:
-                    print msg
+                    print(msg)
                 continue
             if re.match(escapestr(e[1], self.ampm), result):
                 if support.verbose:
-                    print "Supports nonstandard '%s' format (%s)" % (e[0], e[2])
+                    print("Supports nonstandard '%s' format (%s)" % (e[0], e[2]))
             elif not result or result[0] == '%':
                 if support.verbose:
-                    print "Does not appear to support '%s' format (%s)" % \
-                           (e[0], e[2])
+                    print("Does not appear to support '%s' format (%s)" % \
+                           (e[0], e[2]))
             else:
                 if support.verbose:
-                    print "Conflict for nonstandard '%s' format (%s):" % \
-                           (e[0], e[2])
-                    print "  Expected %s, but got %s" % (e[1], result)
+                    print("Conflict for nonstandard '%s' format (%s):" % \
+                           (e[0], e[2]))
+                    print("  Expected %s, but got %s" % (e[1], result))
 
 
 class Y1900Tests(unittest.TestCase):

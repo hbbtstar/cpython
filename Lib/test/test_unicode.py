@@ -2201,15 +2201,15 @@ class UnicodeTest(string_tests.CommonTest,
                 pass
 
         out = BitBucket()
-        print >>out, 'abc'
-        print >>out, 'abc', 'def'
-        print >>out, 'abc', 'def'
-        print >>out, 'abc', 'def'
-        print >>out, 'abc\n'
-        print >>out, 'abc\n',
-        print >>out, 'abc\n',
-        print >>out, 'def\n'
-        print >>out, 'def\n'
+        print('abc', file=out)
+        print('abc', 'def', file=out)
+        print('abc', 'def', file=out)
+        print('abc', 'def', file=out)
+        print('abc\n', file=out)
+        print('abc\n', end=' ', file=out)
+        print('abc\n', end=' ', file=out)
+        print('def\n', file=out)
+        print('def\n', file=out)
 
     def test_ucs4(self):
         x = '\U00100000'

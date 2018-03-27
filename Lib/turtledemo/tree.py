@@ -49,7 +49,7 @@ def maketree():
     t = tree([p], 200, 65, 0.6375)
     for x in t:
         pass
-    print len(p.getscreen().turtles())
+    print(len(p.getscreen().turtles()))
 
 def main():
     a=clock()
@@ -59,5 +59,5 @@ def main():
 
 if __name__ == "__main__":
     msg = main()
-    print msg
+    print(msg)
     mainloop()

@@ -195,9 +195,9 @@ class Sheet:
                 if line:
                     line += '|'
                 line += text
-            print line
+            print(line)
             if y == 0:
-                print sep
+                print(sep)
 
     def xml(self):
         out = ['<spreadsheet>']

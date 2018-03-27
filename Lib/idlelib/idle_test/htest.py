@@ -398,7 +398,7 @@ def run(*tests):
     def run_test(_=None):
         widget = callable_object(**test_kwds)
         try:
-            print widget.result
+            print(widget.result)
         except AttributeError:
             pass
 

@@ -131,7 +131,7 @@ def _uninstall_helper(*, verbosity=0):
     if pip.__version__ != _PIP_VERSION:
         msg = ("ensurepip will only uninstall a matching version "
                "({!r} installed, {!r} bundled)")
-        print >>sys.stderr, msg.format(pip.__version__, _PIP_VERSION)
+        print(msg.format(pip.__version__, _PIP_VERSION), file=sys.stderr)
         return
 
     _disable_pip_configuration_settings()

@@ -376,7 +376,7 @@ class _NNTPBase:
         If the response code is 200, posting is allowed;
         if it 201, posting is not allowed."""
 
-        if self.debugging: print '*welcome*', repr(self.welcome)
+        if self.debugging: print('*welcome*', repr(self.welcome))
         return self.welcome
 
     def getcapabilities(self):
@@ -414,14 +414,14 @@ class _NNTPBase:
         """Internal: send one line to the server, appending CRLF.
         The `line` must be a bytes-like object."""
         line = line + _CRLF
-        if self.debugging > 1: print '*put*', repr(line)
+        if self.debugging > 1: print('*put*', repr(line))
         self.file.write(line)
         self.file.flush()
 
     def _putcmd(self, line):
         """Internal: send one command to the server (through _putline()).
         The `line` must be a unicode string."""
-        if self.debugging: print '*cmd*', repr(line)
+        if self.debugging: print('*cmd*', repr(line))
         line = line.encode(self.encoding, self.errors)
         self._putline(line)
 
@@ -433,7 +433,7 @@ class _NNTPBase:
         if len(line) > _MAXLINE:
             raise NNTPDataError('line too long')
         if self.debugging > 1:
-            print '*get*', repr(line)
+            print('*get*', repr(line))
         if not line: raise EOFError
         if strip_crlf:
             if line[-2:] == _CRLF:
@@ -447,7 +447,7 @@ class _NNTPBase:
         Raise various errors if the response indicates an error.
         Returns a unicode string."""
         resp = self._getline()
-        if self.debugging: print '*resp*', repr(resp)
+        if self.debugging: print('*resp*', repr(resp))
         resp = resp.decode(self.encoding, self.errors)
         c = resp[:1]
         if c == '4':
@@ -1127,7 +1127,7 @@ if __name__ == '__main__':
     if 'STARTTLS' in caps:
         s.starttls()
     resp, count, first, last, name = s.group(args.group)
-    print 'Group', name, 'has', count, 'articles, range', first, 'to', last
+    print('Group', name, 'has', count, 'articles, range', first, 'to', last)
 
     def cut(s, lim):
         if len(s) > lim:
@@ -1140,7 +1140,8 @@ if __name__ == '__main__':
         author = decode_header(over['from']).split('<', 1)[0]
         subject = decode_header(over['subject'])
         lines = int(over[':lines'])
-        print "{:7} {:20} {:42} ({})".format(
+        print("{:7} {:20} {:42} ({})".format(
               artnum, cut(author, 20), cut(subject, 42), lines)
+              )
 
     s.quit()

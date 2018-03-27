@@ -86,7 +86,7 @@ class AllTest(unittest.TestCase):
             if blacklisted:
                 continue
             if support.verbose:
-                print modname
+                print(modname)
             try:
                 # This heuristic speeds up the process by removing, de facto,
                 # most test modules (and avoiding the auto-executing ones).
@@ -100,9 +100,9 @@ class AllTest(unittest.TestCase):
                 failed_imports.append(modname)
 
         if support.verbose:
-            print 'Following modules have no __all__ and have been ignored:',
-                  ignored
-            print 'Following modules failed to be imported:', failed_imports
+            print('Following modules have no __all__ and have been ignored:',
+                  ignored)
+            print('Following modules failed to be imported:', failed_imports)
 
 
 if __name__ == "__main__":

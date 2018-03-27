@@ -125,7 +125,7 @@ class GrepDialog(SearchDialogBase):
         list.sort()
         self.close()
         pat = self.engine.getpat()
-        print f"Searching {pat!r} in {path} ..."
+        print(f"Searching {pat!r} in {path} ...")
         hits = 0
         try:
             for fn in list:
@@ -138,9 +138,9 @@ class GrepDialog(SearchDialogBase):
                                 sys.stdout.write(f"{fn}: {lineno}: {line}\n")
                                 hits += 1
                 except OSError as msg:
-                    print msg
-            print f"Hits found: {hits}\n(Hint: right-click to open locations.)"
-                  if hits else "No hits."
+                    print(msg)
+            print(f"Hits found: {hits}\n(Hint: right-click to open locations.)"
+                  if hits else "No hits.")
         except AttributeError:
             # Tk window has been closed, OutputWindow.text = None,
             # so in OW.write, OW.text.insert fails.
@@ -154,7 +154,7 @@ class GrepDialog(SearchDialogBase):
         try:
             names = os.listdir(dir or os.curdir)
         except OSError as msg:
-            print msg
+            print(msg)
             return []
         list = []
         subdirs = []

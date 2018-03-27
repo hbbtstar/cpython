@@ -632,14 +632,14 @@ Common commands: (see '--help-commands' for more)
                 options = self.global_options
             parser.set_option_table(options)
             parser.print_help(self.common_usage + "\nGlobal options:")
-            print ''
+            print('')
 
         if display_options:
             parser.set_option_table(self.display_options)
             parser.print_help(
                 "Information display options (just display " +
                 "information, ignore any commands)")
-            print ''
+            print('')
 
         for command in self.commands:
             if isinstance(command, type) and issubclass(command, Command):
@@ -653,9 +653,9 @@ Common commands: (see '--help-commands' for more)
             else:
                 parser.set_option_table(klass.user_options)
             parser.print_help("Options for '%s' command:" % klass.__name__)
-            print ''
+            print('')
 
-        print gen_usage(self.script_name)
+        print(gen_usage(self.script_name))
 
     def handle_display_options(self, option_order):
         """If there were any non-global "display-only" options
@@ -670,8 +670,8 @@ Common commands: (see '--help-commands' for more)
         # we ignore "foo bar").
         if self.help_commands:
             self.print_commands()
-            print ''
-            print gen_usage(self.script_name)
+            print('')
+            print(gen_usage(self.script_name))
             return 1
 
         # If user supplied any of the "display metadata" options, then
@@ -687,12 +687,12 @@ Common commands: (see '--help-commands' for more)
                 opt = translate_longopt(opt)
                 value = getattr(self.metadata, "get_"+opt)()
                 if opt in ['keywords', 'platforms']:
-                    print ','.join(value)
+                    print(','.join(value))
                 elif opt in ('classifiers', 'provides', 'requires',
                              'obsoletes'):
-                    print '\n'.join(value)
+                    print('\n'.join(value))
                 else:
-                    print value
+                    print(value)
                 any_display_options = 1
 
         return any_display_options
@@ -701,7 +701,7 @@ Common commands: (see '--help-commands' for more)
         """Print a subset of the list of all commands -- used by
         'print_commands()'.
         """
-        print header + ":"
+        print(header + ":")
 
         for cmd in commands:
             klass = self.cmdclass.get(cmd)
@@ -712,7 +712,7 @@ Common commands: (see '--help-commands' for more)
             except AttributeError:
                 description = "(no description available)"
 
-            print "  %-*s  %s" % (max_length, cmd, description)
+            print("  %-*s  %s" % (max_length, cmd, description))
 
     def print_commands(self):
         """Print out a help message listing all available commands with a
@@ -742,7 +742,7 @@ Common commands: (see '--help-commands' for more)
                                 "Standard commands",
                                 max_length)
         if extra_commands:
-            print
+            print()
             self.print_command_list(extra_commands,
                                     "Extra commands",
                                     max_length)

@@ -47,7 +47,7 @@ def _run_object_doctest(obj, module):
     if f:
         raise test.support.TestFailed("%d of %d doctests failed" % (f, t))
     if verbose:
-        print 'doctest (%s) ... %d tests with zero failures' % (module.__name__, t)
+        print ('doctest (%s) ... %d tests with zero failures' % (module.__name__, t))
     return f, t
 
 
@@ -128,7 +128,7 @@ class ZipSupportTests(unittest.TestCase):
             z.close()
             if verbose:
                 zip_file = zipfile.ZipFile(zip_name, 'r')
-                print 'Contents of %r:' % zip_name
+                print ('Contents of %r:' % zip_name)
                 zip_file.printdir()
                 zip_file.close()
             os.remove(script_name)
@@ -199,18 +199,18 @@ class ZipSupportTests(unittest.TestCase):
             rc, out, err = assert_python_ok(script_name)
             expected = pattern % (script_name, "__main__.Test")
             if verbose:
-                print "Expected line", expected
-                print "Got stdout:"
-                print ascii(out)
+                print ("Expected line", expected)
+                print ("Got stdout:")
+                print (ascii(out))
             self.assertIn(expected.encode('utf-8'), out)
             zip_name, run_name = make_zip_script(d, "test_zip",
                                                 script_name, '__main__.py')
             rc, out, err = assert_python_ok(zip_name)
             expected = pattern % (run_name, "__main__.Test")
             if verbose:
-                print "Expected line", expected
-                print "Got stdout:"
-                print ascii(out)
+                print ("Expected line", expected)
+                print ("Got stdout:")
+                print (ascii(out))
             self.assertIn(expected.encode('utf-8'), out)
 
     def test_pdb_issue4201(self):

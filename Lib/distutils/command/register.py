@@ -148,7 +148,7 @@ Your selection [default 1]: ''', log.INFO)
             if not choice:
                 choice = '1'
             elif choice not in choices:
-                print 'Please choose one of the four options!'
+                print('Please choose one of the four options!')
 
         if choice == '1':
             # get the username and password
@@ -200,7 +200,7 @@ Your selection [default 1]: ''', log.INFO)
                 if data['password'] != data['confirm']:
                     data['password'] = ''
                     data['confirm'] = None
-                    print "Password and confirm don't match!"
+                    print("Password and confirm don't match!")
             while not data['email']:
                 data['email'] = input('   EMail: ')
             code, result = self.post_to_server(data)

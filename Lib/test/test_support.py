@@ -72,7 +72,7 @@ class TestSupport(unittest.TestCase):
     def test_forget(self):
         mod_filename = TESTFN + '.py'
         with open(mod_filename, 'w') as f:
-            print >>f, 'foo = 1'
+            print('foo = 1', file=f)
         sys.path.insert(0, os.curdir)
         importlib.invalidate_caches()
         try:
@@ -287,12 +287,12 @@ class TestSupport(unittest.TestCase):
 
     def test_captured_stdout(self):
         with support.captured_stdout() as stdout:
-            print "hello"
+            print("hello")
         self.assertEqual(stdout.getvalue(), "hello\n")
 
     def test_captured_stderr(self):
         with support.captured_stderr() as stderr:
-            print >>sys.stderr, "hello"
+            print("hello", file=sys.stderr)
         self.assertEqual(stderr.getvalue(), "hello\n")
 
     def test_captured_stdin(self):

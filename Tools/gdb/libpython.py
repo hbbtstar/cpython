@@ -1469,8 +1469,8 @@ class Frame(object):
         Not all builds have a gdb.Frame.select method; seems to be present on Fedora 12
         onwards, but absent on Ubuntu buildbot'''
         if not hasattr(self._gdbframe, 'select'):
-            print 'Unable to select frame: '
-                   'this build of gdb does not expose a gdb.Frame.select method'
+            print ('Unable to select frame: '
+                   'this build of gdb does not expose a gdb.Frame.select method')
             return False
         self._gdbframe.select()
         return True
@@ -1714,12 +1714,12 @@ class PyList(gdb.Command):
         # py-list requires an actual PyEval_EvalFrameEx frame:
         frame = Frame.get_selected_bytecode_frame()
         if not frame:
-            print 'Unable to locate gdb frame for python bytecode interpreter'
+            print('Unable to locate gdb frame for python bytecode interpreter')
             return
 
         pyop = frame.get_pyop()
         if not pyop or pyop.is_optimized_out():
-            print 'Unable to read information on python frame'
+            print('Unable to read information on python frame')
             return
 
         filename = pyop.filename()
@@ -1758,7 +1758,7 @@ def move_in_stack(move_up):
     '''Move up or down the stack (for the py-up/py-down command)'''
     frame = Frame.get_selected_python_frame()
     if not frame:
-        print 'Unable to locate python frame'
+        print('Unable to locate python frame')
         return
 
     while frame:
@@ -1779,9 +1779,9 @@ def move_in_stack(move_up):
         frame = iter_frame
 
     if move_up:
-        print 'Unable to find an older python frame'
+        print('Unable to find an older python frame')
     else:
-        print 'Unable to find a newer python frame'
+        print('Unable to find a newer python frame')
 
 class PyUp(gdb.Command):
     'Select and print the python stack frame that called this one (if any)'
@@ -1824,7 +1824,7 @@ class PyBacktraceFull(gdb.Command):
     def invoke(self, args, from_tty):
         frame = Frame.get_selected_python_frame()
         if not frame:
-            print 'Unable to locate python frame'
+            print('Unable to locate python frame')
             return
 
         while frame:
@@ -1846,7 +1846,7 @@ class PyBacktrace(gdb.Command):
     def invoke(self, args, from_tty):
         frame = Frame.get_selected_python_frame()
         if not frame:
-            print 'Unable to locate python frame'
+            print('Unable to locate python frame')
             return
 
         sys.stdout.write('Traceback (most recent call first):\n')
@@ -1871,23 +1871,23 @@ class PyPrint(gdb.Command):
 
         frame = Frame.get_selected_python_frame()
         if not frame:
-            print 'Unable to locate python frame'
+            print('Unable to locate python frame')
             return
 
         pyop_frame = frame.get_pyop()
         if not pyop_frame:
-            print 'Unable to read information on python frame'
+            print('Unable to read information on python frame')
             return
 
         pyop_var, scope = pyop_frame.get_var_by_name(name)
 
         if pyop_var:
-            print '%s %r = %s'
+            print('%s %r = %s'
                    % (scope,
                       name,
-                      pyop_var.get_truncated_repr(MAX_OUTPUT_LEN))
+                      pyop_var.get_truncated_repr(MAX_OUTPUT_LEN)))
         else:
-            print '%r not found' % name
+            print('%r not found' % name)
 
 PyPrint()
 
@@ -1905,17 +1905,17 @@ class PyLocals(gdb.Command):
 
         frame = Frame.get_selected_python_frame()
         if not frame:
-            print 'Unable to locate python frame'
+            print('Unable to locate python frame')
             return
 
         pyop_frame = frame.get_pyop()
         if not pyop_frame:
-            print 'Unable to read information on python frame'
+            print('Unable to read information on python frame')
             return
 
         for pyop_name, pyop_value in pyop_frame.iter_locals():
-            print '%s = %s'
+            print('%s = %s'
                    % (pyop_name.proxyval(set()),
-                      pyop_value.get_truncated_repr(MAX_OUTPUT_LEN))
+                      pyop_value.get_truncated_repr(MAX_OUTPUT_LEN)))
 
 PyLocals()

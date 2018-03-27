@@ -168,8 +168,8 @@ class StopTokenizing(Exception): pass
 def printtoken(type, token, xxx_todo_changeme, xxx_todo_changeme1, line): # for testing
     (srow, scol) = xxx_todo_changeme
     (erow, ecol) = xxx_todo_changeme1
-    print "%d,%d-%d,%d:\t%s\t%s" % \
-        (srow, scol, erow, ecol, tok_name[type], repr(token))
+    print("%d,%d-%d,%d:\t%s\t%s" % \
+        (srow, scol, erow, ecol, tok_name[type], repr(token)))
 
 def tokenize(readline, tokeneater=printtoken):
     """

@@ -79,18 +79,18 @@ def main():
 
     pl[nsstr('\xc5benraa')] = nsstr("That was a unicode key.")
 
-    print "TESTDATA={"
+    print("TESTDATA={")
     for fmt_name, fmt_key in FORMATS:
         data, error = NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
             pl, fmt_key, 0, None)
         if data is None:
-            print "Cannot serialize", fmt_name, error
+            print("Cannot serialize", fmt_name, error)
 
         else:
-            print "    %s: binascii.a2b_base64(b'''\n        %s'''),"%(fmt_name, _encode_base64(bytes(data)).decode('ascii')[:-1])
+            print("    %s: binascii.a2b_base64(b'''\n        %s'''),"%(fmt_name, _encode_base64(bytes(data)).decode('ascii')[:-1]))
 
-    print "}"
-    print
+    print("}")
+    print()
 
 def _encode_base64(s, maxlinelength=60):
     maxbinsize = (maxlinelength//4)*3

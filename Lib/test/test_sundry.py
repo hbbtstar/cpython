@@ -50,7 +50,7 @@ class TestUntestedModules(unittest.TestCase):
                 import tty  # Not available on Windows
             except ImportError:
                 if support.verbose:
-                    print "skipping tty"
+                    print("skipping tty")
 
 
 if __name__ == "__main__":

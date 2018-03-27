@@ -1185,11 +1185,11 @@ def test(HandlerClass=BaseHTTPRequestHandler,
     with ServerClass(server_address, HandlerClass) as httpd:
         sa = httpd.socket.getsockname()
         serve_message = "Serving HTTP on {host} port {port} (http://{host}:{port}/) ..."
-        print serve_message.format(host=sa[0], port=sa[1])
+        print(serve_message.format(host=sa[0], port=sa[1]))
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
-            print "\nKeyboard interrupt received, exiting."
+            print("\nKeyboard interrupt received, exiting.")
             sys.exit(0)
 
 if __name__ == '__main__':

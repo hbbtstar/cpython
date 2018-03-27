@@ -96,7 +96,7 @@ class TestProgram(object):
 
     def usageExit(self, msg=None):
         if msg:
-            print msg
+            print(msg)
         if self._discovery_parser is None:
             self._initArgParsers()
         self._print_help()
@@ -104,12 +104,12 @@ class TestProgram(object):
 
     def _print_help(self, *args, **kwargs):
         if self.module is None:
-            print self._main_parser.format_help()
-            print MAIN_EXAMPLES % {'prog': self.progName}
+            print(self._main_parser.format_help())
+            print(MAIN_EXAMPLES % {'prog': self.progName})
             self._discovery_parser.print_help()
         else:
-            print self._main_parser.format_help()
-            print MODULE_EXAMPLES % {'prog': self.progName}
+            print(self._main_parser.format_help())
+            print(MODULE_EXAMPLES % {'prog': self.progName})
 
     def parseArgs(self, argv):
         self._initArgParsers()

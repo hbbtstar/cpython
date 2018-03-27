@@ -173,7 +173,7 @@ class Template:
     def makepipeline(self, infile, outfile):
         cmd = makepipeline(infile, self.steps, outfile)
         if self.debugging:
-            print cmd
+            print(cmd)
             cmd = 'set -x; ' + cmd
         return cmd
 

@@ -69,7 +69,7 @@ def main():
     file = io.BytesIO()
     DBPickler(file).dump(memos)
 
-    print "Pickled records:"
+    print("Pickled records:")
     pprint.pprint(memos)
 
     # Update a record, just for good measure.
@@ -79,7 +79,7 @@ def main():
     file.seek(0)
     memos = DBUnpickler(file, conn).load()
 
-    print "Unpickled records:"
+    print("Unpickled records:")
     pprint.pprint(memos)
 
 

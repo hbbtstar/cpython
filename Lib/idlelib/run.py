@@ -114,7 +114,8 @@ def main(del_exitfunc=False):
         assert(len(sys.argv) > 1)
         port = int(sys.argv[-1])
     except:
-        print >>sys.__stderr__, "IDLE Subprocess: no IP port passed in sys.argv."
+        print("IDLE Subprocess: no IP port passed in sys.argv.",
+              file=sys.__stderr__)
         return
 
     capture_warnings(True)
@@ -170,12 +171,12 @@ def manage_socket(address):
             server = MyRPCServer(address, MyHandler)
             break
         except OSError as err:
-            print >>sys.__stderr__, "IDLE Subprocess: OSError: " + err.args[1] +
-                  ", retrying...."
+            print("IDLE Subprocess: OSError: " + err.args[1] +
+                  ", retrying....", file=sys.__stderr__)
             socket_error = err
     else:
-        print >>sys.__stderr__, "IDLE Subprocess: Connection to "
-              "IDLE GUI failed, exiting."
+        print("IDLE Subprocess: Connection to "
+              "IDLE GUI failed, exiting.", file=sys.__stderr__)
         show_socket_error(socket_error, address)
         global exit_now
         exit_now = True
@@ -211,24 +212,24 @@ def print_exception():
         cause = exc.__cause__
         if cause is not None and id(cause) not in seen:
             print_exc(type(cause), cause, cause.__traceback__)
-            print >>efile, "\nThe above exception was the direct cause "
-                  "of the following exception:\n"
+            print("\nThe above exception was the direct cause "
+                  "of the following exception:\n", file=efile)
         elif (context is not None and
               not exc.__suppress_context__ and
               id(context) not in seen):
             print_exc(type(context), context, context.__traceback__)
-            print >>efile, "\nDuring handling of the above exception, "
-                  "another exception occurred:\n"
+            print("\nDuring handling of the above exception, "
+                  "another exception occurred:\n", file=efile)
         if tb:
             tbe = traceback.extract_tb(tb)
-            print >>efile, 'Traceback (most recent call last):'
+            print('Traceback (most recent call last):', file=efile)
             exclude = ("run.py", "rpc.py", "threading.py", "queue.py",
                        "debugger_r.py", "bdb.py")
             cleanup_traceback(tbe, exclude)
             traceback.print_list(tbe, file=efile)
         lines = traceback.format_exception_only(typ, exc)
         for line in lines:
-            print >>efile, line,; efile.write('')
+            print(line, end='', file=efile)
 
     print_exc(typ, val, tb)
 
@@ -252,7 +253,7 @@ def cleanup_traceback(tb, exclude):
     if len(tb) == 0:
         # exception was in IDLE internals, don't prune!
         tb[:] = orig_tb[:]
-        print >>sys.stderr, "** IDLE Internal Exception: "
+        print("** IDLE Internal Exception: ", file=sys.stderr)
     rpchandler = rpc.objecttable['exec'].rpchandler
     for i in range(len(tb)):
         fn, ln, nm, line = tb[i]
@@ -312,14 +313,14 @@ class MyRPCServer(rpc.RPCServer):
             thread.interrupt_main()
         except:
             erf = sys.__stderr__
-            print >>erf, '\n' + '-'*40
-            print >>erf, 'Unhandled server exception!'
-            print >>erf, 'Thread: %s' % threading.current_thread().name
-            print >>erf, 'Client Address: ', client_address
-            print >>erf, 'Request: ', repr(request)
+            print('\n' + '-'*40, file=erf)
+            print('Unhandled server exception!', file=erf)
+            print('Thread: %s' % threading.current_thread().name, file=erf)
+            print('Client Address: ', client_address, file=erf)
+            print('Request: ', repr(request), file=erf)
             traceback.print_exc(file=erf)
-            print >>erf, '\n*** Unrecoverable, server exiting!'
-            print >>erf, '-'*40
+            print('\n*** Unrecoverable, server exiting!', file=erf)
+            print('-'*40, file=erf)
             quitting = True
             thread.interrupt_main()
 

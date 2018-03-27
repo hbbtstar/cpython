@@ -1020,7 +1020,7 @@ def test_main():
         gc.set_debug(debug)
         # test gc.enable() even if GC is disabled by default
         if verbose:
-            print "restoring automatic collection"
+            print("restoring automatic collection")
         # make sure to always test gc.enable()
         gc.enable()
         assert gc.isenabled()

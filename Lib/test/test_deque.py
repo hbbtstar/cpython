@@ -534,7 +534,7 @@ class TestBasic(unittest.TestCase):
         try:
             support.unlink(support.TESTFN)
             fo = open(support.TESTFN, "w")
-            print >>fo, d,; fo.write('')
+            print(d, file=fo, end='')
             fo.close()
             fo = open(support.TESTFN, "r")
             self.assertEqual(fo.read(), repr(d))
@@ -1049,7 +1049,7 @@ def test_main(verbose=None):
             support.run_unittest(*test_classes)
             gc.collect()
             counts[i] = sys.gettotalrefcount()
-        print counts
+        print(counts)
 
     # doctests
     from test import test_deque

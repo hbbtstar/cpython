@@ -183,7 +183,7 @@ def test():
             if isinstance(output, str):
                 output = open(output, 'wb')
             else:
-                print sys.argv[0], ': cannot do -t to stdout'
+                print(sys.argv[0], ': cannot do -t to stdout')
                 sys.exit(1)
         decode(input, output)
     else:
@@ -191,7 +191,7 @@ def test():
             if isinstance(input, str):
                 input = open(input, 'rb')
             else:
-                print sys.argv[0], ': cannot do -t from stdin'
+                print(sys.argv[0], ': cannot do -t from stdin')
                 sys.exit(1)
         encode(input, output)
 

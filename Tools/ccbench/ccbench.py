@@ -90,7 +90,7 @@ def task_regex():
         try:
             return pat.findall(s)
         finally:
-            print time.time() - t
+            print(time.time() - t)
     return pat.findall, (arg, )
 
 def task_sort():
@@ -246,8 +246,8 @@ def run_throughput_test(func, args, nthreads):
 
 def run_throughput_tests(max_threads):
     for task in throughput_tasks:
-        print task.__doc__
-        print
+        print(task.__doc__)
+        print()
         func, args = task()
         nthreads = 1
         baseline_speed = None
@@ -256,14 +256,14 @@ def run_throughput_tests(max_threads):
             # Taking the max duration rather than average gives pessimistic
             # results rather than optimistic.
             speed = sum(r[0] for r in results) / max(r[1] for r in results)
-            print "threads=%d: %d" % (nthreads, speed),; sys.stdout.write("")
+            print("threads=%d: %d" % (nthreads, speed), end="")
             if baseline_speed is None:
-                print " iterations/s."
+                print(" iterations/s.")
                 baseline_speed = speed
             else:
-                print " ( %d %%)" % (speed / baseline_speed * 100)
+                print(" ( %d %%)" % (speed / baseline_speed * 100))
             nthreads += 1
-        print
+        print()
 
 
 LAT_END = "END"
@@ -381,8 +381,8 @@ def run_latency_test(func, args, nthreads):
 
 def run_latency_tests(max_threads):
     for task in latency_tasks:
-        print "Background CPU task:", task.__doc__
-        print
+        print("Background CPU task:", task.__doc__)
+        print()
         func, args = task()
         nthreads = 0
         while nthreads <= max_threads:
@@ -393,11 +393,11 @@ def run_latency_tests(max_threads):
             #print(list(map(int, lats)))
             avg = sum(lats) / n
             dev = (sum((x - avg) ** 2 for x in lats) / n) ** 0.5
-            print "CPU threads=%d: %d ms. (std dev: %d ms.)" % (nthreads, avg, dev),; sys.stdout.write("")
-            print
+            print("CPU threads=%d: %d ms. (std dev: %d ms.)" % (nthreads, avg, dev), end="")
+            print()
             #print("    [... from %d samples]" % n)
             nthreads += 1
-        print
+        print()
 
 
 BW_END = "END"
@@ -508,8 +508,8 @@ def run_bandwidth_test(func, args, nthreads):
 
 def run_bandwidth_tests(max_threads):
     for task in bandwidth_tasks:
-        print "Background CPU task:", task.__doc__
-        print
+        print("Background CPU task:", task.__doc__)
+        print()
         func, args = task()
         nthreads = 0
         baseline_speed = None
@@ -517,14 +517,14 @@ def run_bandwidth_tests(max_threads):
             results = run_bandwidth_test(func, args, nthreads)
             speed = results
             #speed = len(results) * 1.0 / results[-1][0]
-            print "CPU threads=%d: %.1f" % (nthreads, speed),; sys.stdout.write("")
+            print("CPU threads=%d: %.1f" % (nthreads, speed), end="")
             if baseline_speed is None:
-                print " packets/s."
+                print(" packets/s.")
                 baseline_speed = speed
             else:
-                print " ( %d %%)" % (speed / baseline_speed * 100)
+                print(" ( %d %%)" % (speed / baseline_speed * 100))
             nthreads += 1
-        print
+        print()
 
 
 def main():
@@ -578,33 +578,33 @@ def main():
     if options.switch_interval:
         sys.setswitchinterval(options.switch_interval)
 
-    print "== %s %s (%s) ==" % (
+    print("== %s %s (%s) ==" % (
         platform.python_implementation(),
         platform.python_version(),
         platform.python_build()[0],
-    )
+    ))
     # Processor identification often has repeated spaces
     cpu = ' '.join(platform.processor().split())
-    print "== %s %s on '%s' ==" % (
+    print("== %s %s on '%s' ==" % (
         platform.machine(),
         platform.system(),
         cpu,
-    )
-    print
+    ))
+    print()
 
     if options.throughput:
-        print "--- Throughput ---"
-        print
+        print("--- Throughput ---")
+        print()
         run_throughput_tests(options.nthreads)
 
     if options.latency:
-        print "--- Latency ---"
-        print
+        print("--- Latency ---")
+        print()
         run_latency_tests(options.nthreads)
 
     if options.bandwidth:
-        print "--- I/O bandwidth ---"
-        print
+        print("--- I/O bandwidth ---")
+        print()
         run_bandwidth_tests(options.nthreads)
 
 if __name__ == "__main__":

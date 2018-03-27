@@ -21,8 +21,8 @@ def main():
 
         if version != upstream_version:
             outofdate = True
-            print "The latest version of {} on PyPI is {}, but ensurepip "
-                  "has {}".format(project, upstream_version, version)
+            print("The latest version of {} on PyPI is {}, but ensurepip "
+                  "has {}".format(project, upstream_version, version))
 
     if outofdate:
         sys.exit(1)

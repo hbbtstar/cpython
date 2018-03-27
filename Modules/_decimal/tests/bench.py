@@ -69,16 +69,16 @@ def factorial(n, m):
         return factorial(n, (n+m)//2) * factorial((n+m)//2 + 1, m)
 
 
-print "\n# ======================================================================"
-print "#                   Calculating pi, 10000 iterations"
-print "# ======================================================================\n"
+print("\n# ======================================================================")
+print("#                   Calculating pi, 10000 iterations")
+print("# ======================================================================\n")
 
 to_benchmark = [pi_float, pi_decimal]
 if C is not None:
     to_benchmark.insert(1, pi_cdecimal)
 
 for prec in [9, 19]:
-    print "\nPrecision: %d decimal digits\n" % prec
+    print("\nPrecision: %d decimal digits\n" % prec)
     for func in to_benchmark:
         start = time.time()
         if C is not None:
@@ -86,14 +86,14 @@ for prec in [9, 19]:
         P.getcontext().prec = prec
         for i in range(10000):
             x = func()
-        print "%s:" % func.__name__.replace("pi_", "")
-        print "result: %s" % str(x)
-        print "time: %fs\n" % (time.time()-start)
+        print("%s:" % func.__name__.replace("pi_", ""))
+        print("result: %s" % str(x))
+        print("time: %fs\n" % (time.time()-start))
 
 
-print "\n# ======================================================================"
-print "#                               Factorial"
-print "# ======================================================================\n"
+print("\n# ======================================================================")
+print("#                               Factorial")
+print("# ======================================================================\n")
 
 if C is not None:
     c = C.getcontext()
@@ -103,7 +103,7 @@ if C is not None:
 
 for n in [100000, 1000000]:
 
-    print "n = %d\n" % n
+    print("n = %d\n" % n)
 
     if C is not None:
         # C version of decimal
@@ -113,9 +113,9 @@ for n in [100000, 1000000]:
         start_conv = time.time()
         sx = str(x)
         end_conv = time.time()
-        print "cdecimal:"
-        print "calculation time: %fs" % (end_calc-start_calc)
-        print "conversion time: %fs\n" % (end_conv-start_conv)
+        print("cdecimal:")
+        print("calculation time: %fs" % (end_calc-start_calc))
+        print("conversion time: %fs\n" % (end_conv-start_conv))
 
     # Python integers
     start_calc = time.time()
@@ -125,9 +125,9 @@ for n in [100000, 1000000]:
     sy = str(y)
     end_conv =  time.time()
 
-    print "int:"
-    print "calculation time: %fs" % (end_calc-start_calc)
-    print "conversion time: %fs\n\n" % (end_conv-start_conv)
+    print("int:")
+    print("calculation time: %fs" % (end_calc-start_calc))
+    print("conversion time: %fs\n\n" % (end_conv-start_conv))
 
     if C is not None:
         assert(sx == sy)

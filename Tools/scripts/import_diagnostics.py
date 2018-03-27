@@ -6,9 +6,9 @@ import argparse
 from pprint import pprint
 
 def _dump_state(args):
-    print sys.version
+    print(sys.version)
     for name in args.attributes:
-        print "sys.{}:".format(name)
+        print("sys.{}:".format(name))
         pprint(getattr(sys, name))
 
 def _add_dump_args(cmd):

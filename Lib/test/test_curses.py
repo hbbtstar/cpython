@@ -70,7 +70,7 @@ class TestCurses(unittest.TestCase):
         self.save_signals.save()
         if verbose:
             # just to make the test output a little more readable
-            print
+            print()
         self.stdscr = curses.initscr()
         curses.savetty()
 

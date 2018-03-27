@@ -31,14 +31,14 @@ import time
 def write_tests(filename, tests):
     with open(filename, "w") as fp:
         for name in tests:
-            print >>fp, name
+            print(name, file=fp)
         fp.flush()
 
 
 def write_output(filename, tests):
     if not filename:
         return
-    print "Write %s tests into %s" % (len(tests), filename)
+    print("Write %s tests into %s" % (len(tests), filename))
     write_tests(filename, tests)
     return filename
 
@@ -56,8 +56,8 @@ def list_cases(args):
     exitcode = proc.returncode
     if exitcode:
         cmd = format_shell_args(cmd)
-        print "Failed to list tests: %s failed with exit code %s"
-              % (cmd, exitcode)
+        print("Failed to list tests: %s failed with exit code %s"
+              % (cmd, exitcode))
         sys.exit(exitcode)
     tests = proc.stdout.splitlines()
     return tests
@@ -70,7 +70,7 @@ def run_tests(args, tests, huntrleaks=None):
 
         cmd = [sys.executable, '-m', 'test', '--matchfile', tmp]
         cmd.extend(args.test_args)
-        print "+ %s" % format_shell_args(cmd)
+        print("+ %s" % format_shell_args(cmd))
         proc = subprocess.run(cmd)
         return proc.returncode
     finally:
@@ -107,14 +107,14 @@ def main():
     else:
         tests = list_cases(args)
 
-    print "Start bisection with %s tests" % len(tests)
-    print "Test arguments: %s" % format_shell_args(args.test_args)
-    print "Bisection will stop when getting %s or less tests "
+    print("Start bisection with %s tests" % len(tests))
+    print("Test arguments: %s" % format_shell_args(args.test_args))
+    print("Bisection will stop when getting %s or less tests "
           "(-n/--max-tests option), or after %s iterations "
           "(-N/--max-iter option)"
-          % (args.max_tests, args.max_iter)
+          % (args.max_tests, args.max_iter))
     output = write_output(args.output, tests)
-    print
+    print()
 
     start_time = time.monotonic()
     iteration = 1
@@ -124,43 +124,43 @@ def main():
             ntest = max(ntest // 2, 1)
             subtests = random.sample(tests, ntest)
 
-            print "[+] Iteration %s: run %s tests/%s"
-                  % (iteration, len(subtests), len(tests))
-            print
+            print("[+] Iteration %s: run %s tests/%s"
+                  % (iteration, len(subtests), len(tests)))
+            print()
 
             exitcode = run_tests(args, subtests)
 
-            print "ran %s tests/%s" % (ntest, len(tests))
-            print "exit", exitcode
+            print("ran %s tests/%s" % (ntest, len(tests)))
+            print("exit", exitcode)
             if exitcode:
-                print "Tests failed: use this new subtest"
+                print("Tests failed: use this new subtest")
                 tests = subtests
                 output = write_output(args.output, tests)
             else:
-                print "Tests succeeded: skip this subtest, try a new subbset"
-            print
+                print("Tests succeeded: skip this subtest, try a new subbset")
+            print()
             iteration += 1
     except KeyboardInterrupt:
-        print
-        print "Bisection interrupted!"
-        print
+        print()
+        print("Bisection interrupted!")
+        print()
 
-    print "Tests (%s):" % len(tests)
+    print("Tests (%s):" % len(tests))
     for test in tests:
-        print "* %s" % test
-    print
+        print("* %s" % test)
+    print()
 
     if output:
-        print "Output written into %s" % output
+        print("Output written into %s" % output)
 
     dt = math.ceil(time.monotonic() - start_time)
     if len(tests) <= args.max_tests:
-        print "Bisection completed in %s iterations and %s"
-              % (iteration, datetime.timedelta(seconds=dt))
+        print("Bisection completed in %s iterations and %s"
+              % (iteration, datetime.timedelta(seconds=dt)))
         sys.exit(1)
     else:
-        print "Bisection failed after %s iterations and %s"
-              % (iteration, datetime.timedelta(seconds=dt))
+        print("Bisection failed after %s iterations and %s"
+              % (iteration, datetime.timedelta(seconds=dt)))
 
 
 if __name__ == "__main__":

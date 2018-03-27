@@ -203,7 +203,7 @@ class IdleConf:
                 warn = ('\n Warning: os.path.expanduser("~") points to\n ' +
                         userDir + ',\n but the path does not exist.')
                 try:
-                    print >>sys.stderr, warn
+                    print(warn, file=sys.stderr)
                 except OSError:
                     pass
                 userDir = '~'
@@ -218,7 +218,7 @@ class IdleConf:
                 warn = ('\n Warning: unable to create user config directory\n' +
                         userDir + '\n Check path and permissions.\n Exiting!\n')
                 if not idlelib.testing:
-                    print >>sys.stderr, warn
+                    print(warn, file=sys.stderr)
                 raise SystemExit
         # TODO continue without userDIr instead of exit
         return userDir
@@ -788,7 +788,7 @@ def _warn(msg, *key):
     key = (msg,) + key
     if key not in _warned:
         try:
-            print >>sys.stderr, msg
+            print(msg, file=sys.stderr)
         except OSError:
             pass
         _warned.add(key)
@@ -902,11 +902,11 @@ def _dump():  # htest # (not really, but ignore in coverage)
         txt = str(obj)
         line += 1
         crc = crc32(txt.encode(encoding='utf-8'), crc)
-        print txt
+        print(txt)
         #print('***', line, crc, '***')  # Uncomment for diagnosis.
 
     def dumpCfg(cfg):
-        print '\n', cfg, '\n'  # Cfg has variable '0xnnnnnnnn' address.
+        print('\n', cfg, '\n')  # Cfg has variable '0xnnnnnnnn' address.
         for key in sorted(cfg.keys()):
             sections = cfg[key].sections()
             sprint(key)
@@ -920,7 +920,7 @@ def _dump():  # htest # (not really, but ignore in coverage)
 
     dumpCfg(idleConf.defaultCfg)
     dumpCfg(idleConf.userCfg)
-    print ''.join([unicode('\nlines = '), unicode(line), unicode(', crc = '), unicode(crc)])
+    print('\nlines = ', line, ', crc = ', crc, sep='')
 
 if __name__ == '__main__':
     import unittest

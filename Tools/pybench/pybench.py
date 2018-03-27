@@ -114,7 +114,7 @@ def get_timer(timertype):
 def get_machine_details():
 
     if _debug:
-        print 'Getting machine details...'
+        print('Getting machine details...')
     buildno, builddate = platform.python_build()
     python = platform.python_version()
     # XXX this is now always UCS4, maybe replace it with 'PEP393' in 3.3+?
@@ -156,7 +156,7 @@ def print_machine_details(d, indent=''):
          '   Unicode:        %s' % d.get('unicode', 'n/a'),
          ]
     joiner = '\n' + indent
-    print indent + joiner.join(l) + '\n'
+    print(indent + joiner.join(l) + '\n')
 
 ### Test baseclass
 
@@ -290,9 +290,9 @@ class Test:
             prep_times.append(t / CALIBRATION_LOOPS)
         min_prep_time = min(prep_times)
         if _debug:
-            print
-            print 'Calib. prep time     = %.6fms' % (
-                min_prep_time * MILLI_SECONDS)
+            print()
+            print('Calib. prep time     = %.6fms' % (
+                min_prep_time * MILLI_SECONDS))
 
         # Time the calibration runs (doing CALIBRATION_LOOPS loops of
         # .calibrate() method calls each)
@@ -308,8 +308,8 @@ class Test:
         min_overhead = min(self.overhead_times)
         max_overhead = max(self.overhead_times)
         if _debug:
-            print 'Calib. overhead time = %.6fms' % (
-                min_overhead * MILLI_SECONDS)
+            print('Calib. overhead time = %.6fms' % (
+                min_overhead * MILLI_SECONDS))
         if min_overhead < 0.0:
             raise ValueError('calibration setup did not work')
         if max_overhead - min_overhead > 0.1:
@@ -446,7 +446,7 @@ class Benchmark:
         # Init vars
         self.tests = {}
         if _debug:
-            print 'Getting machine details...'
+            print('Getting machine details...')
         self.machine_details = get_machine_details()
 
         # Make .version an instance attribute to have it saved in the
@@ -483,8 +483,8 @@ class Benchmark:
 
         # Add tests
         if self.verbose:
-            print 'Searching for tests ...'
-            print '--------------------------------------'
+            print('Searching for tests ...')
+            print('--------------------------------------')
         for testclass in setupmod.__dict__.values():
             if not hasattr(testclass, 'is_a_test'):
                 continue
@@ -501,72 +501,72 @@ class Benchmark:
         l = sorted(self.tests)
         if self.verbose:
             for name in l:
-                print '  %s' % name
-            print '--------------------------------------'
-            print '  %i tests found' % len(l)
-            print
+                print('  %s' % name)
+            print('--------------------------------------')
+            print('  %i tests found' % len(l))
+            print()
 
     def calibrate(self):
 
-        print 'Calibrating tests. Please wait...',
+        print('Calibrating tests. Please wait...', end=' ')
         sys.stdout.flush()
         if self.verbose:
-            print
-            print
-            print 'Test                              min      max'
-            print '-' * LINE
+            print()
+            print()
+            print('Test                              min      max')
+            print('-' * LINE)
         tests = sorted(self.tests.items())
         for i in range(len(tests)):
             name, test = tests[i]
             test.calibrate_test()
             if self.verbose:
-                print '%30s:  %6.3fms  %6.3fms' % \
+                print('%30s:  %6.3fms  %6.3fms' % \
                       (name,
                        min(test.overhead_times) * MILLI_SECONDS,
-                       max(test.overhead_times) * MILLI_SECONDS)
+                       max(test.overhead_times) * MILLI_SECONDS))
         if self.verbose:
-            print
-            print 'Done with the calibration.'
+            print()
+            print('Done with the calibration.')
         else:
-            print 'done.'
-        print
+            print('done.')
+        print()
 
     def run(self):
 
         tests = sorted(self.tests.items())
         timer = self.get_timer()
-        print 'Running %i round(s) of the suite at warp factor %i:' % \
-              (self.rounds, self.warp)
-        print
+        print('Running %i round(s) of the suite at warp factor %i:' % \
+              (self.rounds, self.warp))
+        print()
         self.roundtimes = []
         for i in range(self.rounds):
             if self.verbose:
-                print ' Round %-25i  effective   absolute  overhead' % (i+1)
+                print(' Round %-25i  effective   absolute  overhead' % (i+1))
             total_eff_time = 0.0
             for j in range(len(tests)):
                 name, test = tests[j]
                 if self.verbose:
-                    print '%30s:' % name,
+                    print('%30s:' % name, end=' ')
                 test.run()
                 (eff_time, abs_time, min_overhead) = test.last_timing
                 total_eff_time = total_eff_time + eff_time
                 if self.verbose:
-                    print '    %5.0fms    %5.0fms %7.3fms' % \
+                    print('    %5.0fms    %5.0fms %7.3fms' % \
                           (eff_time * MILLI_SECONDS,
                            abs_time * MILLI_SECONDS,
-                           min_overhead * MILLI_SECONDS)
+                           min_overhead * MILLI_SECONDS))
             self.roundtimes.append(total_eff_time)
             if self.verbose:
-                print '                   '
-                       '               ------------------------------'
-                print '                   '
+                print('                   '
+                       '               ------------------------------')
+                print('                   '
                        '     Totals:    %6.0fms' %
-                       (total_eff_time * MILLI_SECONDS)
-                print
+                       (total_eff_time * MILLI_SECONDS))
+                print()
             else:
-                print '* Round %i done in %.3f seconds.' % (i+1,
-                                                            total_eff_time)
-        print
+                print('* Round %i done in %.3f seconds.' % (i+1,
+                                                            total_eff_time))
+        print()
 
     def stat(self):
 
@@ -591,23 +591,23 @@ class Benchmark:
 
     def print_header(self, title='Benchmark'):
 
-        print '-' * LINE
-        print '%s: %s' % (title, self.name)
-        print '-' * LINE
-        print
-        print '    Rounds: %s' % self.rounds
-        print '    Warp:   %s' % self.warp
-        print '    Timer:  %s' % self.timer
-        print
+        print('-' * LINE)
+        print('%s: %s' % (title, self.name))
+        print('-' * LINE)
+        print()
+        print('    Rounds: %s' % self.rounds)
+        print('    Warp:   %s' % self.warp)
+        print('    Timer:  %s' % self.timer)
+        print()
         if self.machine_details:
             print_machine_details(self.machine_details, indent='    ')
-            print
+            print()
 
     def print_benchmark(self, hidenoise=0, limitnames=None):
 
-        print 'Test                          '
-               '   minimum  average  operation  overhead'
-        print '-' * LINE
+        print('Test                          '
+               '   minimum  average  operation  overhead')
+        print('-' * LINE)
         tests = sorted(self.tests.items())
         total_min_time = 0.0
         total_avg_time = 0.0
@@ -622,39 +622,39 @@ class Benchmark:
              min_overhead) = test.stat()
             total_min_time = total_min_time + min_time
             total_avg_time = total_avg_time + avg_time
-            print '%30s:  %5.0fms  %5.0fms  %6.2fus  %7.3fms' % \
+            print('%30s:  %5.0fms  %5.0fms  %6.2fus  %7.3fms' % \
                   (name,
                    min_time * MILLI_SECONDS,
                    avg_time * MILLI_SECONDS,
                    op_avg * MICRO_SECONDS,
-                   min_overhead *MILLI_SECONDS)
-        print '-' * LINE
-        print 'Totals:                        '
+                   min_overhead *MILLI_SECONDS))
+        print('-' * LINE)
+        print('Totals:                        '
                ' %6.0fms %6.0fms' %
                (total_min_time * MILLI_SECONDS,
                 total_avg_time * MILLI_SECONDS,
-                )
-        print
+                ))
+        print()
 
     def print_comparison(self, compare_to, hidenoise=0, limitnames=None):
 
         # Check benchmark versions
         if compare_to.version != self.version:
-            print '* Benchmark versions differ: '
+            print('* Benchmark versions differ: '
                    'cannot compare this benchmark to "%s" !' %
-                   compare_to.name
-            print
+                   compare_to.name)
+            print()
             self.print_benchmark(hidenoise=hidenoise,
                                  limitnames=limitnames)
             return
 
         # Print header
         compare_to.print_header('Comparing with')
-        print 'Test                          '
-               '   minimum run-time        average  run-time'
-        print '                              '
-               '   this    other   diff    this    other   diff'
-        print '-' * LINE
+        print('Test                          '
+               '   minimum run-time        average  run-time')
+        print('                              '
+               '   this    other   diff    this    other   diff')
+        print('-' * LINE)
 
         # Print test comparisons
         tests = sorted(self.tests.items())
@@ -710,15 +710,15 @@ class Benchmark:
                     # Benchmark or tests are not comparable
                     min_diff, avg_diff = 'n/a', 'n/a'
                     tests_compatible = 0
-            print '%30s: %5.0fms %5.0fms %7s %5.0fms %5.0fms %7s' % \
+            print('%30s: %5.0fms %5.0fms %7s %5.0fms %5.0fms %7s' % \
                   (name,
                    min_time * MILLI_SECONDS,
                    other_min_time * MILLI_SECONDS * compare_to.warp / self.warp,
                    min_diff,
                    avg_time * MILLI_SECONDS,
                    other_avg_time * MILLI_SECONDS * compare_to.warp / self.warp,
-                   avg_diff)
-        print '-' * LINE
+                   avg_diff))
+        print('-' * LINE)
 
         # Summarise test results
         if not benchmarks_compatible or not tests_compatible:
@@ -736,7 +736,7 @@ class Benchmark:
                      (other_total_avg_time * compare_to.warp) - 1.0) * PERCENT)
             else:
                 avg_diff = 'n/a'
-        print 'Totals:                       '
+        print('Totals:                       '
                '  %5.0fms %5.0fms %7s %5.0fms %5.0fms %7s' %
                (total_min_time * MILLI_SECONDS,
                 (other_total_min_time * compare_to.warp/self.warp
@@ -746,11 +746,11 @@ class Benchmark:
                 (other_total_avg_time * compare_to.warp/self.warp
                  * MILLI_SECONDS),
                 avg_diff
-               )
-        print
-        print '(this=%s, other=%s)' % (self.name,
-                                       compare_to.name)
-        print
+               ))
+        print()
+        print('(this=%s, other=%s)' % (self.name,
+                                       compare_to.name))
+        print()
 
 class PyBenchCmdline(Application):
 
@@ -829,8 +829,8 @@ python pybench.py -s p25.pybench -c p21.pybench
         limitnames = self.values['-t']
         if limitnames:
             if _debug:
-                print '* limiting test names to one with substring "%s"' % \
-                      limitnames
+                print('* limiting test names to one with substring "%s"' % \
+                      limitnames)
             limitnames = re.compile(limitnames, re.I)
         else:
             limitnames = None
@@ -839,26 +839,26 @@ python pybench.py -s p25.pybench -c p21.pybench
         calibration_runs = self.values['-C']
         timer = self.values['--timer']
 
-        print '-' * LINE
-        print 'PYBENCH %s' % __version__
-        print '-' * LINE
-        print '* using %s %s' % (
+        print('-' * LINE)
+        print('PYBENCH %s' % __version__)
+        print('-' * LINE)
+        print('* using %s %s' % (
             getattr(platform, 'python_implementation', lambda:'Python')(),
-            ' '.join(sys.version.split()))
+            ' '.join(sys.version.split())))
 
         # Switch off garbage collection
         if not withgc:
             try:
                 import gc
             except ImportError:
-                print '* Python version doesn\'t support garbage collection'
+                print('* Python version doesn\'t support garbage collection')
             else:
                 try:
                     gc.disable()
                 except NotImplementedError:
-                    print '* Python version doesn\'t support gc.disable'
+                    print('* Python version doesn\'t support gc.disable')
                 else:
-                    print '* disabled garbage collection'
+                    print('* disabled garbage collection')
 
         # "Disable" sys check interval
         if not withsyscheck:
@@ -867,29 +867,29 @@ python pybench.py -s p25.pybench -c p21.pybench
             try:
                 sys.setcheckinterval(value)
             except (AttributeError, NotImplementedError):
-                print '* Python version doesn\'t support sys.setcheckinterval'
+                print('* Python version doesn\'t support sys.setcheckinterval')
             else:
-                print '* system check interval set to maximum: %s' % value
+                print('* system check interval set to maximum: %s' % value)
 
         if timer == TIMER_SYSTIMES_PROCESSTIME:
             import systimes
-            print '* using timer: systimes.processtime (%s)' % \
-                  systimes.SYSTIMES_IMPLEMENTATION
+            print('* using timer: systimes.processtime (%s)' % \
+                  systimes.SYSTIMES_IMPLEMENTATION)
         else:
             # Check that the clock function does exist
             try:
                 get_timer(timer)
             except TypeError:
-                print "* Error: Unknown timer: %s" % timer
+                print("* Error: Unknown timer: %s" % timer)
                 return
 
-            print '* using timer: %s' % timer
+            print('* using timer: %s' % timer)
             if hasattr(time, 'get_clock_info'):
                 info = time.get_clock_info(timer[5:])
-                print '* timer: resolution=%s, implementation=%s'
-                      % (info.resolution, info.implementation)
+                print('* timer: resolution=%s, implementation=%s'
+                      % (info.resolution, info.implementation))
 
-        print
+        print()
 
         if compare_to:
             try:
@@ -899,9 +899,9 @@ python pybench.py -s p25.pybench -c p21.pybench
                 f.close()
                 compare_to = bench
             except IOError as reason:
-                print '* Error opening/reading file %s: %s' % (
+                print('* Error opening/reading file %s: %s' % (
                     repr(compare_to),
-                    reason)
+                    reason))
                 compare_to = None
 
         if show_bench:
@@ -919,16 +919,16 @@ python pybench.py -s p25.pybench -c p21.pybench
                     bench.print_benchmark(hidenoise=hidenoise,
                                           limitnames=limitnames)
             except IOError as reason:
-                print '* Error opening/reading file %s: %s' % (
+                print('* Error opening/reading file %s: %s' % (
                     repr(show_bench),
-                    reason)
-                print
+                    reason))
+                print()
             return
 
         if reportfile:
-            print 'Creating benchmark: %s (rounds=%i, warp=%i)' % \
-                  (reportfile, rounds, warp)
-            print
+            print('Creating benchmark: %s (rounds=%i, warp=%i)' % \
+                  (reportfile, rounds, warp))
+            print()
 
         # Create benchmark object
         bench = Benchmark(reportfile,
@@ -942,9 +942,9 @@ python pybench.py -s p25.pybench -c p21.pybench
             bench.calibrate()
             bench.run()
         except KeyboardInterrupt:
-            print
-            print '*** KeyboardInterrupt -- Aborting'
-            print
+            print()
+            print('*** KeyboardInterrupt -- Aborting')
+            print()
             return
         bench.print_header()
         if compare_to:
@@ -965,10 +965,10 @@ python pybench.py -s p25.pybench -c p21.pybench
                 pickle.dump(bench,f)
                 f.close()
             except IOError as reason:
-                print '* Error opening/writing reportfile %s: %s' % (
+                print('* Error opening/writing reportfile %s: %s' % (
                     reportfile,
-                    reason)
-                print
+                    reason))
+                print()
 
 if __name__ == '__main__':
     PyBenchCmdline()

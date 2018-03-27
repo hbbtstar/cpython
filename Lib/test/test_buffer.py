@@ -733,10 +733,10 @@ def ndarray_print(nd):
     else:
         offset = 'unknown'
         flags = 'unknown'
-    print "ndarray(%s, shape=%s, strides=%s, suboffsets=%s, offset=%s, "
+    print("ndarray(%s, shape=%s, strides=%s, suboffsets=%s, offset=%s, "
           "format='%s', itemsize=%s, flags=%s)" %
           (x, nd.shape, nd.strides, nd.suboffsets, offset,
-           nd.format, nd.itemsize, flags)
+           nd.format, nd.itemsize, flags))
     sys.stdout.flush()
 
 

@@ -168,8 +168,8 @@ class ParseArgsTestCase(unittest.TestCase):
 
         self.addCleanup(support.unlink, support.TESTFN)
         with open(support.TESTFN, "w") as fp:
-            print >>fp, 'matchfile1'
-            print >>fp, 'matchfile2'
+            print('matchfile1', file=fp)
+            print('matchfile2', file=fp)
 
         filename = os.path.abspath(support.TESTFN)
         ns = libregrtest._parse_args(['-m', 'match',
@@ -689,7 +689,7 @@ class ArgsTestCase(BaseTestCase):
                         % (index, index, len(tests), name))
                 if previous:
                     line += " -- %s took 0 sec" % previous
-                print >>fp, line
+                print(line, file=fp)
                 previous = name
 
         output = self.run_tests('--fromfile', filename)
@@ -698,7 +698,7 @@ class ArgsTestCase(BaseTestCase):
         # test format '[2/7] test_opcodes'
         with open(filename, "w") as fp:
             for index, name in enumerate(tests, 1):
-                print >>fp, "[%s/%s] %s" % (index, len(tests), name)
+                print("[%s/%s] %s" % (index, len(tests), name), file=fp)
 
         output = self.run_tests('--fromfile', filename)
         self.check_executed_tests(output, tests)
@@ -706,7 +706,7 @@ class ArgsTestCase(BaseTestCase):
         # test format 'test_opcodes'
         with open(filename, "w") as fp:
             for name in tests:
-                print >>fp, name
+                print(name, file=fp)
 
         output = self.run_tests('--fromfile', filename)
         self.check_executed_tests(output, tests)
@@ -714,7 +714,7 @@ class ArgsTestCase(BaseTestCase):
         # test format 'Lib/test/test_opcodes.py'
         with open(filename, "w") as fp:
             for name in tests:
-                print >>fp, 'Lib/test/%s.py' % name
+                print('Lib/test/%s.py' % name, file=fp)
 
         output = self.run_tests('--fromfile', filename)
         self.check_executed_tests(output, tests)
@@ -936,7 +936,7 @@ class ArgsTestCase(BaseTestCase):
             '%s.Tests.test_method3' % testname]
         with open(filename, "w") as fp:
             for name in subset:
-                print >>fp, name
+                print(name, file=fp)
 
         output = self.run_tests("-v", "--matchfile", filename, testname)
         methods = self.parse_methods(output)

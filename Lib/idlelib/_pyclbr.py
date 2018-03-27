@@ -393,10 +393,10 @@ def _main():
                 ob.indent = obj.indent + indent_level
             objs.extend(new_objs)
         if isinstance(obj, Class):
-            print "{}class {} {} {}"
-                  .format(' ' * obj.indent, obj.name, obj.super, obj.lineno)
+            print("{}class {} {} {}"
+                  .format(' ' * obj.indent, obj.name, obj.super, obj.lineno))
         elif isinstance(obj, Function):
-            print "{}def {} {}".format(' ' * obj.indent, obj.name, obj.lineno)
+            print("{}def {} {}".format(' ' * obj.indent, obj.name, obj.lineno))
 
 if __name__ == "__main__":
     _main()

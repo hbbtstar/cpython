@@ -102,7 +102,7 @@ def _cnfmerge(cnfs):
             try:
                 cnf.update(c)
             except (AttributeError, TypeError) as msg:
-                print "_cnfmerge: fallback due to:", msg
+                print("_cnfmerge: fallback due to:", msg)
                 for k, v in c.items():
                     cnf[k] = v
         return cnf
@@ -2088,7 +2088,7 @@ class Tk(Misc, Wm):
         Applications may want to override this internal function, and
         should when sys.stderr is None."""
         import traceback
-        print >>sys.stderr, "Exception in Tkinter callback"
+        print("Exception in Tkinter callback", file=sys.stderr)
         sys.last_type = exc
         sys.last_value = val
         sys.last_traceback = tb

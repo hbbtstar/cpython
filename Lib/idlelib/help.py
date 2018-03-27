@@ -260,7 +260,7 @@ def copy_strip():
          open(dst, 'wb') as out:
         for line in inn:
             out.write(line.rstrip() + b'\n')
-    print f'{src} copied to {dst}'
+    print(f'{src} copied to {dst}')
 
 def show_idlehelp(parent):
     "Create HelpWindow; called from Idle Help event handler."

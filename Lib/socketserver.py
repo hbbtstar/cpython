@@ -374,12 +374,12 @@ class BaseServer:
         The default is to print a traceback and continue.
 
         """
-        print >>sys.stderr, '-'*40
-        print >>sys.stderr, 'Exception happened during processing of request from',
-            client_address
+        print('-'*40, file=sys.stderr)
+        print('Exception happened during processing of request from',
+            client_address, file=sys.stderr)
         import traceback
         traceback.print_exc()
-        print >>sys.stderr, '-'*40
+        print('-'*40, file=sys.stderr)
 
     def __enter__(self):
         return self

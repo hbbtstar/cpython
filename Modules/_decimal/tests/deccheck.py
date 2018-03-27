@@ -433,8 +433,8 @@ class SkipHandler:
             if P.Decimal("-1.1") < err < P.Decimal("1.1"):
                 return True
 
-        print "ulp: %s  error: %s  exact: %s  c_rounded: %s"
-              % (ulp, err, exact, rounded)
+        print("ulp: %s  error: %s  exact: %s  c_rounded: %s"
+              % (ulp, err, exact, rounded))
         return False
 
     def bin_resolve_ulp(self, t):

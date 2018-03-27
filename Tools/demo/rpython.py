@@ -13,7 +13,7 @@ BUFSIZE = 1024
 
 def main():
     if len(sys.argv) < 3:
-        print "usage: rpython host command"
+        print("usage: rpython host command")
         sys.exit(2)
     host = sys.argv[1]
     port = PORT
@@ -32,7 +32,7 @@ def main():
         if not data:
             break
         reply += data
-    print reply.decode(),
+    print(reply.decode(), end=' ')
     s.close()
 
 main()

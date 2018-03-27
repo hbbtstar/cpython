@@ -75,7 +75,7 @@ class FunctionPropertiesTest(FuncAttrsTest):
 
     def test___closure__(self):
         a = 12
-        def f(): print a
+        def f(): print(a)
         c = f.__closure__
         self.assertIsInstance(c, tuple)
         self.assertEqual(len(c), 1)
@@ -84,7 +84,7 @@ class FunctionPropertiesTest(FuncAttrsTest):
         self.cannot_set_attr(f, "__closure__", c, AttributeError)
 
     def test_empty_cell(self):
-        def f(): print a
+        def f(): print(a)
         try:
             f.__closure__[0].cell_contents
         except ValueError:
@@ -307,14 +307,14 @@ class FunctionDocstringTest(FuncAttrsTest):
 def cell(value):
     """Create a cell containing the given value."""
     def f():
-        print a
+        print(a)
     a = value
     return f.__closure__[0]
 
 def empty_cell(empty=True):
     """Create an empty cell."""
     def f():
-        print a
+        print(a)
     # the intent of the following line is simply "if False:";  it's
     # spelt this way to avoid the danger that a future optimization
     # might simply remove an "if False:" code block.

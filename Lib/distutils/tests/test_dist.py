@@ -88,7 +88,7 @@ class DistributionTestCase(support.LoggingSilencer,
         fakepath = '/somedir'
 
         with open(TESTFN, "w") as f:
-            print >>f, ("[install]\n"
+            print(("[install]\n"
                    "install-base = {0}\n"
                    "install-platbase = {0}\n"
                    "install-lib = {0}\n"
@@ -101,7 +101,7 @@ class DistributionTestCase(support.LoggingSilencer,
                    "exec-prefix = {0}\n"
                    "home = {0}\n"
                    "user = {0}\n"
-                   "root = {0}").format(fakepath)
+                   "root = {0}").format(fakepath), file=f)
 
         # Base case: Not in a Virtual Environment
         with mock.patch.multiple(sys, prefix='/a', base_prefix='/a') as values:
@@ -144,8 +144,8 @@ class DistributionTestCase(support.LoggingSilencer,
         self.addCleanup(os.unlink, TESTFN)
         f = open(TESTFN, "w")
         try:
-            print >>f, "[global]"
-            print >>f, "command_packages = foo.bar, splat"
+            print("[global]", file=f)
+            print("command_packages = foo.bar, splat", file=f)
         finally:
             f.close()
 

@@ -1468,7 +1468,7 @@ class CoroutineTest(unittest.TestCase):
 
         async def foo():
             async for i in tup:
-                print 'never going to happen'
+                print('never going to happen')
 
         with self.assertRaisesRegex(
                 TypeError, "async for' requires an object.*__aiter__.*tuple"):
@@ -1487,7 +1487,7 @@ class CoroutineTest(unittest.TestCase):
 
         async def foo():
             async for i in aiter:
-                print 'never going to happen'
+                print('never going to happen')
 
         with self.assertRaisesRegex(
                 TypeError,
@@ -1510,7 +1510,7 @@ class CoroutineTest(unittest.TestCase):
 
         async def foo():
             async for i in aiter:
-                print 'never going to happen'
+                print('never going to happen')
 
         with self.assertRaisesRegex(
                 TypeError,
@@ -1531,7 +1531,7 @@ class CoroutineTest(unittest.TestCase):
         async def foo():
             with self.assertWarnsRegex(DeprecationWarning, "legacy"):
                 async for i in I():
-                    print 'never going to happen'
+                    print('never going to happen')
 
         with self.assertRaisesRegex(
                 TypeError,

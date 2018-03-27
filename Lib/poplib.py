@@ -108,14 +108,14 @@ class POP3:
         return socket.create_connection((self.host, self.port), timeout)
 
     def _putline(self, line):
-        if self._debugging > 1: print '*put*', repr(line)
+        if self._debugging > 1: print('*put*', repr(line))
         self.sock.sendall(line + CRLF)
 
 
     # Internal: send one command to the server (through _putline())
 
     def _putcmd(self, line):
-        if self._debugging: print '*cmd*', repr(line)
+        if self._debugging: print('*cmd*', repr(line))
         line = bytes(line, self.encoding)
         self._putline(line)
 
@@ -129,7 +129,7 @@ class POP3:
         if len(line) > _MAXLINE:
             raise error_proto('line too long')
 
-        if self._debugging > 1: print '*get*', repr(line)
+        if self._debugging > 1: print('*get*', repr(line))
         if not line: raise error_proto('-ERR EOF')
         octets = len(line)
         # server can send any combination of CR & LF
@@ -147,7 +147,7 @@ class POP3:
 
     def _getresp(self):
         resp, o = self._getline()
-        if self._debugging > 1: print '*resp*', repr(resp)
+        if self._debugging > 1: print('*resp*', repr(resp))
         if not resp.startswith(b'+'):
             raise error_proto(resp)
         return resp
@@ -220,7 +220,7 @@ class POP3:
         """
         retval = self._shortcmd('STAT')
         rets = retval.split()
-        if self._debugging: print '*stat*', repr(rets)
+        if self._debugging: print('*stat*', repr(rets))
         numMessages = int(rets[1])
         sizeMessages = int(rets[2])
         return (numMessages, sizeMessages)
@@ -464,15 +464,15 @@ if HAVE_SSL:
 if __name__ == "__main__":
     import sys
     a = POP3(sys.argv[1])
-    print a.getwelcome()
+    print(a.getwelcome())
     a.user(sys.argv[2])
     a.pass_(sys.argv[3])
     a.list()
     (numMsgs, totalSize) = a.stat()
     for i in range(1, numMsgs + 1):
         (header, msg, octets) = a.retr(i)
-        print "Message %d:" % i
+        print("Message %d:" % i)
         for line in msg:
-            print '   ' + line
-        print '-----------------------'
+            print('   ' + line)
+        print('-----------------------')
     a.quit()

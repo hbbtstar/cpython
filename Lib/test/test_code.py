@@ -128,8 +128,8 @@ def dump(co):
     """Print out a text representation of a code object."""
     for attr in ["name", "argcount", "kwonlyargcount", "names", "varnames",
                  "cellvars", "freevars", "nlocals", "flags"]:
-        print "%s: %s" % (attr, getattr(co, "co_" + attr))
-    print "consts:", tuple(consts(co.co_consts))
+        print("%s: %s" % (attr, getattr(co, "co_" + attr)))
+    print("consts:", tuple(consts(co.co_consts)))
 
 # Needed for test_closure_injection below
 # Defined at global scope to avoid implicitly closing over __class__

@@ -168,14 +168,14 @@ class ABCMeta(type):
 
     def _dump_registry(cls, file=None):
         """Debug helper to print the ABC registry."""
-        print "Class: %s.%s"
-        print >>file, "Inv.counter: %s" % ABCMeta._abc_invalidation_counter
+        print("Class: %s.%s" % (cls.__module__, cls.__qualname__), file=file)
+        print("Inv.counter: %s" % ABCMeta._abc_invalidation_counter, file=file)
         for name in sorted(cls.__dict__):
             if name.startswith("_abc_"):
                 value = getattr(cls, name)
                 if isinstance(value, WeakSet):
                     value = set(value)
-                print >>file, "%s: %r" % (name, value)
+                print("%s: %r" % (name, value), file=file)
 
     def __instancecheck__(cls, instance):
         """Override for isinstance(instance, cls)."""

@@ -791,8 +791,9 @@ class EventLoopTestsMixin:
                 response = csock.recv(99)
                 csock.close()
             except Exception as exc:
-                print "Failure in client thread in test_connect_accepted_socket",
-                    exc
+                print(
+                    "Failure in client thread in test_connect_accepted_socket",
+                    exc)
 
         thread = threading.Thread(target=client, daemon=True)
         thread.start()

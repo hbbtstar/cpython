@@ -15,8 +15,8 @@ except ImportError:
             from urllib import urlretrieve
             USING = "urllib.retrieve"
         except ImportError:
-            print >>sys.stderr, "Python at", sys.executable, "is not suitable",
-                  "for downloading files."
+            print("Python at", sys.executable, "is not suitable",
+                  "for downloading files.", file=sys.stderr)
             sys.exit(2)
 else:
     USING = "requests.get"
@@ -31,9 +31,9 @@ else:
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print >>sys.stderr, "Usage: urlretrieve.py [url] [filename]"
+        print("Usage: urlretrieve.py [url] [filename]", file=sys.stderr)
         sys.exit(1)
     URL = sys.argv[1]
     FILENAME = sys.argv[2]
-    print "Downloading from", URL, "to", FILENAME, "using", USING
+    print("Downloading from", URL, "to", FILENAME, "using", USING)
     urlretrieve(URL, FILENAME)

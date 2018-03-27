@@ -69,4 +69,4 @@ def askcolor(color = None, **options):
 # test stuff
 
 if __name__ == "__main__":
-    print "color", askcolor()
+    print("color", askcolor())

@@ -128,7 +128,7 @@ class VisitorBase(object):
             try:
                 meth(obj, *args)
             except Exception as e:
-                print "Error visiting %r: %s" % (obj, e)
+                print("Error visiting %r: %s" % (obj, e))
                 raise
 
 class Check(VisitorBase):
@@ -159,8 +159,8 @@ class Check(VisitorBase):
         if conflict is None:
             self.cons[key] = name
         else:
-            print 'Redefinition of constructor {}'.format(key)
-            print 'Defined in {} and {}'.format(conflict, name)
+            print('Redefinition of constructor {}'.format(key))
+            print('Defined in {} and {}'.format(conflict, name))
             self.errors += 1
         for f in cons.fields:
             self.visit(f, key)
@@ -187,7 +187,7 @@ def check(mod):
         if t not in mod.types and not t in builtin_types:
             v.errors += 1
             uses = ", ".join(v.types[t])
-            print 'Undefined type {}, used in {}'.format(t, uses)
+            print('Undefined type {}, used in {}'.format(t, uses))
     return not v.errors
 
 # The ASDL parser itself comes next. The only interesting external interface

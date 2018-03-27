@@ -90,7 +90,7 @@ Disassembly of %s:
        _C.sm.__name__, dis_c_static_method)
 
 def _f(a):
-    print a
+    print(a)
     return 1
 
 dis_f = """\
@@ -486,7 +486,7 @@ Variable names:
 @staticmethod
 def tricky(x, y, z=True, *args, c, d, e=[], **kwds):
     def f(c=c):
-        print x, y, z, c, d, e, f
+        print(x, y, z, c, d, e, f)
     yield x, y, z, c, d, e, f
 
 code_info_tricky = """\
@@ -641,40 +641,40 @@ class CodeInfoTests(unittest.TestCase):
 def outer(a=1, b=2):
     def f(c=3, d=4):
         def inner(e=5, f=6):
-            print a, b, c, d, e, f
-        print a, b, c, d
+            print(a, b, c, d, e, f)
+        print(a, b, c, d)
         return inner
-    print a, b, '', 1, [], {}, "Hello world!"
+    print(a, b, '', 1, [], {}, "Hello world!")
     return f
 
 def jumpy():
     # This won't actually run (but that's OK, we only disassemble it)
     for i in range(10):
-        print i
+        print(i)
         if i < 4:
             continue
         if i > 6:
             break
     else:
-        print "I can haz else clause?"
+        print("I can haz else clause?")
     while i:
-        print i
+        print(i)
         i -= 1
         if i > 6:
             continue
         if i < 4:
             break
     else:
-        print "Who let lolcatz into this test suite?"
+        print("Who let lolcatz into this test suite?")
     try:
         1 / 0
     except ZeroDivisionError:
-        print "Here we go, here we go, here we go..."
+        print("Here we go, here we go, here we go...")
     else:
         with i as dodgy:
-            print "Never reach this"
+            print("Never reach this")
     finally:
-        print "OK, now we're done"
+        print("OK, now we're done")
 
 # End fodder for opinfo generation tests
 expected_outer_line = 1

@@ -232,7 +232,7 @@ class OtherNetworkTests(unittest.TestCase):
                                 buf = f.read()
                                 debug("read %d bytes" % len(buf))
                         except socket.timeout:
-                            print >>sys.stderr, "<timeout: %s>" % url
+                            print("<timeout: %s>" % url, file=sys.stderr)
                         f.close()
                 time.sleep(0.1)
 

@@ -17,9 +17,9 @@ def main():
             hashes.append(md5.hexdigest())
             sizes.append(str(len(data)))
 
-    print '{:40s}  {:<32s}  {:<9s}'.format('File', 'MD5', 'Size')
+    print('{:40s}  {:<32s}  {:<9s}'.format('File', 'MD5', 'Size'))
     for f, h, s in zip(filenames, hashes, sizes):
-        print '{:40s}  {:>32s}  {:>9s}'.format(f, h, s)
+        print('{:40s}  {:>32s}  {:>9s}'.format(f, h, s))
 
 
 

@@ -19,7 +19,7 @@ def bottle(n):
     return str(n) + " bottles of beer"
 
 for i in range(n, 0, -1):
-    print bottle(i), "on the wall,"
-    print bottle(i) + "."
-    print "Take one down, pass it around,"
-    print bottle(i-1), "on the wall."
+    print(bottle(i), "on the wall,")
+    print(bottle(i) + ".")
+    print("Take one down, pass it around,")
+    print(bottle(i-1), "on the wall.")

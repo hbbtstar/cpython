@@ -647,9 +647,9 @@ class HandlerTest(BaseTest):
                         self.handle_time = time.time()
                         h.handle(r)
                     except Exception:
-                        print 'Deleted at %s, '
+                        print('Deleted at %s, '
                               'opened at %s' % (self.deletion_time,
-                                                self.handle_time)
+                                                self.handle_time))
                         raise
             finally:
                 remover.join()
@@ -4247,13 +4247,13 @@ class TimedRotatingFileHandlerTest(BaseFileTest):
             # print additional diagnostics
             dn, fn = os.path.split(self.fn)
             files = [f for f in os.listdir(dn) if f.startswith(fn)]
-            print >>sys.stderr, 'Test time: %s' % now.strftime("%Y-%m-%d %H-%M-%S")
-            print >>sys.stderr, 'The only matching files are: %s' % files
+            print('Test time: %s' % now.strftime("%Y-%m-%d %H-%M-%S"), file=sys.stderr)
+            print('The only matching files are: %s' % files, file=sys.stderr)
             for f in files:
-                print 'Contents of %s:' % f
+                print('Contents of %s:' % f)
                 path = os.path.join(dn, f)
                 with open(path, 'r') as tf:
-                    print tf.read()
+                    print(tf.read())
         self.assertTrue(found, msg=msg)
 
     def test_invalid(self):
@@ -4307,16 +4307,16 @@ class TimedRotatingFileHandlerTest(BaseFileTest):
                 expected += today
                 actual = rh.computeRollover(today)
                 if actual != expected:
-                    print 'failed in timezone: %d' % time.timezone
-                    print 'local vars: %s' % locals()
+                    print('failed in timezone: %d' % time.timezone)
+                    print('local vars: %s' % locals())
                 self.assertEqual(actual, expected)
                 if day == wday:
                     # goes into following week
                     expected += 7 * 24 * 60 * 60
                 actual = rh.computeRollover(today + 13 * 60 * 60)
                 if actual != expected:
-                    print 'failed in timezone: %d' % time.timezone
-                    print 'local vars: %s' % locals()
+                    print('failed in timezone: %d' % time.timezone)
+                    print('local vars: %s' % locals())
                 self.assertEqual(actual, expected)
             finally:
                 rh.close()
@@ -4356,14 +4356,14 @@ for when, exp in (('S', 1),
                                                        currentMinute) * 60 +
                             currentSecond)
                     result = currentTime + r
-                    print >>sys.stderr, 't: %s (%s)' % (t, rh.utc)
-                    print >>sys.stderr, 'currentHour: %s' % currentHour
-                    print >>sys.stderr, 'currentMinute: %s' % currentMinute
-                    print >>sys.stderr, 'currentSecond: %s' % currentSecond
-                    print >>sys.stderr, 'r: %s' % r
-                    print >>sys.stderr, 'result: %s' % result
+                    print('t: %s (%s)' % (t, rh.utc), file=sys.stderr)
+                    print('currentHour: %s' % currentHour, file=sys.stderr)
+                    print('currentMinute: %s' % currentMinute, file=sys.stderr)
+                    print('currentSecond: %s' % currentSecond, file=sys.stderr)
+                    print('r: %s' % r, file=sys.stderr)
+                    print('result: %s' % result, file=sys.stderr)
                 except Exception:
-                    print >>sys.stderr, 'exception in diagnostic code: %s' % sys.exc_info()[1]
+                    print('exception in diagnostic code: %s' % sys.exc_info()[1], file=sys.stderr)
         self.assertEqual(exp, actual)
         rh.close()
     setattr(TimedRotatingFileHandlerTest, "test_compute_rollover_%s" % when, test_compute_rollover)

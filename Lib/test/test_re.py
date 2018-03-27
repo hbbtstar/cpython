@@ -2058,7 +2058,7 @@ class ExternalTests(unittest.TestCase):
                         obj = re.compile(bpat, re.LOCALE)
                         result = obj.search(bs)
                         if result is None:
-                            print '=== Fails on locale-sensitive match', t
+                            print('=== Fails on locale-sensitive match', t)
 
                 # Try the match with the search area limited to the extent
                 # of the match and see if it still succeeds.  \B will

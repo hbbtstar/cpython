@@ -734,7 +734,7 @@ def main():
 
     # Helper error handling routines
     def perror(message):
-        print >>sys.stderr, message
+        print(message, file=sys.stderr)
 
     def error(message, filename=None, location=None):
         if location:
@@ -771,8 +771,8 @@ def main():
             if args.exact:
                 token_type = token.exact_type
             token_range = "%d,%d-%d,%d:" % (token.start + token.end)
-            print "%-20s%-15s%-15r" %
-                  (token_range, tok_name[token_type], token.string)
+            print("%-20s%-15s%-15r" %
+                  (token_range, tok_name[token_type], token.string))
     except IndentationError as err:
         line, column = err.args[1][1:3]
         error(err.args[0], filename, (line, column))
@@ -784,7 +784,7 @@ def main():
     except OSError as err:
         error(err)
     except KeyboardInterrupt:
-        print "interrupted\n"
+        print("interrupted\n")
     except Exception as err:
         perror("unexpected error: %s" % err)
         raise

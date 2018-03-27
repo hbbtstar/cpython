@@ -921,9 +921,9 @@ class PyLocalsTests(DebuggerTests):
 
 def test_main():
     if support.verbose:
-        print "GDB version %s.%s:" % (gdb_major_version, gdb_minor_version)
+        print("GDB version %s.%s:" % (gdb_major_version, gdb_minor_version))
         for line in gdb_version.splitlines():
-            print " " * 4 + line
+            print(" " * 4 + line)
     run_unittest(PrettyPrintTests,
                  PyListTests,
                  StackNavigationTests,

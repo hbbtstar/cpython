@@ -989,7 +989,7 @@ class StressTest(unittest.TestCase):
         durations = [times[i+1] - times[i] for i in range(len(times) - 1)]
         med = statistics.median(durations)
         if support.verbose:
-            print "detected median itimer() resolution: %.6f s." % (med,)
+            print("detected median itimer() resolution: %.6f s." % (med,))
         return med
 
     def decide_itimer_count(self):

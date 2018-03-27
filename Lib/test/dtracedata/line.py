@@ -1,6 +1,6 @@
 def test_line():
     a = 1
-    print '# Preamble', a
+    print('# Preamble', a)
     for i in range(2):
         a = i
         b = i+2
@@ -8,9 +8,9 @@ def test_line():
         if c < 4:
             a = c
         d = a + b +c
-        print '#', a, b, c, d
+        print('#', a, b, c, d)
     a = 1
-    print '# Epilogue', a
+    print('# Epilogue', a)
 
 
 if __name__ == '__main__':

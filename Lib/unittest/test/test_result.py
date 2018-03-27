@@ -549,8 +549,8 @@ class TestOutputBuffering(unittest.TestCase):
         result._original_stdout = io.StringIO()
         result._original_stderr = io.StringIO()
 
-        print 'foo'
-        print >>sys.stderr, 'bar'
+        print('foo')
+        print('bar', file=sys.stderr)
 
         self.assertEqual(out_stream.getvalue(), 'foo\n')
         self.assertEqual(err_stream.getvalue(), 'bar\n')
@@ -593,9 +593,9 @@ class TestOutputBuffering(unittest.TestCase):
             result._original_stdout = io.StringIO()
             result._original_stderr = io.StringIO()
 
-            print >>sys.stdout, 'foo'
+            print('foo', file=sys.stdout)
             if include_error:
-                print >>sys.stderr, 'bar'
+                print('bar', file=sys.stderr)
 
 
             addFunction = getattr(result, add_attr)

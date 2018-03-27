@@ -970,7 +970,7 @@ class TestBasicOps(unittest.TestCase):
             result = []
             for i, j in zip_longest(r1, r2, fillvalue=0):
                 with support.captured_output('stdout'):
-                    print (i, j)
+                    print((i, j))
                 result.append((i, j))
             return result
         self.assertEqual(run(r1, r2), [(1,2), (1,2), (1,2), (0,2)])
@@ -2364,7 +2364,7 @@ def test_main(verbose=None):
             support.run_unittest(*test_classes)
             gc.collect()
             counts[i] = sys.gettotalrefcount()
-        print counts
+        print(counts)
 
     # doctest the examples in the library reference
     support.run_doctest(sys.modules[__name__], verbose)

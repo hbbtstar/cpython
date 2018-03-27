@@ -569,7 +569,7 @@ class TestParserIdempotency(support.TestCase):
                     self.fail('ParseError on file %s (%s)' % (filepath, err))
             new = str(tree)
             if new != source:
-                print diff_texts(source, new, filepath)
+                print(diff_texts(source, new, filepath))
                 self.fail("Idempotency failed: %s" % filepath)
 
     def test_extended_unpacking(self):

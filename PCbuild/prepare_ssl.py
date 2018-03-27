@@ -56,13 +56,13 @@ def find_working_perl(perls):
             return perl
 
     if perls:
-        print "The following perl interpreters were found:"
+        print("The following perl interpreters were found:")
         for p in perls:
-            print " ", p
-        print " None of these versions appear suitable for building OpenSSL"
+            print(" ", p)
+        print(" None of these versions appear suitable for building OpenSSL")
     else:
-        print "NO perl interpreters were found on this machine at all!"
-    print " Please install ActivePerl and ensure it appears on your path"
+        print("NO perl interpreters were found on this machine at all!")
+    print(" Please install ActivePerl and ensure it appears on your path")
 
 
 def create_asms(makefile, tmp_d):
@@ -105,14 +105,14 @@ def copy_includes(makefile, suffix):
                 # We're in the root of the source tree
                 src = src.replace('$(SRC_D)', '.').strip('"')
                 dest = dest.strip('"').replace('$(INCO_D)', dir)
-                print 'copying', src, 'to', dest
+                print('copying', src, 'to', dest)
                 copy(src, dest)
 
 
 def run_configure(configure, do_script):
-    print "perl Configure "+configure+" no-idea no-mdc2"
+    print("perl Configure "+configure+" no-idea no-mdc2")
     os.system("perl Configure "+configure+" no-idea no-mdc2")
-    print do_script
+    print(do_script)
     os.system(do_script)
 
 
@@ -131,7 +131,7 @@ def prep(arch):
     else:
         raise ValueError('Unrecognized platform: %s' % arch)
 
-    print "Creating the makefiles..."
+    print("Creating the makefiles...")
     sys.stdout.flush()
     # run configure, copy includes, create asms
     run_configure(configure, do_script)
@@ -143,25 +143,25 @@ def prep(arch):
     os.rename(generated_makefile, makefile)
     copy_includes(makefile, suffix)
 
-    print 'creating asms...'
+    print('creating asms...')
     create_asms(makefile, 'tmp'+suffix)
 
 
 def main():
     if len(sys.argv) == 1:
-        print "Not enough arguments: directory containing OpenSSL",
-              "sources must be supplied"
+        print("Not enough arguments: directory containing OpenSSL",
+              "sources must be supplied")
         sys.exit(1)
 
     if len(sys.argv) > 2:
-        print "Too many arguments supplied, all we need is the directory",
-              "containing OpenSSL sources"
+        print("Too many arguments supplied, all we need is the directory",
+              "containing OpenSSL sources")
         sys.exit(1)
 
     ssl_dir = sys.argv[1]
 
     if not os.path.isdir(ssl_dir):
-        print ssl_dir, "is not an existing directory!"
+        print(ssl_dir, "is not an existing directory!")
         sys.exit(1)
 
     # perl should be on the path, but we also look in "\perl" and "c:\\perl"
@@ -173,14 +173,14 @@ def main():
                                          ])
     perl = find_working_perl(perls)
     if perl:
-        print "Found a working perl at '%s'" % (perl,)
+        print("Found a working perl at '%s'" % (perl,))
     else:
         sys.exit(1)
     if not find_all_on_path('nmake.exe'):
-        print 'Could not find nmake.exe, try running env.bat'
+        print('Could not find nmake.exe, try running env.bat')
         sys.exit(1)
     if not find_all_on_path('nasm.exe'):
-        print 'Could not find nasm.exe, please add to PATH'
+        print('Could not find nasm.exe, please add to PATH')
         sys.exit(1)
     sys.stdout.flush()
 

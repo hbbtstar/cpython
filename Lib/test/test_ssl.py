@@ -3622,13 +3622,13 @@ def test_main(verbose=False):
                     break
             else:
                 plat = repr(platform.platform())
-        print "test_ssl: testing with %r %r" %
-            (ssl.OPENSSL_VERSION, ssl.OPENSSL_VERSION_INFO)
-        print "          under %s" % plat
-        print "          HAS_SNI = %r" % ssl.HAS_SNI
-        print "          OP_ALL = 0x%8x" % ssl.OP_ALL
+        print("test_ssl: testing with %r %r" %
+            (ssl.OPENSSL_VERSION, ssl.OPENSSL_VERSION_INFO))
+        print("          under %s" % plat)
+        print("          HAS_SNI = %r" % ssl.HAS_SNI)
+        print("          OP_ALL = 0x%8x" % ssl.OP_ALL)
         try:
-            print "          OP_NO_TLSv1_1 = 0x%8x" % ssl.OP_NO_TLSv1_1
+            print("          OP_NO_TLSv1_1 = 0x%8x" % ssl.OP_NO_TLSv1_1)
         except AttributeError:
             pass
 
