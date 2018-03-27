@@ -2935,17 +2935,17 @@ _check_for_legacy_statements(PySyntaxErrorObject *self, Py_ssize_t start)
     }
 
     /* Check for legacy print statements */
-    if (print_prefix == NULL) {
-        print_prefix = PyUnicode_InternFromString("print ");
-        if (print_prefix == NULL) {
-            return -1;
-        }
-    }
-    if (PyUnicode_Tailmatch(self->text, print_prefix,
-                            start, text_len, -1)) {
-
-        return _set_legacy_print_statement_msg(self, start);
-    }
+//    if (print_prefix == NULL) {
+//        print_prefix = PyUnicode_InternFromString("print ");
+//        if (print_prefix == NULL) {
+//            return -1;
+//        }
+//    }
+//    if (PyUnicode_Tailmatch(self->text, print_prefix,
+//                            start, text_len, -1)) {
+//
+//        return _set_legacy_print_statement_msg(self, start);
+//    }
 
     /* Check for legacy exec statements */
     if (exec_prefix == NULL) {
